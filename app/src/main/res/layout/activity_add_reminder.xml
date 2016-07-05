@@ -1,0 +1,424 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent">
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground"
+    tools:context="com.urhive.scheduled.activities.AddReminderActivity">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/heading"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
+                android:orientation="vertical"
+                android:padding="@dimen/activity_horizontal_margin">
+
+                <EditText
+                    android:id="@+id/titleET"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="50dp"
+                    android:hint="Add Title"
+                    android:inputType="textCapWords"
+                    android:singleLine="true"
+                    android:textAppearance="@android:style/TextAppearance.Large"
+                    android:textColor="@android:color/white"
+                    android:textColorHint="@color/primary_text_disabled_material_dark" />
+
+                <EditText
+                    android:id="@+id/contentET"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="50dp"
+                    android:gravity="top"
+                    android:hint="Add Notification Content\nReason"
+                    android:inputType="textMultiLine"
+                    android:lines="3"
+                    android:textAppearance="@android:style/TextAppearance.Large"
+                    android:textColor="@android:color/white"
+                    android:textColorHint="@color/primary_text_disabled_material_dark" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="50dp"
+                    android:paddingBottom="@dimen/activity_vertical_margin"
+                    android:paddingLeft="@dimen/activity_horizontal_margin"
+                    android:paddingRight="@dimen/activity_horizontal_margin"
+                    android:paddingTop="@dimen/activity_vertical_margin"
+                    android:text="Details"
+                    android:textAppearance="@android:style/TextAppearance.Large" />
+
+                <RelativeLayout
+                    android:id="@+id/timeRL"
+                    android:layout_width="match_parent"
+                    android:layout_height="72dp"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:onClick="setTime">
+
+                    <ImageView
+                        android:id="@+id/time_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="27dp"
+                        android:src="@drawable/ic_alarm_black_24dp" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@id/time_icon"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/time_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Time To Show Notification"
+                            android:textSize="15sp" />
+
+                        <TextView
+                            android:id="@+id/setTimeTV"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Now"
+                            android:textSize="15sp" />
+                    </LinearLayout>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/dateRL"
+                    android:layout_width="match_parent"
+                    android:layout_height="72dp"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:onClick="setDate">
+
+                    <ImageView
+                        android:id="@+id/date_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="27dp"
+                        android:src="@drawable/ic_event_black_24dp" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@id/date_icon"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/date_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Date"
+                            android:textSize="15sp" />
+
+                        <TextView
+                            android:id="@+id/setDateTV"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Today"
+                            android:textSize="15sp" />
+                    </LinearLayout>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/addCategoryRL"
+                    android:layout_width="match_parent"
+                    android:layout_height="72dp"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:clickable="true">
+
+                    <FrameLayout
+                        android:id="@+id/categoryIconFrame"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="19dp">
+
+                        <ImageView
+                            android:id="@+id/circle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/circle" />
+
+                        <ImageView
+                            android:id="@+id/image"
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_notifications_white_24dp" />
+
+                    </FrameLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@id/categoryIconFrame"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/addcategorytext"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Category"
+                            android:textSize="15sp" />
+
+                        <TextView
+                            android:id="@+id/addcategoryTV"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Uncategorized"
+                            android:textSize="15sp" />
+                    </LinearLayout>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/repeatTypeRL"
+                    android:layout_width="match_parent"
+                    android:layout_height="72dp"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:clickable="true">
+
+                    <ImageView
+                        android:id="@+id/repeat_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="27dp"
+                        android:src="@drawable/ic_refresh_white_24dp"
+                        android:tint="@color/black" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@id/repeat_icon"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/repeat_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Repeat"
+                            android:textSize="15sp" />
+
+                        <TextView
+                            android:id="@+id/repeatTypeTV"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Does Not Repeat"
+                            android:textSize="15sp" />
+                    </LinearLayout>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/presetRL"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:paddingBottom="21dp"
+                    android:paddingTop="21dp">
+
+                    <ImageView
+                        android:id="@+id/preset_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="27dp"
+                        android:src="@drawable/ic_alarm_on_black_24dp" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@id/preset_icon"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/preset_heading_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Preset"
+                            android:textSize="15sp" />
+
+                        <TextView
+                            android:id="@+id/setPresetTV"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Default"
+                            android:textSize="15sp" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/customizeTV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="15dp"
+                        android:text="Customize"
+                        android:textColor="@android:color/primary_text_light"
+                        android:textSize="20sp" />
+                </RelativeLayout>
+
+                <com.github.paolorotolo.expandableheightlistview.ExpandableHeightListView
+                    android:id="@+id/expandableheightlistviewPreset"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"></com.github.paolorotolo.expandableheightlistview.ExpandableHeightListView>
+
+                <RelativeLayout
+                    android:id="@+id/repeatTimeRL"
+                    android:layout_width="match_parent"
+                    android:layout_height="72dp"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:clickable="true">
+
+                    <ImageView
+                        android:id="@+id/repeat_time_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="27dp"
+                        android:src="@drawable/ic_settings_backup_restore_white_24dp"
+                        android:tint="@color/black" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@id/repeat_time_icon"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/repeat_time_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="No of times to repeat"
+                            android:textSize="15sp" />
+
+                        <TextView
+                            android:id="@+id/repeatTimeTV"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="5"
+                            android:textSize="15sp" />
+                    </LinearLayout>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/advanceNotificationRL"
+                    android:layout_width="match_parent"
+                    android:layout_height="72dp"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:clickable="true">
+
+                    <ImageView
+                        android:id="@+id/advance_notification_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="27dp"
+                        android:src="@drawable/ic_data_usage_white_24dp"
+                        android:tint="@color/black" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@id/advance_notification_icon"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/setup_early_notification_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Setup Early Reminder"
+                            android:textSize="15sp" />
+
+                        <TextView
+                            android:id="@+id/setEarlyNotificationTV"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Do Not Remind Early"
+                            android:textSize="15sp" />
+                    </LinearLayout>
+
+                    <Switch
+                        android:id="@+id/setEarlyNotificationSwitch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:paddingRight="16dp" />
+                </RelativeLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+
+    <com.getbase.floatingactionbutton.FloatingActionButton
+        android:id="@+id/offFab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:baselineAlignBottom="true"
+        android:clickable="true"
+        android:onClick="selectFabOff"
+        app:fab_colorNormal="@color/fab"
+        app:fab_colorPressed="@color/mdtp_neutral_pressed"
+        app:fab_icon="@drawable/ic_notifications_off_white_24dp"
+        app:fab_size="normal"
+        app:layout_anchor="@id/heading"
+        app:layout_anchorGravity="bottom|left|end" />
+
+    <com.getbase.floatingactionbutton.FloatingActionButton
+        android:id="@+id/onFab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:onClick="selectFabOn"
+        app:fab_colorNormal="@color/fab"
+        app:fab_colorPressed="@color/mdtp_neutral_pressed"
+        app:fab_icon="@drawable/ic_notifications_active_white_24dp"
+        app:fab_size="normal"
+        app:layout_anchor="@id/heading"
+        app:layout_anchorGravity="bottom|left|end" />
+</android.support.design.widget.CoordinatorLayout>
+</ScrollView>

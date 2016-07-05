@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:dslv="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.urhive.scheduled.activities.EditLabelsActivity">
+
+    <com.mobeta.android.dslv.DragSortListView
+        android:id="@+id/listView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorBackground"
+        android:divider="@color/colorBackground"
+        android:listSelector="@android:color/transparent"
+        dslv:drag_enabled="true"
+        dslv:drag_start_mode="onLongPress"
+        dslv:sort_enabled="true"
+        dslv:track_drag_sort="false" />
+</RelativeLayout>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:title="Notification Preferences">
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="checkBoxVibrate"
+            android:title="Vibrate" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="checkBoxSound"
+            android:title="Sound" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="checkBoxLED"
+            android:title="LED" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="checkBoxSnooze"
+            android:title="Snooze"
+            android:summary="Add a snooze button in the notification" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="checkBoxOngoing"
+            android:title="Persitent"
+            android:summary="Reminder Notification will not be removed untill you give feedback!"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="Quotes">
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:title="Show quotes as notification"
+            android:summary="Daily show a notification with quote of the day" />
+    </PreferenceCategory>
+</PreferenceScreen>

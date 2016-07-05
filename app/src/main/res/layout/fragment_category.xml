@@ -1,0 +1,104 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    style="@style/dialogForm"
+    tools:context="com.urhive.scheduled.activities.EditLabelsActivity">
+
+    <LinearLayout
+        android:id="@+id/formPanel"
+        style="@style/dialogFormPanel">
+
+        <LinearLayout style="@style/dialogFormRow">
+
+            <EditText
+                android:id="@+id/categoryNameET"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="Category Name"
+                android:inputType="textCapWords">
+
+                <requestFocus />
+            </EditText>
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/dialogFormRow"
+            android:gravity="center">
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingRight="16dp">
+
+                <ImageView
+                    android:id="@+id/circle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/circle" />
+
+                <ImageView
+                    android:id="@+id/image"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_notifications_white_24dp" />
+
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/categoryColorTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/categoryNameET"
+                    android:layout_weight="1"
+                    android:text="Category Color"
+                    android:textAppearance="@android:style/TextAppearance.Medium" />
+
+                <View
+                    android:layout_width="15dp"
+                    android:layout_height="15dp" />
+
+                <TextView
+                    android:id="@+id/categoryIconTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Category Icon"
+                    android:textAppearance="@android:style/TextAppearance.Medium" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        style="?android:attr/buttonBarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:paddingEnd="16dp"
+        android:paddingLeft="0dp"
+        android:paddingRight="16dp"
+        android:paddingStart="0dp">
+
+        <TextView
+            android:id="@+id/categoryFragmentDiscardTV"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="DISCARD"
+            android:textColor="@color/colorAccent" />
+
+        <TextView
+            android:id="@+id/categoryFragmentSaveTV"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SAVE"
+            android:textColor="@color/colorAccent" />
+    </LinearLayout>
+</LinearLayout>
