@@ -38,37 +38,28 @@ public class AddReminderActivity extends AppCompatActivity implements
         TimePickerDialog.OnTimeSetListener,
         DatePickerDialog.OnDateSetListener {
 
+    public static TextView categoryTV, repeatTimeTV;
+    public static ImageView circle, categoryIcon;
+    public static int noToRepeat = 5;
+    public static Category category = Category.findById(Category.class, 1);
+    public static long inAdvanceValues[] = {900000, 86400000, 604800000};
+    public static AlertDialog categoryAlertBox;
+    AlertDialog.Builder repeatArrayBuilder, repeatCustomArrayBuilder;
     private FloatingActionButton onFab, offFab;
     private EditText titleET, contentET;
-
     private TextView timeTV, dateTV, repeatTypeTV, advanceNotificationTV, presetTV, customizeTV;
-
-    public static TextView categoryTV, repeatTimeTV;
-
     private Switch advanceNotificationSwitch;
-
-    public static ImageView circle, categoryIcon;
-
     private RelativeLayout categoryRL, repeatTypeRL, repeatTimeRL, advanceNotificationRL, presetRL;
-
     private ExpandableHeightListView ehlv;
-
     private int mYear, mMonth, mHour, mMinute, mDay;
     private String mTitle;
     private String mContent;
     private int mActive = Reminder.ACTIVE;
     private String mTime;
     private String mDate;
-    public static int noToRepeat = 5;
-
-    public static Category category = Category.findById(Category.class, 1);
-    private int type = Reminder.NORMAL_NOTIFICATION;
+    private int repeatType = 0;
     private long inAdvanceMillis = 0;
     private boolean[] mDaysOfWeek;
-
-    public static long inAdvanceValues[] = {900000, 86400000, 604800000};
-
-    public static AlertDialog categoryAlertBox;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,10 +88,22 @@ public class AddReminderActivity extends AppCompatActivity implements
         advanceNotificationRL.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                final String[] advanceNotificationArray = getResources().getStringArray(R.array.advance_notification_array);
                 if (advanceNotificationSwitch.isChecked()) {
                     advanceNotificationSwitch.setChecked(false);
+                    inAdvanceMillis = 0;
+                    advanceNotificationTV.setText("Do not remind early");
                 } else {
-                    advanceNotificationSwitch.setChecked(true);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(AddReminderActivity.this)
+                            .setItems(advanceNotificationArray, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    inAdvanceMillis = inAdvanceValues[which];
+                                    advanceNotificationTV.setText(advanceNotificationArray[which]);
+                                    advanceNotificationSwitch.setChecked(true);
+                                }
+                            });
+                    builder.show();
                 }
             }
         });
@@ -135,7 +138,7 @@ public class AddReminderActivity extends AppCompatActivity implements
             @Override
             public void onClick(View v) {
                 RepeatTimesFragment repeatTimeFragment = RepeatTimesFragment.showRepeatTimesFragment(noToRepeat);
-                repeatTimeFragment.show(getSupportFragmentManager(),"RepeatTime");
+                repeatTimeFragment.show(getSupportFragmentManager(), "RepeatTime");
             }
         });
 
@@ -145,35 +148,60 @@ public class AddReminderActivity extends AppCompatActivity implements
                 final String[] repeatArray = getResources().getStringArray(R.array.repeat_array);
                 final String[] repeatArrayCustom = getResources().getStringArray(R.array.repeat_array_custom);
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(AddReminderActivity.this)
+                repeatArrayBuilder = new AlertDialog.Builder(AddReminderActivity.this)
                         .setItems(repeatArray, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
+                                repeatType = which;
                                 if (which == 5) {
+                                    presetRL.setVisibility(View.GONE);
+                                    ehlv.setVisibility(View.GONE);
                                     daysOfWeekSelector();
+                                } else if (which == 6) {
+                                    repeatTypeTV.setText(repeatArray[repeatType]);
+                                    presetRL.setVisibility(View.VISIBLE);
+                                    ehlv.setVisibility(View.VISIBLE);
                                 } else {
-                                    if (which == 0) {
-
-                                    }
+                                    repeatTypeTV.setText(repeatArray[repeatType]);
+                                    presetRL.setVisibility(View.GONE);
+                                    ehlv.setVisibility(View.GONE);
                                 }
                             }
                         })
                         .setPositiveButton("Custom", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                // customPresetDialog();
+                                customPresetDialog(repeatArrayCustom);
                             }
                         });
-                builder.show();
+                repeatArrayBuilder.show();
             }
         });
 
         // Check if no view has focus:
         View view = this.getCurrentFocus();
         if (view != null) {
-            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
+    }
+
+    public void customPresetDialog(final String repeatCustomArray[]) {
+        repeatCustomArrayBuilder = new AlertDialog.Builder(AddReminderActivity.this)
+                .setItems(repeatCustomArray, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        repeatType = which + 7;
+                        repeatTypeTV.setText(repeatCustomArray[which]);
+                    }
+                })
+                .setPositiveButton("Back", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        repeatArrayBuilder.show();
+                    }
+                });
+        repeatCustomArrayBuilder.show();
     }
 
     public void daysOfWeekSelector() {
@@ -200,9 +228,11 @@ public class AddReminderActivity extends AppCompatActivity implements
 
                     repeatTimeRL.setVisibility(View.VISIBLE);
                     repeatTypeTV.setText(stringBuilder);
-                    Toast.makeText(AddReminderActivity.this, ""+stringBuilder, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddReminderActivity.this, "" + stringBuilder, Toast.LENGTH_SHORT).show();
                     mDaysOfWeek = values;
                 } else {
+                    repeatType = 0;
+                    repeatTypeTV.setText("Do not repeat");
                 }
             }
         }).setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
@@ -242,7 +272,7 @@ public class AddReminderActivity extends AppCompatActivity implements
         ehlv = (ExpandableHeightListView) findViewById(R.id.expandableheightlistviewPreset);
     }
 
-    private void assignDefaultValues(){
+    private void assignDefaultValues() {
         mDaysOfWeek = new boolean[7];
         Arrays.fill(mDaysOfWeek, false);
     }

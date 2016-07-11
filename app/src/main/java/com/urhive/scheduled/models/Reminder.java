@@ -11,37 +11,10 @@ import java.util.Date;
  * Created by Chirag Bhatia on 06-06-2016.
  */
 public class Reminder extends SugarRecord implements Comparable<Reminder> {
-    String title;
-    String content;
-
-    String date;
-    String time;
-
-    int type;
-
-    @Ignore
-    public static final int NORMAL_NOTIFICATION = 0;
-
-    @Ignore
-    public static final int ADVANCE_NOTIFICATION = 1;
-
-    @Ignore
-    private Date dateTime;
-
-    int active;
-
     @Ignore
     public static final int ACTIVE = 1;
     @Ignore
     public static final int INACTIVE = 0;
-
-    long categoryId;
-
-    int noToShow;
-    int noShown;
-
-    int repeatType;
-
     @Ignore
     public static final int DO_NOT_REPEAT = 0;
     @Ignore
@@ -62,8 +35,18 @@ public class Reminder extends SugarRecord implements Comparable<Reminder> {
     public static final int REVISION_PRESET = 8;
     @Ignore
     public static final int CUSTOM_PRESET = 9;
-
+    String title;
+    String content;
+    String date;
+    String time;
+    int active;
+    long categoryId;
+    int noToShow;
+    int noShown;
+    int repeatType;
     long inAdvanceMillis;
+    @Ignore
+    private Date dateTime;
 
     public Reminder() {
     }
@@ -73,7 +56,6 @@ public class Reminder extends SugarRecord implements Comparable<Reminder> {
         this.content = content;
         this.date = date;
         this.time = time;
-        this.type = type;
         this.active = active;
         this.categoryId = categoryId;
         this.noToShow = noToShow;
@@ -155,14 +137,6 @@ public class Reminder extends SugarRecord implements Comparable<Reminder> {
         this.repeatType = repeatType;
     }
 
-    public int getType() {
-        return type;
-    }
-
-    public void setType(int type) {
-        this.type = type;
-    }
-
     public long getInAdvanceMillis() {
         return inAdvanceMillis;
     }
@@ -172,6 +146,8 @@ public class Reminder extends SugarRecord implements Comparable<Reminder> {
     }
 
     // TO STRING
+
+
     @Override
     public String toString() {
         return "Reminder{" +
@@ -179,11 +155,13 @@ public class Reminder extends SugarRecord implements Comparable<Reminder> {
                 ", content='" + content + '\'' +
                 ", date='" + date + '\'' +
                 ", time='" + time + '\'' +
+                ", dateTime=" + dateTime +
                 ", active=" + active +
                 ", categoryId=" + categoryId +
                 ", noToShow=" + noToShow +
                 ", noShown=" + noShown +
                 ", repeatType=" + repeatType +
+                ", inAdvanceMillis=" + inAdvanceMillis +
                 '}';
     }
 

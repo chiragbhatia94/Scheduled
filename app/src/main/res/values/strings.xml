@@ -329,4 +329,10 @@
         <item>MWF TTS Alternate Week</item>
         <item>Custom</item>
     </string-array>
+
+    <string-array name="advance_notification_array">
+        <item>15 Minutes</item>
+        <item>24 Hours</item>
+        <item>7 Days</item>
+    </string-array>
 </resources>

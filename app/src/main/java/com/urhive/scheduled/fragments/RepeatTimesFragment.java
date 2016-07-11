@@ -44,7 +44,7 @@ public class RepeatTimesFragment extends AppCompatDialogFragment {
         int times = args.getInt("times");
 
         if (times == -1){
-            repeatTimesET.setText("Forever");
+            repeatTimesET.setText("5");
         } else {
             repeatTimesET.setText(""+times);
         }
