@@ -252,21 +252,24 @@
                     android:paddingBottom="21dp"
                     android:paddingTop="21dp">
 
-                    <ImageView
-                        android:id="@+id/preset_icon"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                    <Button
+                        android:id="@+id/addCustomReminderFab"
+                        style="@style/smallFabButtonBlue"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
+                        android:layout_gravity="center_horizontal"
                         android:layout_marginLeft="16dp"
                         android:layout_marginRight="27dp"
-                        android:src="@drawable/ic_alarm_on_black_24dp" />
+                        android:onClick="addPreset"
+                        android:text="+" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_toRightOf="@id/preset_icon"
+                        android:layout_toRightOf="@id/addCustomReminderFab"
                         android:orientation="vertical">
 
                         <TextView
@@ -284,16 +287,6 @@
                             android:textSize="15sp" />
                     </LinearLayout>
 
-                    <TextView
-                        android:id="@+id/customizeTV"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="15dp"
-                        android:text="Customize"
-                        android:textColor="@android:color/primary_text_light"
-                        android:textSize="20sp" />
                 </RelativeLayout>
 
                 <com.github.paolorotolo.expandableheightlistview.ExpandableHeightListView

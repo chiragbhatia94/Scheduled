@@ -28,13 +28,14 @@ public class Reminder extends SugarRecord implements Comparable<Reminder> {
     @Ignore
     public static final int SPECIFIC_DAY_OF_WEEK = 5;
     @Ignore
-    public static final int ALTERNATE_DAYS = 6;
+    public static final int REVISION_PRESET = 6;
     @Ignore
-    public static final int MWF_TTS_ALTERNATE = 7;
+    public static final int ALTERNATE_DAYS = 7;
     @Ignore
-    public static final int REVISION_PRESET = 8;
+    public static final int MWF_TTS_ALTERNATE = 8;
     @Ignore
-    public static final int CUSTOM_PRESET = 9;
+    public static final int CUSTOM = 9;
+
     String title;
     String content;
     String date;
@@ -146,8 +147,6 @@ public class Reminder extends SugarRecord implements Comparable<Reminder> {
     }
 
     // TO STRING
-
-
     @Override
     public String toString() {
         return "Reminder{" +

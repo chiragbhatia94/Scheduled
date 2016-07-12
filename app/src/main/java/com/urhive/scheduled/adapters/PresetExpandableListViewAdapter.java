@@ -6,8 +6,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.TextView;
 
-import com.urhive.scheduled.models.Reminder;
+import com.urhive.scheduled.R;
+import com.urhive.scheduled.activities.AddReminderActivity;
+import com.urhive.scheduled.helpers.PremiumHelper;
+import com.urhive.scheduled.models.CustomReminder;
+import com.urhive.scheduled.utils.DateTimeUtil;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
@@ -20,9 +26,18 @@ import java.util.List;
  */
 public class PresetExpandableListViewAdapter extends BaseAdapter implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
     Context context;
-    List<Reminder> list;
+    List<CustomReminder> list;
     FragmentManager fragmentManager;
 
+    String date, time;
+    int mYear, mMonth, mDay, mHour, mMinute;
+    int p = 0;
+
+    public PresetExpandableListViewAdapter(Context context, List<CustomReminder> list, FragmentManager fm) {
+        this.context = context;
+        this.list = list;
+        this.fragmentManager = fm;
+    }
 
     /**
      * How many items are in the data set represented by this Adapter.
@@ -31,7 +46,7 @@ public class PresetExpandableListViewAdapter extends BaseAdapter implements Date
      */
     @Override
     public int getCount() {
-        return 0;
+        return list.size();
     }
 
     /**
@@ -43,7 +58,7 @@ public class PresetExpandableListViewAdapter extends BaseAdapter implements Date
      */
     @Override
     public Object getItem(int position) {
-        return null;
+        return list.get(position);
     }
 
     /**
@@ -54,7 +69,7 @@ public class PresetExpandableListViewAdapter extends BaseAdapter implements Date
      */
     @Override
     public long getItemId(int position) {
-        return 0;
+        return list.get(position).getReminderId();
     }
 
     /**
@@ -76,8 +91,75 @@ public class PresetExpandableListViewAdapter extends BaseAdapter implements Date
      * @return A View corresponding to the data at the specified position.
      */
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        return null;
+    public View getView(final int position, View convertView, ViewGroup parent) {
+        View cell = convertView;
+        final ViewHolder holder;
+        LayoutInflater layoutInflater = LayoutInflater.from(context);
+
+        if (cell == null) {
+            cell = layoutInflater.inflate(R.layout.customreminderlistitem, null);
+            holder = new ViewHolder(cell);
+            cell.setTag(holder);
+        } else {
+            holder = (ViewHolder) cell.getTag();
+        }
+
+        holder.removeFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                list.remove(position);
+                CustomReminder.sortCustomReminderListByDateTimeAndArrangeByNumber(list);
+                notifyDataSetChanged();
+            }
+        });
+
+        holder.removeFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Toast.makeText(context, "yet to be implemented", Toast.LENGTH_SHORT).show();
+                if (PremiumHelper.checkPremium(context, "Customize Presets", "For changing preset time and date purchase premium version.")) {
+                    list.remove(position);
+                    if (list.size() == 0) {
+                        AddReminderActivity.resetToDoNotRepeat();
+                    }
+                    CustomReminder.sortCustomReminderListByDateTimeAndArrangeByNumber(list);
+                    notifyDataSetChanged();
+                }
+            }
+        });
+
+        holder.view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (PremiumHelper.checkPremium(context, "Customize Presets", "For changing preset time and date purchase premium version.")) {
+                    p = position;
+                    date = list.get(position).getDate();
+                    time = list.get(position).getTime();
+
+                    String d[] = date.split("/");
+                    mDay = Integer.parseInt(d[0]);
+                    mMonth = Integer.parseInt(d[1]);
+                    mYear = Integer.parseInt(d[2]);
+
+                    String t[] = time.split(":");
+                    mHour = Integer.parseInt(t[0]);
+                    mMinute = Integer.parseInt(t[1]);
+
+                    DatePickerDialog dpd = DatePickerDialog.newInstance(
+                            PresetExpandableListViewAdapter.this,
+                            mYear,
+                            --mMonth,
+                            mDay
+                    );
+                    dpd.setMinDate(Calendar.getInstance());
+                    dpd.show(fragmentManager, "Datepickerdialog");
+                }
+            }
+        });
+
+        holder.heading.setText("Revision - " + list.get(position).getNumber());
+        holder.dateTime.setText(list.get(position).getDate() + " " + list.get(position).getTime());
+        return cell;
     }
 
     /**
@@ -89,7 +171,21 @@ public class PresetExpandableListViewAdapter extends BaseAdapter implements Date
      */
     @Override
     public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
+        monthOfYear++;
+        mDay = dayOfMonth;
+        mMonth = monthOfYear;
+        mYear = year;
 
+        date = DateTimeUtil.getDate(mDay, mMonth, mYear);
+
+        TimePickerDialog tpd = TimePickerDialog.newInstance(
+                PresetExpandableListViewAdapter.this,
+                mHour,
+                mMinute,
+                false
+        );
+        tpd.setThemeDark(false);
+        tpd.show(fragmentManager, "Timepickerdialog");
     }
 
     /**
@@ -99,6 +195,31 @@ public class PresetExpandableListViewAdapter extends BaseAdapter implements Date
      */
     @Override
     public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute) {
+        mHour = hourOfDay;
+        mMinute = minute;
 
+        time = DateTimeUtil.getTime(mHour, mMinute);
+
+        // changing the date and time for this position
+        list.get(p).setDate(date);
+        list.get(p).setTime(time);
+
+        CustomReminder.sortCustomReminderListByDateTimeAndArrangeByNumber(list);
+
+        notifyDataSetChanged();
+    }
+
+    private class ViewHolder {
+        TextView heading;
+        TextView dateTime;
+        ImageView removeFab;
+        View view;
+
+        ViewHolder(View v) {
+            heading = (TextView) v.findViewById(R.id.custom_reminder_heading);
+            dateTime = (TextView) v.findViewById(R.id.custom_reminder_datetimetext);
+            removeFab = (ImageView) v.findViewById(R.id.removeFab);
+            view = v;
+        }
     }
 }

@@ -38,4 +38,9 @@
         <item name="material_drawer_header_selection_text">@color/material_drawer_header_selection_text</item>
     </style>
 
+    <style name="smallFabButtonBlue">
+        <item name="android:background">@drawable/roundbuttonfabblue</item>
+        <item name="android:textColor">#fff</item>
+    </style>
+
 </resources>

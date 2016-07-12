@@ -19,10 +19,13 @@ import android.widget.Toast;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.github.paolorotolo.expandableheightlistview.ExpandableHeightListView;
 import com.urhive.scheduled.R;
+import com.urhive.scheduled.adapters.PresetExpandableListViewAdapter;
 import com.urhive.scheduled.adapters.UseCategoryAdapter;
 import com.urhive.scheduled.fragments.CategoryFragment;
 import com.urhive.scheduled.fragments.RepeatTimesFragment;
+import com.urhive.scheduled.helpers.PremiumHelper;
 import com.urhive.scheduled.models.Category;
+import com.urhive.scheduled.models.CustomReminder;
 import com.urhive.scheduled.models.Icon;
 import com.urhive.scheduled.models.Reminder;
 import com.urhive.scheduled.utils.DateTimeUtil;
@@ -30,6 +33,7 @@ import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
@@ -44,22 +48,38 @@ public class AddReminderActivity extends AppCompatActivity implements
     public static Category category = Category.findById(Category.class, 1);
     public static long inAdvanceValues[] = {900000, 86400000, 604800000};
     public static AlertDialog categoryAlertBox;
+    public static TextView repeatTypeTV;
+    public static RelativeLayout presetRL, repeatTypeRL, repeatTimeRL;
+    public static ExpandableHeightListView ehlv;
+    public static int repeatType = 0;
     AlertDialog.Builder repeatArrayBuilder, repeatCustomArrayBuilder;
     private FloatingActionButton onFab, offFab;
     private EditText titleET, contentET;
-    private TextView timeTV, dateTV, repeatTypeTV, advanceNotificationTV, presetTV, customizeTV;
+    private TextView timeTV, dateTV, advanceNotificationTV, presetTV, customizeTV;
     private Switch advanceNotificationSwitch;
-    private RelativeLayout categoryRL, repeatTypeRL, repeatTimeRL, advanceNotificationRL, presetRL;
-    private ExpandableHeightListView ehlv;
+    private RelativeLayout categoryRL, advanceNotificationRL;
     private int mYear, mMonth, mHour, mMinute, mDay;
     private String mTitle;
     private String mContent;
     private int mActive = Reminder.ACTIVE;
     private String mTime;
     private String mDate;
-    private int repeatType = 0;
+    private String mmDate, mmTime;
     private long inAdvanceMillis = 0;
     private boolean[] mDaysOfWeek;
+
+    private List<CustomReminder> defaultPresetList;
+    private List<CustomReminder> customReminderList;
+
+    private PresetExpandableListViewAdapter adp;
+
+    public static void resetToDoNotRepeat() {
+        presetRL.setVisibility(View.GONE);
+        ehlv.setVisibility(View.GONE);
+        repeatType = 0;
+        repeatTypeTV.setText("Does not repeat");
+        repeatTimeRL.setVisibility(View.VISIBLE);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -153,13 +173,14 @@ public class AddReminderActivity extends AppCompatActivity implements
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 repeatType = which;
-                                if (which == 5) {
+                                if (which == Reminder.SPECIFIC_DAY_OF_WEEK) {
                                     presetRL.setVisibility(View.GONE);
                                     ehlv.setVisibility(View.GONE);
                                     daysOfWeekSelector();
-                                } else if (which == 6) {
+                                } else if (which == Reminder.REVISION_PRESET) {
                                     repeatTypeTV.setText(repeatArray[repeatType]);
                                     presetRL.setVisibility(View.VISIBLE);
+                                    ehlvSetAdapter();
                                     ehlv.setVisibility(View.VISIBLE);
                                 } else {
                                     repeatTypeTV.setText(repeatArray[repeatType]);
@@ -186,6 +207,94 @@ public class AddReminderActivity extends AppCompatActivity implements
         }
     }
 
+    public void addPreset(View view) {
+        if (PremiumHelper.checkPremium(AddReminderActivity.this, "Add Reminder", "Buy premium to add new more reminders!")) {
+            int size = defaultPresetList.size();
+
+            if (size > 0) {
+                mmDate = defaultPresetList.get(size - 1).getDate();
+                mmTime = defaultPresetList.get(size - 1).getTime();
+            } else {
+                mmDate = defaultPresetList.get(0).getDate();
+                mmTime = defaultPresetList.get(0).getTime();
+            }
+
+            String d[] = mDate.split("/");
+            mDay = Integer.parseInt(d[0]);
+            mMonth = Integer.parseInt(d[1]);
+            mYear = Integer.parseInt(d[2]);
+
+            String t[] = mTime.split(":");
+            mHour = Integer.parseInt(t[0]);
+            mMinute = Integer.parseInt(t[1]);
+
+            DatePickerDialog dpd = DatePickerDialog.newInstance(
+                    this,
+                    mYear,
+                    --mMonth,
+                    mDay
+            );
+            dpd.setMinDate(Calendar.getInstance());
+            dpd.show(getFragmentManager(), "Datepickerdialog");
+
+            dpd.setOnDateSetListener(new DatePickerDialog.OnDateSetListener() {
+                @Override
+                public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
+                    monthOfYear++;
+                    mDay = dayOfMonth;
+                    mMonth = monthOfYear;
+                    mYear = year;
+
+                    mmDate = DateTimeUtil.getDate(mDay, mMonth, mYear);
+
+                    TimePickerDialog tpd = TimePickerDialog.newInstance(
+                            AddReminderActivity.this,
+                            mHour,
+                            mMinute,
+                            false
+                    );
+                    tpd.setThemeDark(false);
+                    tpd.show(getFragmentManager(), "Timepickerdialog");
+                    tpd.setOnTimeSetListener(new TimePickerDialog.OnTimeSetListener() {
+                        @Override
+                        public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute) {
+                            mHour = hourOfDay;
+                            mMinute = minute;
+
+                            mmTime = DateTimeUtil.getTime(mHour, mMinute);
+
+                            int size = defaultPresetList.size();
+                            defaultPresetList.add(new CustomReminder(size + 1, mmDate, mmTime, CustomReminder.NOT_SHOWN));
+
+                            CustomReminder.sortCustomReminderListByDateTimeAndArrangeByNumber(defaultPresetList);
+
+                            adp.notifyDataSetChanged();
+                        }
+                    });
+                }
+            });
+        }
+    }
+
+    private void ehlvSetAdapter() {
+        createDefaultRevisionPresetList();
+        adp = new PresetExpandableListViewAdapter(AddReminderActivity.this, defaultPresetList, getFragmentManager());
+        ehlv.setAdapter(adp);
+        ehlv.setExpanded(true);
+    }
+
+    private void createDefaultRevisionPresetList() {
+        if (defaultPresetList.isEmpty()) {
+            defaultPresetList.clear();
+        }
+
+        defaultPresetList.add(new CustomReminder(1, DateTimeUtil.addDaysToDate(mDate, 0), mTime, CustomReminder.NOT_SHOWN));
+        defaultPresetList.add(new CustomReminder(2, DateTimeUtil.addDaysToDate(mDate, 1), mTime, CustomReminder.NOT_SHOWN));
+        defaultPresetList.add(new CustomReminder(3, DateTimeUtil.addDaysToDate(mDate, 7), mTime, CustomReminder.NOT_SHOWN));
+        defaultPresetList.add(new CustomReminder(4, DateTimeUtil.addDaysToDate(mDate, 30), mTime, CustomReminder.NOT_SHOWN));
+        defaultPresetList.add(new CustomReminder(5, DateTimeUtil.addDaysToDate(mDate, 90), mTime, CustomReminder.NOT_SHOWN));
+    }
+
     public void customPresetDialog(final String repeatCustomArray[]) {
         repeatCustomArrayBuilder = new AlertDialog.Builder(AddReminderActivity.this)
                 .setItems(repeatCustomArray, new DialogInterface.OnClickListener() {
@@ -193,6 +302,10 @@ public class AddReminderActivity extends AppCompatActivity implements
                     public void onClick(DialogInterface dialog, int which) {
                         repeatType = which + 7;
                         repeatTypeTV.setText(repeatCustomArray[which]);
+
+                        if (repeatType == Reminder.CUSTOM) {
+                            // code for custom
+                        }
                     }
                 })
                 .setPositiveButton("Back", new DialogInterface.OnClickListener() {
@@ -255,7 +368,6 @@ public class AddReminderActivity extends AppCompatActivity implements
         repeatTimeTV = (TextView) findViewById(R.id.repeatTimeTV);
         advanceNotificationTV = (TextView) findViewById(R.id.setEarlyNotificationTV);
         presetTV = (TextView) findViewById(R.id.setPresetTV);
-        customizeTV = (TextView) findViewById(R.id.customizeTV);
         categoryTV = (TextView) findViewById(R.id.addcategoryTV);
 
         circle = (ImageView) findViewById(R.id.circle);
@@ -275,6 +387,8 @@ public class AddReminderActivity extends AppCompatActivity implements
     private void assignDefaultValues() {
         mDaysOfWeek = new boolean[7];
         Arrays.fill(mDaysOfWeek, false);
+        defaultPresetList = new ArrayList<>();
+        customReminderList = new ArrayList<>();
     }
 
     // Date & Time Picker
