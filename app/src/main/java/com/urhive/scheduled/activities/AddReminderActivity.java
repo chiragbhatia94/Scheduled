@@ -475,6 +475,7 @@ public class AddReminderActivity extends AppCompatActivity implements
     public void switchMCVWorking() {
         if (typeNeutral == 0) {
             typeNeutral = 1;
+            Toast.makeText(AddReminderActivity.this, "Select Discrete Reminders", Toast.LENGTH_SHORT).show();
             mcv.setOnDateChangedListener(new OnDateSelectedListener() {
                 @Override
                 public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull final CalendarDay date, boolean selected) {
@@ -513,6 +514,7 @@ public class AddReminderActivity extends AppCompatActivity implements
             });
         } else {
             typeNeutral = 0;
+            Toast.makeText(AddReminderActivity.this, "Select Range of Reminders", Toast.LENGTH_SHORT).show();
             mcv.setOnDateChangedListener(new OnDateSelectedListener() {
                 @Override
                 public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
@@ -539,7 +541,15 @@ public class AddReminderActivity extends AppCompatActivity implements
         defaultPresetList.clear();
         int i = 1;
         for (CalendarDay d : dates) {
-            defaultPresetList.add(new CustomReminder(i, DateTimeUtil.getDate(d.getDay(), d.getMonth(), d.getYear()), mTime, CustomReminder.NOT_SHOWN));
+            if (customlist.containsKey(d)) {
+                String time = customlist.get(d);
+                String t[] = time.split(":");
+                int h = Integer.parseInt(t[0]);
+                int m = Integer.parseInt(t[1]);
+                defaultPresetList.add(new CustomReminder(i, DateTimeUtil.getDate(d.getDay(), d.getMonth(), d.getYear()), DateTimeUtil.getTime(h, m), CustomReminder.NOT_SHOWN));
+            } else {
+                defaultPresetList.add(new CustomReminder(i, DateTimeUtil.getDate(d.getDay(), d.getMonth(), d.getYear()), mTime, CustomReminder.NOT_SHOWN));
+            }
             i++;
         }
 
