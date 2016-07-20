@@ -9,10 +9,12 @@ import android.widget.Toast;
  * Created by Chirag Bhatia on 13-07-2016.
  */
 public class PremiumHelper {
+    public static final Boolean CUSTOM_TYPE_DISCRETE = true;
+    public static final Boolean CUSTOM_TYPE_RANGE = false;
     public static Boolean PREMIUM = Boolean.TRUE;
 
     public static Boolean checkPremium(final Context context, String title, String msg) {
-        if (PREMIUM == true) {
+        if (PREMIUM) {
             return true;
         } else {
             AlertDialog.Builder builder = new AlertDialog.Builder(context)

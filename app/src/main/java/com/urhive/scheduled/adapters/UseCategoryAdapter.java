@@ -6,9 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.urhive.scheduled.R;
 import com.urhive.scheduled.activities.AddReminderActivity;
@@ -50,19 +48,6 @@ public class UseCategoryAdapter extends BaseAdapter {
         return categoryList.get(position).getId();
     }
 
-    private class ViewHolder {
-        ImageView iconIV, circleIV;
-        TextView nameTV;
-
-        ViewHolder(View v) {
-            iconIV = (ImageView) v.findViewById(R.id.categoryIconIV);
-            nameTV = (TextView) v.findViewById(R.id.categoryNameTV);
-            circleIV = (ImageView) v.findViewById(R.id.circle);
-
-            view = v;
-        }
-    }
-
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         View cell = convertView;
@@ -101,5 +86,18 @@ public class UseCategoryAdapter extends BaseAdapter {
         });
 
         return cell;
+    }
+
+    private class ViewHolder {
+        ImageView iconIV, circleIV;
+        TextView nameTV;
+
+        ViewHolder(View v) {
+            iconIV = (ImageView) v.findViewById(R.id.categoryIconIV);
+            nameTV = (TextView) v.findViewById(R.id.categoryNameTV);
+            circleIV = (ImageView) v.findViewById(R.id.circle);
+
+            view = v;
+        }
     }
 }

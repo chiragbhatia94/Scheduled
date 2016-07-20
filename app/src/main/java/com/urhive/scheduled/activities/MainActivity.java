@@ -2,7 +2,6 @@ package com.urhive.scheduled.activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.view.ViewPager;
@@ -67,8 +66,8 @@ public class MainActivity extends AppCompatActivity {
                 // System.out.println("Icon saved! " + icon.getId());
             }
 
-            List<Icon> iconsU = Icon.find(Icon.class,"name = ?","ic_label_white_24dp");
-            Category uncategorized = new Category("Uncategorized",12,Integer.parseInt(String.valueOf(iconsU.get(0).getId())),0,0);
+            List<Icon> iconsU = Icon.find(Icon.class, "name = ?", "ic_label_white_24dp");
+            Category uncategorized = new Category("Uncategorized", 12, Integer.parseInt(String.valueOf(iconsU.get(0).getId())), 0, 0);
             uncategorized.save();
         }
 
@@ -76,13 +75,13 @@ public class MainActivity extends AppCompatActivity {
         List<IDrawerItem> drawerItems = new ArrayList<>();
         // add labels later here via a for loop with their id as identifier and total items in them as badges
         List<Category> categories = Category.find(Category.class, null, null, null, "position", null);
-        Log.i("All Categories", "onCreate: "+categories.toString());
+        Log.i("All Categories", "onCreate: " + categories.toString());
 
         for (Category category : categories) {
             Icon i = Icon.findById(Icon.class, category.getIconId());
-            Log.i("Category Icons", "onCreate: "+i.toString());
+            Log.i("Category Icons", "onCreate: " + i.toString());
             drawerItems.add(new PrimaryDrawerItem()
-                    .withIcon(getResources().getIdentifier(i.getName(),"drawable",getPackageName()))
+                    .withIcon(getResources().getIdentifier(i.getName(), "drawable", getPackageName()))
                     .withIconTintingEnabled(true)
                     .withIdentifier(category.getId())
                     .withBadge(String.valueOf(category.getCount()))
@@ -157,8 +156,8 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_restore:
                 return true;
             case R.id.action_settings:
-                //Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
-                //startActivity(intent);
+                Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+                startActivity(intent);
                 return true;
             case R.id.action_walkthrough:
                 return true;
@@ -171,7 +170,6 @@ public class MainActivity extends AppCompatActivity {
             default:
                 Toast.makeText(MainActivity.this, "Yet to be developed!", Toast.LENGTH_SHORT).show();
         }
-
         return super.onOptionsItemSelected(item);
     }
 

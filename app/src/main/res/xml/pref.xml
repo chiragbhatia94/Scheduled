@@ -17,20 +17,29 @@
         <CheckBoxPreference
             android:defaultValue="true"
             android:key="checkBoxSnooze"
-            android:title="Snooze"
-            android:summary="Add a snooze button in the notification" />
+            android:summary="Add a snooze button in the notification"
+            android:title="Snooze" />
         <CheckBoxPreference
             android:defaultValue="true"
             android:key="checkBoxOngoing"
-            android:title="Persitent"
-            android:summary="Reminder Notification will not be removed untill you give feedback!"/>
+            android:summary="Reminder Notification will not be removed untill you give feedback!"
+            android:title="Persitent" />
     </PreferenceCategory>
 
     <PreferenceCategory
         android:title="Quotes">
         <CheckBoxPreference
             android:defaultValue="true"
-            android:title="Show quotes as notification"
-            android:summary="Daily show a notification with quote of the day" />
+            android:key="quoteNotification"
+            android:summary="Daily show a notification with quote of the day"
+            android:title="Show quotes as notification" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="Custom">
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="reminderSelection"
+            android:summary="Select time along with the date or later on!"
+            android:title="Reminder Selection" />
     </PreferenceCategory>
 </PreferenceScreen>

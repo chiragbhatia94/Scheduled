@@ -14,7 +14,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -25,7 +24,6 @@ import com.urhive.scheduled.R;
 import com.urhive.scheduled.activities.AddReminderActivity;
 import com.urhive.scheduled.activities.EditLabelsActivity;
 import com.urhive.scheduled.adapters.IconsAdapter;
-import com.urhive.scheduled.adapters.UseCategoryAdapter;
 import com.urhive.scheduled.helpers.ColorHelper;
 import com.urhive.scheduled.models.Category;
 import com.urhive.scheduled.models.Icon;
@@ -39,16 +37,12 @@ public class CategoryFragment extends AppCompatDialogFragment {
     public static int EDIT_MODE = 0;
     public static int ADD_MODE = 1;
     public static int IMMIDIATE_ADD_MODE = 2;
-
-    private int mode;
-
     public static Category category;
-
-    private TextView discardTV, saveTV, colorSelectTV, iconSelectTV;
-    private EditText nameET;
     public static ImageView circle, image;
     static AlertDialog iconSelectorDialog;
-
+    private int mode;
+    private TextView discardTV, saveTV, colorSelectTV, iconSelectTV;
+    private EditText nameET;
     private int initIconId;
 
     public static CategoryFragment addImmidiateCategory(){
@@ -79,6 +73,10 @@ public class CategoryFragment extends AppCompatDialogFragment {
         return categoryFragment;
     }
 
+    public static void imageSelected() {
+        iconSelectorDialog.dismiss();
+    }
+
     @Nullable
     @Override
     public View onCreateView(final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -102,7 +100,7 @@ public class CategoryFragment extends AppCompatDialogFragment {
         if (mode == ADD_MODE || mode == IMMIDIATE_ADD_MODE) {
             getDialog().setTitle("Add Category");
 
-            category = new Category("", 12, (int) 1, (int) Category.count(Category.class), 0);
+            category = new Category("", 12, 1, (int) Category.count(Category.class), 0);
 
         } else if (mode == EDIT_MODE) {
             getDialog().setTitle("Edit Category");
@@ -232,9 +230,5 @@ public class CategoryFragment extends AppCompatDialogFragment {
             super.getItemOffsets(outRect, view, parent, state);
             outRect.set(mItemOffset, mItemOffset, mItemOffset, mItemOffset);
         }
-    }
-
-    public static void imageSelected() {
-        iconSelectorDialog.dismiss();
     }
 }

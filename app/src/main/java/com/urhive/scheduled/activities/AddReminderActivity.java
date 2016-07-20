@@ -1,13 +1,18 @@
 package com.urhive.scheduled.activities;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -18,7 +23,11 @@ import android.widget.Toast;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.github.paolorotolo.expandableheightlistview.ExpandableHeightListView;
+import com.prolificinteractive.materialcalendarview.CalendarDay;
+import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
+import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
 import com.urhive.scheduled.R;
+import com.urhive.scheduled.adapters.CustomExpandableListViewAdapter;
 import com.urhive.scheduled.adapters.PresetExpandableListViewAdapter;
 import com.urhive.scheduled.adapters.UseCategoryAdapter;
 import com.urhive.scheduled.fragments.CategoryFragment;
@@ -36,6 +45,7 @@ import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 
 public class AddReminderActivity extends AppCompatActivity implements
@@ -52,39 +62,46 @@ public class AddReminderActivity extends AppCompatActivity implements
     public static RelativeLayout presetRL, repeatTypeRL, repeatTimeRL;
     public static ExpandableHeightListView ehlv;
     public static int repeatType = 0;
-    AlertDialog.Builder repeatArrayBuilder, repeatCustomArrayBuilder;
+    public static Boolean customizing = Boolean.FALSE;
+    private static int typeNeutral;
+    private MaterialCalendarView mcv;
+    private List<CalendarDay> dates;
+    private AlertDialog calendarAlert;
+    private HashMap<CalendarDay, String> customlist;
+    private AlertDialog.Builder repeatArrayBuilder, repeatCustomArrayBuilder;
     private FloatingActionButton onFab, offFab;
     private EditText titleET, contentET;
     private TextView timeTV, dateTV, advanceNotificationTV, presetTV, customizeTV;
+    private Button addCustomReminderFab;
+    private String mTime;
     private Switch advanceNotificationSwitch;
     private RelativeLayout categoryRL, advanceNotificationRL;
     private int mYear, mMonth, mHour, mMinute, mDay;
     private String mTitle;
     private String mContent;
     private int mActive = Reminder.ACTIVE;
-    private String mTime;
     private String mDate;
     private String mmDate, mmTime;
     private long inAdvanceMillis = 0;
     private boolean[] mDaysOfWeek;
-
     private List<CustomReminder> defaultPresetList;
-    private List<CustomReminder> customReminderList;
 
-    private PresetExpandableListViewAdapter adp;
+    private PresetExpandableListViewAdapter presetExpandableListViewAdapter;
+    private CustomExpandableListViewAdapter customExpandableListViewAdapter;
 
     public static void resetToDoNotRepeat() {
         presetRL.setVisibility(View.GONE);
         ehlv.setVisibility(View.GONE);
+        customizing = Boolean.FALSE;
         repeatType = 0;
         repeatTypeTV.setText("Does not repeat");
-        repeatTimeRL.setVisibility(View.VISIBLE);
+        repeatTimeRL.setVisibility(View.GONE);
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_reminder);
+        setContentView(R.layout.activity_alternate_add_reminder);
 
         allFindViewById();
         assignDefaultValues();
@@ -173,6 +190,7 @@ public class AddReminderActivity extends AppCompatActivity implements
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 repeatType = which;
+                                defaultPresetList.clear();
                                 if (which == Reminder.SPECIFIC_DAY_OF_WEEK) {
                                     presetRL.setVisibility(View.GONE);
                                     ehlv.setVisibility(View.GONE);
@@ -180,6 +198,8 @@ public class AddReminderActivity extends AppCompatActivity implements
                                 } else if (which == Reminder.REVISION_PRESET) {
                                     repeatTypeTV.setText(repeatArray[repeatType]);
                                     presetRL.setVisibility(View.VISIBLE);
+                                    customizeTV.setVisibility(View.VISIBLE);
+                                    presetTV.setText("Default");
                                     ehlvSetAdapter();
                                     ehlv.setVisibility(View.VISIBLE);
                                 } else {
@@ -205,86 +225,119 @@ public class AddReminderActivity extends AppCompatActivity implements
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
+
+        customizeTV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (PremiumHelper.checkPremium(AddReminderActivity.this, "Customize Presets", "Buy Premium to customize presets & add or remove reminders!")) {
+                    if (!customizing) {
+                        customizing = Boolean.TRUE;
+                        addCustomReminderFab.setVisibility(View.VISIBLE);
+                        customizeTV.setText("Use Default");
+                        presetTV.setText("Custom");
+                        presetExpandableListViewAdapter.notifyDataSetChanged();
+                    } else {
+                        addCustomReminderFab.setVisibility(View.GONE);
+                        customizing = Boolean.FALSE;
+                        customizeTV.setText("Customize");
+                        presetTV.setText("Default");
+                        createDefaultRevisionPresetList();
+                        presetExpandableListViewAdapter.notifyDataSetChanged();
+                    }
+                }
+            }
+        });
+
+        presetRL.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (ehlv.getVisibility() == View.VISIBLE) {
+                    ehlv.setVisibility(View.GONE);
+                } else {
+                    ehlv.setVisibility(View.VISIBLE);
+                }
+            }
+        });
     }
 
     public void addPreset(View view) {
-        if (PremiumHelper.checkPremium(AddReminderActivity.this, "Add Reminder", "Buy premium to add new more reminders!")) {
-            int size = defaultPresetList.size();
+        int size = defaultPresetList.size();
 
-            if (size > 0) {
-                mmDate = defaultPresetList.get(size - 1).getDate();
-                mmTime = defaultPresetList.get(size - 1).getTime();
-            } else {
-                mmDate = defaultPresetList.get(0).getDate();
-                mmTime = defaultPresetList.get(0).getTime();
-            }
-
-            String d[] = mDate.split("/");
-            mDay = Integer.parseInt(d[0]);
-            mMonth = Integer.parseInt(d[1]);
-            mYear = Integer.parseInt(d[2]);
-
-            String t[] = mTime.split(":");
-            mHour = Integer.parseInt(t[0]);
-            mMinute = Integer.parseInt(t[1]);
-
-            DatePickerDialog dpd = DatePickerDialog.newInstance(
-                    this,
-                    mYear,
-                    --mMonth,
-                    mDay
-            );
-            dpd.setMinDate(Calendar.getInstance());
-            dpd.show(getFragmentManager(), "Datepickerdialog");
-
-            dpd.setOnDateSetListener(new DatePickerDialog.OnDateSetListener() {
-                @Override
-                public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
-                    monthOfYear++;
-                    mDay = dayOfMonth;
-                    mMonth = monthOfYear;
-                    mYear = year;
-
-                    mmDate = DateTimeUtil.getDate(mDay, mMonth, mYear);
-
-                    TimePickerDialog tpd = TimePickerDialog.newInstance(
-                            AddReminderActivity.this,
-                            mHour,
-                            mMinute,
-                            false
-                    );
-                    tpd.setThemeDark(false);
-                    tpd.show(getFragmentManager(), "Timepickerdialog");
-                    tpd.setOnTimeSetListener(new TimePickerDialog.OnTimeSetListener() {
-                        @Override
-                        public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute) {
-                            mHour = hourOfDay;
-                            mMinute = minute;
-
-                            mmTime = DateTimeUtil.getTime(mHour, mMinute);
-
-                            int size = defaultPresetList.size();
-                            defaultPresetList.add(new CustomReminder(size + 1, mmDate, mmTime, CustomReminder.NOT_SHOWN));
-
-                            CustomReminder.sortCustomReminderListByDateTimeAndArrangeByNumber(defaultPresetList);
-
-                            adp.notifyDataSetChanged();
-                        }
-                    });
-                }
-            });
+        if (size > 0) {
+            mmDate = defaultPresetList.get(size - 1).getDate();
+            mmTime = defaultPresetList.get(size - 1).getTime();
+        } else {
+            mmDate = defaultPresetList.get(0).getDate();
+            mmTime = defaultPresetList.get(0).getTime();
         }
+
+        String d[] = mDate.split("/");
+        mDay = Integer.parseInt(d[0]);
+        mMonth = Integer.parseInt(d[1]);
+        mYear = Integer.parseInt(d[2]);
+
+        String t[] = mTime.split(":");
+        mHour = Integer.parseInt(t[0]);
+        mMinute = Integer.parseInt(t[1]);
+
+        DatePickerDialog dpd = DatePickerDialog.newInstance(
+                this,
+                mYear,
+                --mMonth,
+                mDay
+        );
+        dpd.setMinDate(Calendar.getInstance());
+        dpd.show(getFragmentManager(), "Datepickerdialog");
+
+        dpd.setOnDateSetListener(new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
+                monthOfYear++;
+                mDay = dayOfMonth;
+                mMonth = monthOfYear;
+                mYear = year;
+
+                mmDate = DateTimeUtil.getDate(mDay, mMonth, mYear);
+
+                TimePickerDialog tpd = TimePickerDialog.newInstance(
+                        AddReminderActivity.this,
+                        mHour,
+                        mMinute,
+                        false
+                );
+                tpd.setThemeDark(false);
+                tpd.show(getFragmentManager(), "Timepickerdialog");
+                tpd.setOnTimeSetListener(new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute) {
+                        mHour = hourOfDay;
+                        mMinute = minute;
+
+                        mmTime = DateTimeUtil.getTime(mHour, mMinute);
+
+                        int size = defaultPresetList.size();
+                        defaultPresetList.add(new CustomReminder(size + 1, mmDate, mmTime, CustomReminder.NOT_SHOWN));
+                        CustomReminder.sortCustomReminderListByDateTimeAndArrangeByNumber(defaultPresetList);
+                        if (repeatType == Reminder.REVISION_PRESET) {
+                            presetExpandableListViewAdapter.notifyDataSetChanged();
+                        } else if (repeatType == Reminder.CUSTOM) {
+                            customExpandableListViewAdapter.notifyDataSetChanged();
+                        }
+                    }
+                });
+            }
+        });
     }
 
     private void ehlvSetAdapter() {
         createDefaultRevisionPresetList();
-        adp = new PresetExpandableListViewAdapter(AddReminderActivity.this, defaultPresetList, getFragmentManager());
-        ehlv.setAdapter(adp);
+        presetExpandableListViewAdapter = new PresetExpandableListViewAdapter(AddReminderActivity.this, defaultPresetList, getFragmentManager());
+        ehlv.setAdapter(presetExpandableListViewAdapter);
         ehlv.setExpanded(true);
     }
 
     private void createDefaultRevisionPresetList() {
-        if (defaultPresetList.isEmpty()) {
+        if (!defaultPresetList.isEmpty()) {
             defaultPresetList.clear();
         }
 
@@ -300,11 +353,113 @@ public class AddReminderActivity extends AppCompatActivity implements
                 .setItems(repeatCustomArray, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        customlist = new HashMap<CalendarDay, String>();
                         repeatType = which + 7;
                         repeatTypeTV.setText(repeatCustomArray[which]);
+                        presetRL.setVisibility(View.GONE);
+                        ehlv.setVisibility(View.GONE);
+
+                        customizing = Boolean.TRUE;
 
                         if (repeatType == Reminder.CUSTOM) {
                             // code for custom
+                            typeNeutral = 0;
+                            // 0 is range
+                            // 1 is discrete
+
+                            String d[] = mDate.split("/");
+                            mDay = Integer.parseInt(d[0]);
+                            mMonth = Integer.parseInt(d[1]);
+                            mYear = Integer.parseInt(d[2]);
+
+                            mcv = new MaterialCalendarView(AddReminderActivity.this);
+                            mcv.setSelectionMode(MaterialCalendarView.SELECTION_MODE_MULTIPLE);
+                            mcv.setShowOtherDates(MaterialCalendarView.SHOW_OUT_OF_RANGE);
+                            mcv.state().edit()
+                                    .setMinimumDate(CalendarDay.from(mYear, mMonth, mDay))
+                                    .commit();
+
+                            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(AddReminderActivity.this);
+                            Boolean type = preferences.getBoolean("reminderSelection", false);
+
+                            if (type == PremiumHelper.CUSTOM_TYPE_DISCRETE) {
+                                typeNeutral = 1;
+                                mcv.setOnDateChangedListener(new OnDateSelectedListener() {
+                                    @Override
+                                    public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull final CalendarDay date, boolean selected) {
+                                        if (selected) {
+                                            String t[] = mTime.split(":");
+                                            mHour = Integer.parseInt(t[0]);
+                                            mMinute = Integer.parseInt(t[1]);
+
+                                            final TimePickerDialog tpd = TimePickerDialog.newInstance(
+                                                    AddReminderActivity.this,
+                                                    mHour,
+                                                    mMinute,
+                                                    false
+                                            );
+
+                                            tpd.setOnTimeSetListener(new TimePickerDialog.OnTimeSetListener() {
+                                                @Override
+                                                public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute) {
+                                                    customlist.put(date, hourOfDay + ":" + minute);
+                                                }
+                                            });
+
+                                            tpd.setThemeDark(false);
+                                            tpd.show(getFragmentManager(), "Timepickerdialog");
+                                        } else {
+                                            customlist.remove(date);
+                                        }
+                                    }
+                                });
+                            } else {
+                                typeNeutral = 0;
+                            }
+
+                            calendarAlert = new AlertDialog.Builder(AddReminderActivity.this)
+                                    .setView(mcv)
+                                    .setNeutralButton("Discrete/Range", null)
+                                    .setNegativeButton("Cancel", null)
+                                    .setPositiveButton("Okay", null)
+                                    .setCancelable(false)
+                                    .create();
+
+                            calendarAlert.setOnShowListener(new DialogInterface.OnShowListener() {
+                                @Override
+                                public void onShow(DialogInterface dialog) {
+                                    Button neutral = calendarAlert.getButton(Dialog.BUTTON_NEUTRAL);
+                                    Button negative = calendarAlert.getButton(Dialog.BUTTON_NEGATIVE);
+                                    Button positive = calendarAlert.getButton(Dialog.BUTTON_POSITIVE);
+
+                                    positive.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            customizeTV.setVisibility(View.GONE);
+                                            presetTV.setText("Tap to change notification time");
+
+                                            getNSetCustomDates(mcv);
+                                            calendarAlert.dismiss();
+                                        }
+                                    });
+
+                                    negative.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            resetToDoNotRepeat();
+                                            calendarAlert.dismiss();
+                                        }
+                                    });
+
+                                    neutral.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            switchMCVWorking();
+                                        }
+                                    });
+                                }
+                            });
+                            calendarAlert.show();
                         }
                     }
                 })
@@ -315,6 +470,84 @@ public class AddReminderActivity extends AppCompatActivity implements
                     }
                 });
         repeatCustomArrayBuilder.show();
+    }
+
+    public void switchMCVWorking() {
+        if (typeNeutral == 0) {
+            typeNeutral = 1;
+            mcv.setOnDateChangedListener(new OnDateSelectedListener() {
+                @Override
+                public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull final CalendarDay date, boolean selected) {
+                    // click to open a timepicker
+                    if (selected) {
+                        String t[] = mTime.split(":");
+                        mHour = Integer.parseInt(t[0]);
+                        mMinute = Integer.parseInt(t[1]);
+
+                        TimePickerDialog tpd = TimePickerDialog.newInstance(
+                                AddReminderActivity.this,
+                                mHour,
+                                mMinute,
+                                false
+                        );
+
+                        tpd.setOnTimeSetListener(new TimePickerDialog.OnTimeSetListener() {
+                            @Override
+                            public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute) {
+                                customlist.put(date, hourOfDay + ":" + minute);
+                            }
+                        });
+
+                        tpd.setThemeDark(false);
+                        tpd.show(getFragmentManager(), "Timepickerdialog");
+                    } else {
+                        customlist.remove(date);
+                    }
+                }
+            });
+            calendarAlert.setButton(DialogInterface.BUTTON_NEUTRAL, "Select Range", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                }
+            });
+        } else {
+            typeNeutral = 0;
+            mcv.setOnDateChangedListener(new OnDateSelectedListener() {
+                @Override
+                public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
+
+                }
+            });
+            calendarAlert.setButton(DialogInterface.BUTTON_NEUTRAL, "Select Discrete", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                }
+            });
+        }
+    }
+
+    public void getNSetCustomDates(MaterialCalendarView mcv) {
+        dates = mcv.getSelectedDates();
+        if (dates.isEmpty()) {
+            resetToDoNotRepeat();
+            return;
+        }
+
+        addCustomReminderFab.setVisibility(View.VISIBLE);
+        defaultPresetList.clear();
+        int i = 1;
+        for (CalendarDay d : dates) {
+            defaultPresetList.add(new CustomReminder(i, DateTimeUtil.getDate(d.getDay(), d.getMonth(), d.getYear()), mTime, CustomReminder.NOT_SHOWN));
+            i++;
+        }
+
+        ehlv.setExpanded(true);
+        customExpandableListViewAdapter = new CustomExpandableListViewAdapter(AddReminderActivity.this, defaultPresetList, getFragmentManager());
+        ehlv.setAdapter(customExpandableListViewAdapter);
+        ehlv.setVisibility(View.VISIBLE);
+        presetRL.setVisibility(View.VISIBLE);
     }
 
     public void daysOfWeekSelector() {
@@ -362,12 +595,16 @@ public class AddReminderActivity extends AppCompatActivity implements
         titleET = (EditText) findViewById(R.id.titleET);
         contentET = (EditText) findViewById(R.id.contentET);
 
+        addCustomReminderFab = (Button) findViewById(R.id.addCustomReminderFab);
+
         timeTV = (TextView) findViewById(R.id.setTimeTV);
         dateTV = (TextView) findViewById(R.id.setDateTV);
         repeatTypeTV = (TextView) findViewById(R.id.repeatTypeTV);
         repeatTimeTV = (TextView) findViewById(R.id.repeatTimeTV);
         advanceNotificationTV = (TextView) findViewById(R.id.setEarlyNotificationTV);
         presetTV = (TextView) findViewById(R.id.setPresetTV);
+        customizeTV = (TextView) findViewById(R.id.customizeTV);
+
         categoryTV = (TextView) findViewById(R.id.addcategoryTV);
 
         circle = (ImageView) findViewById(R.id.circle);
@@ -388,18 +625,36 @@ public class AddReminderActivity extends AppCompatActivity implements
         mDaysOfWeek = new boolean[7];
         Arrays.fill(mDaysOfWeek, false);
         defaultPresetList = new ArrayList<>();
-        customReminderList = new ArrayList<>();
     }
 
     // Date & Time Picker
     // On clicking Time picker
     public void setTime(View v) {
+        if (timeTV.getText().toString().equals("Now")) {
+            Calendar c = Calendar.getInstance();
+            mTime = Calendar.HOUR_OF_DAY + ":" + Calendar.MINUTE;
+        }
+        String t[] = mTime.split(":");
+        mHour = Integer.parseInt(t[0]);
+        mMinute = Integer.parseInt(t[1]);
         TimePickerDialog tpd = TimePickerDialog.newInstance(
                 this,
                 mHour,
                 mMinute,
                 false
         );
+
+        if (repeatType == Reminder.REVISION_PRESET || repeatType == Reminder.CUSTOM) {
+            if (!defaultPresetList.isEmpty()) {
+                for (CustomReminder reminder : defaultPresetList) {
+                    if (DateTimeUtil.isInPast(reminder.getDate(), reminder.getTime())) {
+                        Toast.makeText(AddReminderActivity.this, "Custom Reminders are set in past!", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                }
+            }
+        }
+
         tpd.setThemeDark(false);
         tpd.show(getFragmentManager(), "Timepickerdialog");
     }
@@ -412,6 +667,18 @@ public class AddReminderActivity extends AppCompatActivity implements
                 --mMonth,
                 mDay
         );
+
+        if (repeatType == Reminder.REVISION_PRESET || repeatType == Reminder.CUSTOM) {
+            if (!defaultPresetList.isEmpty()) {
+                for (CustomReminder reminder : defaultPresetList) {
+                    if (DateTimeUtil.isInPast(reminder.getDate(), reminder.getTime())) {
+                        Toast.makeText(AddReminderActivity.this, "Custom Reminders are set in past!", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                }
+            }
+        }
+
         dpd.setMinDate(Calendar.getInstance());
         dpd.show(getFragmentManager(), "Datepickerdialog");
     }

@@ -18,7 +18,8 @@
         android:layout_centerVertical="true"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="27dp"
-        android:src="@drawable/ic_alarm_on_black_24dp" />
+        android:src="@drawable/ic_create_white_24dp"
+        android:tint="@color/black" />
 
     <LinearLayout
         android:layout_width="wrap_content"
