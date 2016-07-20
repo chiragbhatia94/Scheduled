@@ -16,7 +16,7 @@ public class CustomReminder extends SugarRecord implements Comparable<CustomRemi
     @Ignore
     public static final int SHOWN = 1;
     @Ignore
-    public static final int NOT_SHOWN = 1;
+    public static final int NOT_SHOWN = 0;
     long reminderId;
     int number;
     String date;
