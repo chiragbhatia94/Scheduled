@@ -45,6 +45,8 @@ public class Reminder extends SugarRecord implements Comparable<Reminder> {
     public static final int TYPE_NOTIFICATION = 0;
     @Ignore
     public static final int TYPE_ALARM = 1;
+    @Ignore
+    public static final long inAdvanceValues[] = {900000, 86400000, 604800000};
     String title;
     String content;
     String date;
@@ -64,7 +66,7 @@ public class Reminder extends SugarRecord implements Comparable<Reminder> {
     public Reminder() {
     }
 
-    public Reminder(String title, String content, String date, String time, int type, int active,
+    public Reminder(String title, String content, String date, String time, int active,
                     long categoryId, int noToShow, int noShown, int repeatType, long inAdvanceMillis,
                     int status, int reminderType) {
         this.title = title;

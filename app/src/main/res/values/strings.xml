@@ -20,6 +20,34 @@
     <string name="set">Set</string>
     <string name="cancel">Cancel</string>
 
+    <string name="default_string">Default</string>
+    <string name="custom">Custom</string>
+    <string name="customize">Customize</string>
+    <string name="notification">Notification</string>
+    <string name="alarm">Alarm</string>
+
+    <string name="use_default">Use Default</string>
+    <string name="do_not_remind_early">Do not remind early</string>
+    <string name="do_not_repeat">Do not repeat</string>
+    <string name="select_category">Select Category</string>
+    <string name="add_new_category">Add New Category</string>
+    <string name="tap_to_change_notification_time">Tap to change notification time</string>
+    <string name="add_title">Add Title</string>
+    <string name="add_notification_content_nreason">Add Notification Content\nReason</string>
+    <string name="details">Details</string>
+    <string name="time_to_show_notification">Time To Show Notification</string>
+    <string name="now">Now</string>
+    <string name="date">Date</string>
+    <string name="today">Today</string>
+    <string name="category">Category</string>
+    <string name="uncategorized">Uncategorized</string>
+    <string name="repeat">Repeat</string>
+    <string name="reminders">Reminders</string>
+    <string name="no_of_times_to_show">No of times to show</string>
+    <string name="reminder_type">Reminder Type</string>
+    <string name="setup_early_reminder">Setup Early Reminder</string>
+    <string name="select_reminder_type">Select Reminder Type</string>
+
     <string-array name="icons_string_array" translatable="false">
         <item>ic_notifications_white_24dp</item> 
         <item>ic_account_balance_wallet_white_24dp</item> 

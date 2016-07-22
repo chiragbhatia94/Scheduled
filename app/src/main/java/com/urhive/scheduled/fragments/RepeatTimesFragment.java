@@ -52,8 +52,8 @@ public class RepeatTimesFragment extends AppCompatDialogFragment {
         foreverTV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AddReminderActivity.noToRepeat = -1;
-                AddReminderActivity.repeatTimeTV.setText("Forever");
+                AddReminderActivity.noToShow = -1;
+                AddReminderActivity.noToShowTV.setText("Forever");
                 dismiss();
             }
         });
@@ -71,20 +71,20 @@ public class RepeatTimesFragment extends AppCompatDialogFragment {
                 String temp = repeatTimesET.getText().toString();
                 if (temp.isEmpty()){
                     int times = 5;
-                    AddReminderActivity.repeatTimeTV.setText(""+times);
-                    AddReminderActivity.noToRepeat = times;
+                    AddReminderActivity.noToShowTV.setText("" + times);
+                    AddReminderActivity.noToShow = times;
                     dismiss();
                     return;
                 }
                 if (temp.equals("Forever")){
-                    AddReminderActivity.repeatTimeTV.setText("Forever");
-                    AddReminderActivity.noToRepeat = -1;
+                    AddReminderActivity.noToShowTV.setText("Forever");
+                    AddReminderActivity.noToShow = -1;
                     dismiss();
                     return;
                 }
                 int times = Integer.parseInt(temp);
-                AddReminderActivity.repeatTimeTV.setText(""+times);
-                AddReminderActivity.noToRepeat = times;
+                AddReminderActivity.noToShowTV.setText("" + times);
+                AddReminderActivity.noToShow = times;
                 dismiss();
             }
         });

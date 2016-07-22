@@ -7,7 +7,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="@color/colorBackground"
         tools:context="com.urhive.scheduled.activities.AddReminderActivity">
 
@@ -29,7 +29,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="50dp"
-                    android:hint="Add Title"
+                    android:hint="@string/add_title"
                     android:inputType="textCapWords"
                     android:singleLine="true"
                     android:textAppearance="@android:style/TextAppearance.Large"
@@ -42,7 +42,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="50dp"
                     android:gravity="top"
-                    android:hint="Add Notification Content\nReason"
+                    android:hint="@string/add_notification_content_nreason"
                     android:inputType="textMultiLine"
                     android:lines="3"
                     android:textAppearance="@android:style/TextAppearance.Large"
@@ -63,7 +63,7 @@
                     android:paddingLeft="@dimen/activity_horizontal_margin"
                     android:paddingRight="@dimen/activity_horizontal_margin"
                     android:paddingTop="@dimen/activity_vertical_margin"
-                    android:text="Details"
+                    android:text="@string/details"
                     android:textAppearance="@android:style/TextAppearance.Large" />
 
                 <RelativeLayout
@@ -95,14 +95,14 @@
                             android:id="@+id/time_text"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Time To Show Notification"
+                            android:text="@string/time_to_show_notification"
                             android:textSize="15sp" />
 
                         <TextView
                             android:id="@+id/setTimeTV"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Now"
+                            android:text="@string/now"
                             android:textSize="15sp" />
                     </LinearLayout>
                 </RelativeLayout>
@@ -136,14 +136,14 @@
                             android:id="@+id/date_text"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Date"
+                            android:text="@string/date"
                             android:textSize="15sp" />
 
                         <TextView
                             android:id="@+id/setDateTV"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Today"
+                            android:text="@string/today"
                             android:textSize="15sp" />
                     </LinearLayout>
                 </RelativeLayout>
@@ -190,14 +190,14 @@
                             android:id="@+id/addcategorytext"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Category"
+                            android:text="@string/category"
                             android:textSize="15sp" />
 
                         <TextView
-                            android:id="@+id/addcategoryTV"
+                            android:id="@+id/categoryTV"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Uncategorized"
+                            android:text="@string/uncategorized"
                             android:textSize="15sp" />
                     </LinearLayout>
                 </RelativeLayout>
@@ -231,14 +231,14 @@
                             android:id="@+id/repeat_text"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Repeat"
+                            android:text="@string/repeat"
                             android:textSize="15sp" />
 
                         <TextView
                             android:id="@+id/repeatTypeTV"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Does not repeat"
+                            android:text="@string/do_not_repeat"
                             android:textSize="15sp" />
                     </LinearLayout>
                 </RelativeLayout>
@@ -269,7 +269,7 @@
                             android:tint="@color/black" />
 
                         <Button
-                            android:id="@+id/addCustomReminderFab"
+                            android:id="@+id/addReminder"
                             style="@style/smallFabButtonBlue"
                             android:layout_width="24dp"
                             android:layout_height="24dp"
@@ -294,14 +294,14 @@
                             android:id="@+id/preset_heading_text"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Reminders"
+                            android:text="@string/reminders"
                             android:textSize="15sp" />
 
                         <TextView
                             android:id="@+id/setPresetTV"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Default"
+                            android:text="@string/default_string"
                             android:textSize="15sp" />
                     </LinearLayout>
 
@@ -311,7 +311,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_marginRight="16dp"
-                        android:text="Customize"
+                        android:text="@string/customize"
                         android:textAppearance="@android:style/TextAppearance.Large" />
 
                 </RelativeLayout>
@@ -319,10 +319,10 @@
                 <com.github.paolorotolo.expandableheightlistview.ExpandableHeightListView
                     android:id="@+id/expandableheightlistviewPreset"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"></com.github.paolorotolo.expandableheightlistview.ExpandableHeightListView>
+                    android:layout_height="wrap_content" />
 
                 <RelativeLayout
-                    android:id="@+id/repeatTimeRL"
+                    android:id="@+id/noToShowRL"
                     android:layout_width="match_parent"
                     android:layout_height="72dp"
                     android:background="?android:attr/selectableItemBackground"
@@ -350,11 +350,11 @@
                             android:id="@+id/repeat_time_text"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="No of times to repeat"
+                            android:text="@string/no_of_times_to_show"
                             android:textSize="15sp" />
 
                         <TextView
-                            android:id="@+id/repeatTimeTV"
+                            android:id="@+id/noToShowTV"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="5"
@@ -391,14 +391,14 @@
                             android:id="@+id/notiTypeText"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Reminder Type"
+                            android:text="@string/reminder_type"
                             android:textSize="15sp" />
 
                         <TextView
                             android:id="@+id/notiTypeTV"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Notification"
+                            android:text="@string/notification"
                             android:textSize="15sp" />
                     </LinearLayout>
                 </RelativeLayout>
@@ -432,19 +432,19 @@
                             android:id="@+id/setup_early_notification_text"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Setup Early Reminder"
+                            android:text="@string/setup_early_reminder"
                             android:textSize="15sp" />
 
                         <TextView
-                            android:id="@+id/setEarlyNotificationTV"
+                            android:id="@+id/advanceNotiTV"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Do not remind early"
+                            android:text="@string/do_not_remind_early"
                             android:textSize="15sp" />
                     </LinearLayout>
 
                     <Switch
-                        android:id="@+id/setEarlyNotificationSwitch"
+                        android:id="@+id/advanceNotiSwitch"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"

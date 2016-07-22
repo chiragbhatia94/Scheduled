@@ -178,7 +178,7 @@
                             android:textSize="15sp" />
 
                         <TextView
-                            android:id="@+id/addcategoryTV"
+                            android:id="@+id/categoryTV"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Uncategorized"
@@ -280,7 +280,7 @@
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:id="@+id/repeatTimeRL"
+                    android:id="@+id/noToShowRL"
                     android:layout_width="match_parent"
                     android:layout_height="72dp"
                     android:background="?android:attr/selectableItemBackground"
@@ -312,7 +312,7 @@
                             android:textSize="15sp" />
 
                         <TextView
-                            android:id="@+id/repeatTimeTV"
+                            android:id="@+id/noToShowTV"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="5"
