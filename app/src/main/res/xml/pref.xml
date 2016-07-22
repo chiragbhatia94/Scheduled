@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <PreferenceCategory
-        android:title="Notification Preferences">
+    <PreferenceCategory android:title="Notification Preferences">
         <CheckBoxPreference
             android:defaultValue="true"
             android:key="checkBoxVibrate"
@@ -24,15 +23,25 @@
             android:key="checkBoxOngoing"
             android:summary="Reminder Notification will not be removed untill you give feedback!"
             android:title="Persitent" />
+        <ListPreference
+            android:defaultValue="0"
+            android:entries="@array/listentries"
+            android:entryValues="@array/listvalues"
+            android:key="notiTypePref"
+            android:summary="%s"
+            android:title="Default Reminder Type" />
     </PreferenceCategory>
 
-    <PreferenceCategory
-        android:title="Quotes">
+    <PreferenceCategory android:title="Quotes">
         <CheckBoxPreference
             android:defaultValue="true"
             android:key="quoteNotification"
             android:summary="Daily show a notification with quote of the day"
             android:title="Show quotes as notification" />
+        <com.urhive.scheduled.fragments.TimePreference
+            android:key="quotationTime"
+            android:summary="%s"
+            android:title="Quote Notification Time" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="Custom">

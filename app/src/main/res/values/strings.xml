@@ -17,6 +17,9 @@
     <string name="default_quotation_author">- Anonymous</string>
     <string name="title_activity_settings">Settings</string>
 
+    <string name="set">Set</string>
+    <string name="cancel">Cancel</string>
+
     <string-array name="icons_string_array" translatable="false">
         <item>ic_notifications_white_24dp</item> 
         <item>ic_account_balance_wallet_white_24dp</item> 

@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.urhive.scheduled.R;
 import com.urhive.scheduled.activities.AddReminderActivity;
-import com.urhive.scheduled.models.CustomReminder;
+import com.urhive.scheduled.models.AlarmReminders;
 import com.urhive.scheduled.utils.DateTimeUtil;
 import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
@@ -23,14 +23,14 @@ import java.util.List;
  */
 public class CustomExpandableListViewAdapter extends BaseAdapter implements TimePickerDialog.OnTimeSetListener {
     Context context;
-    List<CustomReminder> list;
+    List<AlarmReminders> list;
     FragmentManager fragmentManager;
 
     String date, time;
     int mHour, mMinute;
     int p = 0;
 
-    public CustomExpandableListViewAdapter(Context context, List<CustomReminder> list, FragmentManager fm) {
+    public CustomExpandableListViewAdapter(Context context, List<AlarmReminders> list, FragmentManager fm) {
         this.context = context;
         this.list = list;
         this.fragmentManager = fm;
@@ -109,7 +109,7 @@ public class CustomExpandableListViewAdapter extends BaseAdapter implements Time
                 @Override
                 public void onClick(View v) {
                     list.remove(position);
-                    CustomReminder.sortCustomReminderListByDateTimeAndArrangeByNumber(list);
+                    AlarmReminders.sortCustomReminderListByDateTimeAndArrangeByNumber(list);
                     notifyDataSetChanged();
                 }
             });
@@ -122,7 +122,7 @@ public class CustomExpandableListViewAdapter extends BaseAdapter implements Time
                     if (list.size() == 0) {
                         AddReminderActivity.resetToDoNotRepeat();
                     }
-                    CustomReminder.sortCustomReminderListByDateTimeAndArrangeByNumber(list);
+                    AlarmReminders.sortCustomReminderListByDateTimeAndArrangeByNumber(list);
                     notifyDataSetChanged();
                 }
             });
@@ -171,7 +171,7 @@ public class CustomExpandableListViewAdapter extends BaseAdapter implements Time
         list.get(p).setDate(date);
         list.get(p).setTime(time);
 
-        CustomReminder.sortCustomReminderListByDateTimeAndArrangeByNumber(list);
+        AlarmReminders.sortCustomReminderListByDateTimeAndArrangeByNumber(list);
 
         notifyDataSetChanged();
     }

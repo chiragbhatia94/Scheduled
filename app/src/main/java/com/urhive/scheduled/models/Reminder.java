@@ -35,7 +35,16 @@ public class Reminder extends SugarRecord implements Comparable<Reminder> {
     public static final int MWF_TTS_ALTERNATE = 8;
     @Ignore
     public static final int CUSTOM = 9;
-
+    @Ignore
+    public static final int STATUS_NORMAL = 1;
+    @Ignore
+    public static final int STATUS_ARCHIEVED = 2;
+    @Ignore
+    public static final int STATUS_DELETED = 3;
+    @Ignore
+    public static final int TYPE_NOTIFICATION = 0;
+    @Ignore
+    public static final int TYPE_ALARM = 1;
     String title;
     String content;
     String date;
@@ -46,13 +55,18 @@ public class Reminder extends SugarRecord implements Comparable<Reminder> {
     int noShown;
     int repeatType;
     long inAdvanceMillis;
+    // added later on
+    int status;
+    int reminderType;
     @Ignore
     private Date dateTime;
 
     public Reminder() {
     }
 
-    public Reminder(String title, String content, String date, String time, int type, int active, long categoryId, int noToShow, int noShown, int repeatType, long inAdvanceMillis) {
+    public Reminder(String title, String content, String date, String time, int type, int active,
+                    long categoryId, int noToShow, int noShown, int repeatType, long inAdvanceMillis,
+                    int status, int reminderType) {
         this.title = title;
         this.content = content;
         this.date = date;
@@ -63,6 +77,8 @@ public class Reminder extends SugarRecord implements Comparable<Reminder> {
         this.noShown = noShown;
         this.repeatType = repeatType;
         this.inAdvanceMillis = inAdvanceMillis;
+        this.status = status;
+        this.reminderType = reminderType;
     }
 
     // GETTER & SETTER
@@ -146,6 +162,22 @@ public class Reminder extends SugarRecord implements Comparable<Reminder> {
         this.inAdvanceMillis = inAdvanceMillis;
     }
 
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public int getReminderType() {
+        return reminderType;
+    }
+
+    public void setReminderType(int reminderType) {
+        this.reminderType = reminderType;
+    }
+
     // TO STRING
     @Override
     public String toString() {
@@ -161,6 +193,8 @@ public class Reminder extends SugarRecord implements Comparable<Reminder> {
                 ", noShown=" + noShown +
                 ", repeatType=" + repeatType +
                 ", inAdvanceMillis=" + inAdvanceMillis +
+                ", status =" + status +
+                ", reminderType =" + reminderType +
                 '}';
     }
 

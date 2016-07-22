@@ -47,7 +47,6 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setAdapter(viewPagerAdapter);
 
         PreferenceManager.setDefaultValues(this, R.xml.pref, false);
-
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
         Boolean firstRun = prefs.getBoolean("pref_first_run", true);

@@ -12,40 +12,48 @@ import java.util.List;
 /**
  * Created by Chirag Bhatia on 12-07-2016.
  */
-public class CustomReminder extends SugarRecord implements Comparable<CustomReminder> {
+public class AlarmReminders extends SugarRecord implements Comparable<AlarmReminders> {
     @Ignore
     public static final int SHOWN = 1;
     @Ignore
     public static final int NOT_SHOWN = 0;
+    @Ignore
+    public static final int TYPE_ALARM = 0;
+    @Ignore
+    public static final int TYPE_ADVANCED_NOTI = 1;
     long reminderId;
     int number;
     String date;
     String time;
     int statusShown;
+    // added later on
+    int alarmType;
     @Ignore
     private Date dateTime;
 
-    public CustomReminder() {
+    public AlarmReminders() {
 
     }
 
-    public CustomReminder(int number, String date, String time, int statusShown) {
+    public AlarmReminders(int number, String date, String time, int statusShown, int alarmType) {
         this.number = number;
         this.date = date;
         this.time = time;
         this.statusShown = statusShown;
+        this.alarmType = alarmType;
     }
 
-    public CustomReminder(long reminderId, int number, String date, String time, int statusShown) {
+    public AlarmReminders(long reminderId, int number, String date, String time, int statusShown, int alarmType) {
         this.reminderId = reminderId;
         this.number = number;
         this.date = date;
         this.time = time;
         this.statusShown = statusShown;
+        this.alarmType = alarmType;
     }
 
     // static methods
-    public static void sortCustomReminderListByDateTimeAndArrangeByNumber(List<CustomReminder> presetList) {
+    public static void sortCustomReminderListByDateTimeAndArrangeByNumber(List<AlarmReminders> presetList) {
         Collections.sort(presetList);
 
         for (int i = 0; i < presetList.size(); i++) {
@@ -53,8 +61,8 @@ public class CustomReminder extends SugarRecord implements Comparable<CustomRemi
         }
     }
 
-    public static boolean anyReminderInPast(List<CustomReminder> reminders) {
-        for (CustomReminder reminder : reminders) {
+    public static boolean anyReminderInPast(List<AlarmReminders> reminders) {
+        for (AlarmReminders reminder : reminders) {
             if (DateTimeUtil.isInPast(reminder.getDate(), reminder.getTime())) {
                 return true;
             }
@@ -103,6 +111,14 @@ public class CustomReminder extends SugarRecord implements Comparable<CustomRemi
         this.statusShown = statusShown;
     }
 
+    public int getAlarmType() {
+        return alarmType;
+    }
+
+    public void setAlarmType(int alarmType) {
+        this.alarmType = alarmType;
+    }
+
     public Date getDateTime() {
         String dateTimeString = getDate() + " " + getTime();
         try {
@@ -120,7 +136,20 @@ public class CustomReminder extends SugarRecord implements Comparable<CustomRemi
     }
 
     @Override
-    public int compareTo(CustomReminder another) {
+    public int compareTo(AlarmReminders another) {
         return getDateTime().compareTo(another.getDateTime());
+    }
+
+    @Override
+    public String toString() {
+        return "AlarmReminders{" +
+                "reminderId=" + reminderId +
+                ", number=" + number +
+                ", date='" + date + '\'' +
+                ", time='" + time + '\'' +
+                ", statusShown=" + statusShown +
+                ", alarmType=" + alarmType +
+                ", dateTime=" + dateTime +
+                '}';
     }
 }

@@ -1,24 +1,27 @@
 package com.urhive.scheduled.utils;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.Locale;
 
 /**
  * Created by Chirag Bhatia on 06-06-2016.
  */
 public class DateTimeUtil {
+    private static final SimpleDateFormat WEEK_DAYS_FORMAT = new SimpleDateFormat("EEEE", Locale.getDefault());
+    private static final SimpleDateFormat SHORT_WEEK_DAYS_FORMAT = new SimpleDateFormat("E", Locale.getDefault());
+    public static SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+    public static SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+    public static SimpleDateFormat dateTimeFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
     String mDate;
     String mTime;
     Calendar mCalendar;
     int mDay, mMonth, mYear, mHour, mMin;
-
-    public static SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-    public static SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
-    public static SimpleDateFormat dateTimeFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-
-    private static final SimpleDateFormat WEEK_DAYS_FORMAT = new SimpleDateFormat("EEEE", Locale.getDefault());
-    private static final SimpleDateFormat SHORT_WEEK_DAYS_FORMAT = new SimpleDateFormat("E", Locale.getDefault());
     long inMillis;
 
     // constructors
@@ -122,9 +125,7 @@ public class DateTimeUtil {
         long timeInMillis = calendar.getTimeInMillis();
 
         Calendar now = Calendar.getInstance();
-        if (now.getTimeInMillis()<timeInMillis)
-            return false;
-        return true;
+        return now.getTimeInMillis() >= timeInMillis;
     }
 
     // get current date and time
@@ -215,6 +216,29 @@ public class DateTimeUtil {
         return calendar;
     }
 
+    public static String getQuotationTime(Context context) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        long time = preferences.getLong("quotationTime", 0);
+        Calendar cal = new GregorianCalendar();
+        cal.setTimeInMillis(time);
+
+        return getTime(cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE));
+    }
+
+    public String getmDate() {
+        return mDate;
+    }
+
+    // getters
+
+    public String getmTime() {
+        return mTime;
+    }
+
+    public Calendar getmCalendar() {
+        return mCalendar;
+    }
+
     public void setmCalendar(Calendar mCalendar) {
         this.mCalendar = mCalendar;
         mDate = dateFormat.format(mCalendar.getTime());
@@ -230,20 +254,6 @@ public class DateTimeUtil {
         String t[] = mTime.split(":");
         mHour = Integer.parseInt(t[0]);
         mMin = Integer.parseInt(t[1]);
-    }
-
-    // getters
-
-    public String getmDate() {
-        return mDate;
-    }
-
-    public String getmTime() {
-        return mTime;
-    }
-
-    public Calendar getmCalendar() {
-        return mCalendar;
     }
 
     public int getmDay() {

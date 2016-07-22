@@ -363,6 +363,47 @@
                 </RelativeLayout>
 
                 <RelativeLayout
+                    android:id="@+id/notiTypeRL"
+                    android:layout_width="match_parent"
+                    android:layout_height="72dp"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:clickable="true">
+
+                    <ImageView
+                        android:id="@+id/notiTypeIV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="27dp"
+                        android:src="@drawable/ic_dvr_white_24dp"
+                        android:tint="@color/black" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@id/notiTypeIV"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/notiTypeText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Reminder Type"
+                            android:textSize="15sp" />
+
+                        <TextView
+                            android:id="@+id/notiTypeTV"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Notification"
+                            android:textSize="15sp" />
+                    </LinearLayout>
+                </RelativeLayout>
+
+                <RelativeLayout
                     android:id="@+id/advanceNotificationRL"
                     android:layout_width="match_parent"
                     android:layout_height="72dp"
