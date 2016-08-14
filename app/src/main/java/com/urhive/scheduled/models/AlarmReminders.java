@@ -1,5 +1,7 @@
 package com.urhive.scheduled.models;
 
+import android.support.annotation.NonNull;
+
 import com.orm.SugarRecord;
 import com.orm.dsl.Ignore;
 import com.urhive.scheduled.utils.DateTimeUtil;
@@ -17,17 +19,11 @@ public class AlarmReminders extends SugarRecord implements Comparable<AlarmRemin
     public static final int SHOWN = 1;
     @Ignore
     public static final int NOT_SHOWN = 0;
-    @Ignore
-    public static final int TYPE_ALARM = 0;
-    @Ignore
-    public static final int TYPE_ADVANCED_NOTI = 1;
     long reminderId;
     int number;
     String date;
     String time;
     int statusShown;
-    // added later on
-    int alarmType;
     @Ignore
     private Date dateTime;
 
@@ -35,21 +31,19 @@ public class AlarmReminders extends SugarRecord implements Comparable<AlarmRemin
 
     }
 
-    public AlarmReminders(int number, String date, String time, int statusShown, int alarmType) {
+    public AlarmReminders(int number, String date, String time, int statusShown) {
         this.number = number;
         this.date = date;
         this.time = time;
         this.statusShown = statusShown;
-        this.alarmType = alarmType;
     }
 
-    public AlarmReminders(long reminderId, int number, String date, String time, int statusShown, int alarmType) {
+    public AlarmReminders(long reminderId, int number, String date, String time, int statusShown) {
         this.reminderId = reminderId;
         this.number = number;
         this.date = date;
         this.time = time;
         this.statusShown = statusShown;
-        this.alarmType = alarmType;
     }
 
     public AlarmReminders(AlarmReminders reminder) {
@@ -58,7 +52,6 @@ public class AlarmReminders extends SugarRecord implements Comparable<AlarmRemin
         this.date = reminder.date;
         this.time = reminder.time;
         this.statusShown = reminder.statusShown;
-        this.alarmType = reminder.alarmType;
     }
 
     // static methods
@@ -111,14 +104,6 @@ public class AlarmReminders extends SugarRecord implements Comparable<AlarmRemin
         this.statusShown = statusShown;
     }
 
-    public int getAlarmType() {
-        return alarmType;
-    }
-
-    public void setAlarmType(int alarmType) {
-        this.alarmType = alarmType;
-    }
-
     public Date getDateTime() {
         String dateTimeString = getDate() + " " + getTime();
         try {
@@ -136,7 +121,7 @@ public class AlarmReminders extends SugarRecord implements Comparable<AlarmRemin
     }
 
     @Override
-    public int compareTo(AlarmReminders another) {
+    public int compareTo(@NonNull AlarmReminders another) {
         return getDateTime().compareTo(another.getDateTime());
     }
 
@@ -148,7 +133,6 @@ public class AlarmReminders extends SugarRecord implements Comparable<AlarmRemin
                 ", date='" + date + '\'' +
                 ", time='" + time + '\'' +
                 ", statusShown=" + statusShown +
-                ", alarmType=" + alarmType +
                 ", dateTime=" + dateTime +
                 '}';
     }
