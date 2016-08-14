@@ -52,6 +52,15 @@ public class AlarmReminders extends SugarRecord implements Comparable<AlarmRemin
         this.alarmType = alarmType;
     }
 
+    public AlarmReminders(AlarmReminders reminder) {
+        this.reminderId = reminder.reminderId;
+        this.number = reminder.number;
+        this.date = reminder.date;
+        this.time = reminder.time;
+        this.statusShown = reminder.statusShown;
+        this.alarmType = reminder.alarmType;
+    }
+
     // static methods
     public static void sortCustomReminderListByDateTimeAndArrangeByNumber(List<AlarmReminders> presetList) {
         Collections.sort(presetList);
@@ -59,15 +68,6 @@ public class AlarmReminders extends SugarRecord implements Comparable<AlarmRemin
         for (int i = 0; i < presetList.size(); i++) {
             presetList.get(i).setNumber(i + 1);
         }
-    }
-
-    public static boolean anyReminderInPast(List<AlarmReminders> reminders) {
-        for (AlarmReminders reminder : reminders) {
-            if (DateTimeUtil.isInPast(reminder.getDate(), reminder.getTime())) {
-                return true;
-            }
-        }
-        return false;
     }
 
     // getter & setters

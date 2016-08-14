@@ -3,6 +3,7 @@ package com.urhive.scheduled.activities;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -56,8 +57,8 @@ public class AddReminderActivity extends AppCompatActivity implements
     public static TextView categoryTV, noToShowTV;
     public static ImageView circle, categoryIcon;
     public static AlertDialog categoryAlertBox;
-    public static Category category = Category.findById(Category.class, 1);
-    public static int noToShow = 5;
+    public static Category category;
+    public static int noToShow;
     public static Boolean customizing = Boolean.FALSE;
 
     private static TextView repeatTypeTV;
@@ -97,6 +98,24 @@ public class AddReminderActivity extends AppCompatActivity implements
         repeatType = 0;
         repeatTypeTV.setText(R.string.do_not_repeat);
         repeatTimeRL.setVisibility(View.GONE);
+    }
+
+    private void setDateTimeVariables() {
+        setDateVariables();
+        setTimeVariables();
+    }
+
+    private void setDateVariables() {
+        String d[] = mDate.split("/");
+        mDay = Integer.parseInt(d[0]);
+        mMonth = Integer.parseInt(d[1]);
+        mYear = Integer.parseInt(d[2]);
+    }
+
+    private void setTimeVariables() {
+        String t[] = mTime.split(":");
+        mHour = Integer.parseInt(t[0]);
+        mMinute = Integer.parseInt(t[1]);
     }
 
     @Override
@@ -634,6 +653,8 @@ public class AddReminderActivity extends AppCompatActivity implements
     }
 
     private void assignDefaultValues() {
+        category = Category.findById(Category.class, 1);
+        noToShow = 5;
         mDaysOfWeek = new boolean[7];
         Arrays.fill(mDaysOfWeek, false);
         customReminderList = new ArrayList<>();
@@ -666,18 +687,11 @@ public class AddReminderActivity extends AppCompatActivity implements
                 mMinute,
                 false
         );
-
         if (repeatType == Reminder.REVISION_PRESET || repeatType == Reminder.CUSTOM) {
-            if (!customReminderList.isEmpty()) {
-                for (AlarmReminders reminder : customReminderList) {
-                    if (DateTimeUtil.isInPast(reminder.getDate(), reminder.getTime())) {
-                        Toast.makeText(AddReminderActivity.this, "Custom Reminders are set in past!", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                }
+            if (isAnyCustomRemindersInPast()) {
+                return;
             }
         }
-
         tpd.setThemeDark(false);
         tpd.show(getFragmentManager(), "Timepickerdialog");
     }
@@ -695,18 +709,25 @@ public class AddReminderActivity extends AppCompatActivity implements
         );
 
         if (repeatType == Reminder.REVISION_PRESET || repeatType == Reminder.CUSTOM) {
-            if (!customReminderList.isEmpty()) {
-                for (AlarmReminders reminder : customReminderList) {
-                    if (DateTimeUtil.isInPast(reminder.getDate(), reminder.getTime())) {
-                        Toast.makeText(AddReminderActivity.this, "Custom Reminders are set in past!", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                }
+            if (isAnyCustomRemindersInPast()) {
+                return;
             }
         }
 
         dpd.setMinDate(Calendar.getInstance());
         dpd.show(getFragmentManager(), "Datepickerdialog");
+    }
+
+    private boolean isAnyCustomRemindersInPast() {
+        if (!customReminderList.isEmpty()) {
+            for (AlarmReminders reminder : customReminderList) {
+                if (DateTimeUtil.isInPast(reminder.getDate(), reminder.getTime())) {
+                    Toast.makeText(AddReminderActivity.this, R.string.custom_reminders_are_set_in_past, Toast.LENGTH_SHORT).show();
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     @Override
@@ -766,6 +787,7 @@ public class AddReminderActivity extends AppCompatActivity implements
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_discard) {
             onBackPressed();
+
             Toast.makeText(AddReminderActivity.this, "Discarded!", Toast.LENGTH_SHORT).show();
             return true;
         } else if (id == R.id.action_done) {
@@ -789,7 +811,18 @@ public class AddReminderActivity extends AppCompatActivity implements
         * mTime
         * mActive
         * */
-        long categoryId = category.getId();
+
+        if (dateTV.getText().toString().equals("Today")) {
+            mDate = DateTimeUtil.getCurrentDate();
+            setDateVariables();
+        }
+
+        if (timeTV.getText().toString().equals("Now")) {
+            mTime = DateTimeUtil.getCurrentTime();
+            setTimeVariables();
+        }
+
+        final long categoryId = category.getId();
 
         // noToShow
         if (repeatType == Reminder.DO_NOT_REPEAT) {
@@ -806,62 +839,206 @@ public class AddReminderActivity extends AppCompatActivity implements
         * Reminder.MWF_TTS_ALTERNATE
         * */
 
-        int noShown = 0;
+        final int noShown = 0;
 
         /* these are already set
         * repeatType
-        * inAdvanceMillis*/
+        * inAdvanceMillis
+        * */
 
-        int status = Reminder.STATUS_NORMAL;
+        final int status = Reminder.STATUS_NORMAL;
 
         // notiType already set
 
-        // creating Reminder Object
-        Reminder reminder = new Reminder(mTitle, mContent, mDate, mTime, mActive, categoryId, noToShow, noShown, repeatType, inAdvanceMillis, status, notiType);
-        long reminderId = reminder.save();
-        reminder.setId(reminderId);
-
         // setAlarms
-        if (repeatType == Reminder.DO_NOT_REPEAT ||
-                repeatType == Reminder.EVERY_DAY ||
-                repeatType == Reminder.EVERY_MONTH ||
+        if (repeatType == Reminder.DO_NOT_REPEAT) {
+            // creating Reminder Object
+            if (DateTimeUtil.isInPast(mDate, mTime)) {
+                Toast.makeText(AddReminderActivity.this, "Reminder in past!\nTry Again!", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            Reminder reminder = new Reminder(mTitle, mContent, mDate, mTime, mActive, categoryId, noToShow, noShown, repeatType, inAdvanceMillis, status, notiType);
+
+            long reminderId = reminder.save();
+            reminder.setId(reminderId);
+
+            if (inAdvanceMillis != 0) {
+                String[] dt = DateTimeUtil.calcAdavanceNotiDateTime(mDate, mTime, inAdvanceMillis);
+                if (!DateTimeUtil.isInPast(dt[0], dt[1])) {
+                    AlarmReminders advanceNoti = new AlarmReminders(reminderId, 1, dt[0], dt[1], AlarmReminders.NOT_SHOWN, AlarmReminders.TYPE_ADVANCED_NOTI);
+                    advanceNoti.save();
+                }
+            }
+            AlarmReminders onlyAlarm = new AlarmReminders(reminderId, 1, mDate, mTime, AlarmReminders.NOT_SHOWN, AlarmReminders.TYPE_ALARM);
+            onlyAlarm.save();
+
+            Intent intent = new Intent(AddReminderActivity.this, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+
+            Toast.makeText(AddReminderActivity.this, "Reminder Saved!", Toast.LENGTH_SHORT).show();
+        } else if (repeatType == Reminder.EVERY_DAY ||
                 repeatType == Reminder.EVERY_WEEK ||
+                repeatType == Reminder.EVERY_MONTH ||
                 repeatType == Reminder.EVERY_YEAR ||
                 repeatType == Reminder.ALTERNATE_DAYS) {
-            AlarmReminders firstAlarm = new AlarmReminders(reminderId, 1, mDate, mTime, AlarmReminders.NOT_SHOWN, notiType);
+            final Reminder reminder = new Reminder(mTitle, mContent, mDate, mTime, mActive, categoryId, noToShow, noShown, repeatType, inAdvanceMillis, status, notiType);
+
+            if (DateTimeUtil.isInPast(mDate, mTime)) {
+                /*
+                * show a alert dialog asking user to set alarm from next repeating alarm or to change date and time
+                * */
+                AlertDialog.Builder pastReminderDialog = new AlertDialog.Builder(AddReminderActivity.this)
+                        .setTitle("Reminder in past!")
+                        .setMessage("Todays alarm time is already passed! Want to reschedule alarm?")
+                        .setPositiveButton("Reschedule", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                return;
+                            }
+                        })
+                        .setNegativeButton("Skip Today", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                long reminderId = reminder.save();
+                                reminder.setId(reminderId);
+                                String nextDate = calculateNextReminder(reminder.getDate(), reminder.getRepeatType());
+                                AlarmReminders nextReminder = new AlarmReminders(reminderId, 1, nextDate, mTime, AlarmReminders.NOT_SHOWN, AlarmReminders.TYPE_ALARM);
+                                nextReminder.save();
+                                if (inAdvanceMillis != 0) {
+                                    String[] dt = DateTimeUtil.calcAdavanceNotiDateTime(nextDate, mTime, inAdvanceMillis);
+                                    if (!DateTimeUtil.isInPast(dt[0], dt[1])) {
+                                        AlarmReminders advanceNoti = new AlarmReminders(reminderId, 1, dt[0], dt[1], AlarmReminders.NOT_SHOWN, AlarmReminders.TYPE_ADVANCED_NOTI);
+                                        advanceNoti.save();
+                                    }
+                                }
+                                Intent intent = new Intent(AddReminderActivity.this, MainActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                startActivity(intent);
+                                Toast.makeText(AddReminderActivity.this, "Reminder Saved!", Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                        .setNeutralButton("Show Now", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                long reminderId = reminder.save();
+                                reminder.setId(reminderId);
+                                AlarmReminders nowReminder = new AlarmReminders(reminderId, 1, mDate, DateTimeUtil.getCurrentTime(), AlarmReminders.NOT_SHOWN, AlarmReminders.TYPE_ALARM);
+                                nowReminder.save();
+                                // no advance noti
+
+                                Intent intent = new Intent(AddReminderActivity.this, MainActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                startActivity(intent);
+                                Toast.makeText(AddReminderActivity.this, "Reminder Saved!", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                pastReminderDialog.show();
+            } else {
+                // creating Reminder Object
+                long reminderId = reminder.save();
+                reminder.setId(reminderId);
+
+                AlarmReminders firstAlarm = new AlarmReminders(reminderId, 1, mDate, mTime, AlarmReminders.NOT_SHOWN, AlarmReminders.TYPE_ALARM);
+                firstAlarm.save();
+
+                if (inAdvanceMillis != 0) {
+                    String[] dt = DateTimeUtil.calcAdavanceNotiDateTime(mDate, mTime, inAdvanceMillis);
+                    if (!DateTimeUtil.isInPast(dt[0], dt[1])) {
+                        AlarmReminders advanceNoti = new AlarmReminders(reminderId, 1, dt[0], dt[1], AlarmReminders.NOT_SHOWN, AlarmReminders.TYPE_ADVANCED_NOTI);
+                        advanceNoti.save();
+                    }
+                }
+                Intent intent = new Intent(AddReminderActivity.this, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+                Toast.makeText(AddReminderActivity.this, "Reminder Saved!", Toast.LENGTH_SHORT).show();
+            }
         } else if (repeatType == Reminder.REVISION_PRESET || repeatType == Reminder.CUSTOM) {
+            if (isAnyCustomRemindersInPast()) {
+                Toast.makeText(AddReminderActivity.this, "Custom Reminder in past!", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            // creating Reminder Object
+            Reminder reminder = new Reminder(mTitle, mContent, mDate, mTime, mActive, categoryId, noToShow, noShown, repeatType, inAdvanceMillis, status, notiType);
+
+            long reminderId = reminder.save();
+            reminder.setId(reminderId);
+
             for (AlarmReminders alarm : customReminderList) {
                 alarm.setAlarmType(notiType);
                 alarm.setReminderId(reminderId);
                 alarm.save();
             }
+            Intent intent = new Intent(AddReminderActivity.this, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+
+            Toast.makeText(AddReminderActivity.this, "Reminder Saved!", Toast.LENGTH_SHORT).show();
         } else if (repeatType == Reminder.SPECIFIC_DAY_OF_WEEK) {
+            // creating Reminder Object
+            Reminder reminder = new Reminder(mTitle, mContent, mDate, mTime, mActive, categoryId, noToShow, noShown, repeatType, inAdvanceMillis, status, notiType);
+
+            long reminderId = reminder.save();
+            reminder.setId(reminderId);
+
             DayOfWeek dow = new DayOfWeek(mDaysOfWeek);
             dow.save();
 
             Calendar cal = Calendar.getInstance();
             int dayofweek = cal.get(Calendar.DAY_OF_WEEK) - 1;
 
-
+            String[] daysOfWeek = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
+            int found = 0;
+            for (int i = 0; i < mDaysOfWeek.length; i++) {
+                if (mDaysOfWeek[i]) {
+                    if (dayofweek <= i) {
+                        Toast.makeText(AddReminderActivity.this, "set alarm of " + daysOfWeek[i], Toast.LENGTH_SHORT).show();
+                        found = 1;
+                    }
+                }
+            }
+            if (found == 0) {
+                Toast.makeText(AddReminderActivity.this, "Alarm wont run this week!", Toast.LENGTH_SHORT).show();
+            }
         }
-        Toast.makeText(AddReminderActivity.this, "Reminder Saved!", Toast.LENGTH_SHORT).show();
     }
 
-    private void setDateTimeVariables() {
-        setDateVariables();
-        setTimeVariables();
-    }
+    public String calculateNextReminder(String date, int RepeatType) {
+        String d[] = date.split("/");
+        int day = Integer.parseInt(d[0]);
+        int month = Integer.parseInt(d[1]);
+        int year = Integer.parseInt(d[2]);
 
-    private void setDateVariables() {
-        String d[] = mDate.split("/");
-        mDay = Integer.parseInt(d[0]);
-        mMonth = Integer.parseInt(d[1]);
-        mYear = Integer.parseInt(d[2]);
-    }
 
-    private void setTimeVariables() {
-        String t[] = mTime.split(":");
-        mHour = Integer.parseInt(t[0]);
-        mMinute = Integer.parseInt(t[1]);
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.MONTH, --month);
+        calendar.set(Calendar.YEAR, year);
+        calendar.set(Calendar.DAY_OF_MONTH, day);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+
+        switch (repeatType) {
+            case Reminder.EVERY_DAY:
+                calendar.add(Calendar.DATE, 1);
+                break;
+            case Reminder.EVERY_WEEK:
+                calendar.add(Calendar.DATE, 7);
+                break;
+            case Reminder.EVERY_MONTH:
+                calendar.add(Calendar.MONTH, 1);
+                break;
+            case Reminder.EVERY_YEAR:
+                calendar.add(Calendar.YEAR, 1);
+                break;
+            case Reminder.ALTERNATE_DAYS:
+                calendar.add(Calendar.DATE, 2);
+                break;
+        }
+        date = DateTimeUtil.dateFormat.format(calendar.getTime());
+        return date;
     }
 }

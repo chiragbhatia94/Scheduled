@@ -205,6 +205,34 @@ public class DateTimeUtil {
         return newDate;
     }
 
+    public static String[] calcAdavanceNotiDateTime(String date, String time, long inAdvanceMillis) {
+        String d[] = date.split("/");
+        int day = Integer.parseInt(d[0]);
+        int month = Integer.parseInt(d[1]);
+        int year = Integer.parseInt(d[2]);
+
+        String t[] = time.split(":");
+        int hour = Integer.parseInt(t[0]);
+        int min = Integer.parseInt(t[1]);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar = Calendar.getInstance();
+        calendar.set(Calendar.MONTH, --month);
+        calendar.set(Calendar.YEAR, year);
+        calendar.set(Calendar.DAY_OF_MONTH, day);
+        calendar.set(Calendar.HOUR_OF_DAY, hour);
+        calendar.set(Calendar.MINUTE, min);
+        calendar.set(Calendar.SECOND, 59);
+        calendar.set(Calendar.MILLISECOND, 999);
+
+        long presentMillis = calendar.getTimeInMillis();
+        long newMillis = presentMillis - inAdvanceMillis;
+        calendar.setTimeInMillis(newMillis);
+
+        String[] res = {dateFormat.format(calendar.getTime()), timeFormat.format(calendar.getTime())};
+        return res;
+    }
+
     public static Calendar addTimeToCalender(String time, Calendar calendar){
         String t[] = time.split(":");
         int hour = Integer.parseInt(t[0]);
