@@ -200,9 +200,7 @@ public class DateTimeUtil {
 
         calendar.add(Calendar.DATE,noOfDays);
 
-        String newDate = dateFormat.format(calendar.getTime());
-
-        return newDate;
+        return dateFormat.format(calendar.getTime());
     }
 
     public static String[] calcAdavanceNotiDateTime(String date, String time, long inAdvanceMillis) {
@@ -229,8 +227,7 @@ public class DateTimeUtil {
         long newMillis = presentMillis - inAdvanceMillis;
         calendar.setTimeInMillis(newMillis);
 
-        String[] res = {dateFormat.format(calendar.getTime()), timeFormat.format(calendar.getTime())};
-        return res;
+        return new String[]{dateFormat.format(calendar.getTime()), timeFormat.format(calendar.getTime())};
     }
 
     public static Calendar addTimeToCalender(String time, Calendar calendar){
@@ -251,6 +248,24 @@ public class DateTimeUtil {
         cal.setTimeInMillis(time);
 
         return getTime(cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE));
+    }
+
+    public static Calendar getCalendar(String mDate) {
+        String d[] = mDate.split("/");
+        int mDay = Integer.parseInt(d[0]);
+        int mMonth = Integer.parseInt(d[1]);
+        int mYear = Integer.parseInt(d[2]);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.MONTH, --mMonth);
+        calendar.set(Calendar.YEAR, mYear);
+        calendar.set(Calendar.DAY_OF_MONTH, mDay);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+
+        return calendar;
     }
 
     public String getmDate() {

@@ -304,10 +304,11 @@ public class AddReminderActivity extends AppCompatActivity implements
 
         setDateTimeVariables();
 
+        int temp = mMonth - 1;
         DatePickerDialog dpd = DatePickerDialog.newInstance(
                 this,
                 mYear,
-                --mMonth,
+                temp,
                 mDay
         );
         dpd.setMinDate(Calendar.getInstance());
@@ -701,15 +702,17 @@ public class AddReminderActivity extends AppCompatActivity implements
         if (dateTV.getText().toString().equals("Today")) {
             mDate = DateTimeUtil.getCurrentDate();
         }
+        int temp = mMonth - 1;
         DatePickerDialog dpd = DatePickerDialog.newInstance(
                 this,
                 mYear,
-                --mMonth,
+                temp,
                 mDay
         );
 
         if (repeatType == Reminder.REVISION_PRESET || repeatType == Reminder.CUSTOM) {
             if (isAnyCustomRemindersInPast()) {
+                Toast.makeText(AddReminderActivity.this, "Some custom reminders is set in past!", Toast.LENGTH_SHORT).show();
                 return;
             }
         }
@@ -980,7 +983,8 @@ public class AddReminderActivity extends AppCompatActivity implements
             for (int i = 0; i < mDaysOfWeek.length; i++) {
                 if (mDaysOfWeek[i]) {
                     if (dayofweek <= i) {
-                        Toast.makeText(AddReminderActivity.this, "set alarm of " + daysOfWeek[i], Toast.LENGTH_SHORT).show();
+                        // Toast.makeText(AddReminderActivity.this, "set alarm of " + daysOfWeek[i], Toast.LENGTH_SHORT).show();
+
                         found = 1;
                         break;
                     }
@@ -998,9 +1002,9 @@ public class AddReminderActivity extends AppCompatActivity implements
         int month = Integer.parseInt(d[1]);
         int year = Integer.parseInt(d[2]);
 
-
+        int temp = mMonth - 1;
         Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.MONTH, --month);
+        calendar.set(Calendar.MONTH, temp);
         calendar.set(Calendar.YEAR, year);
         calendar.set(Calendar.DAY_OF_MONTH, day);
         calendar.set(Calendar.HOUR_OF_DAY, 0);
