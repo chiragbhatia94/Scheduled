@@ -366,6 +366,11 @@ public class AddReminderActivity extends AppCompatActivity implements
             customReminderList.clear();
         }
 
+        if (timeTV.getText().toString().equals("Today")) {
+            mTime = DateTimeUtil.getCurrentTime();
+            setTimeVariables();
+        }
+
         customReminderList.add(new AlarmReminders(1, DateTimeUtil.addDaysToDate(mDate, 0), mTime, AlarmReminders.NOT_SHOWN));
         customReminderList.add(new AlarmReminders(2, DateTimeUtil.addDaysToDate(mDate, 1), mTime, AlarmReminders.NOT_SHOWN));
         customReminderList.add(new AlarmReminders(3, DateTimeUtil.addDaysToDate(mDate, 7), mTime, AlarmReminders.NOT_SHOWN));
@@ -1002,7 +1007,7 @@ public class AddReminderActivity extends AppCompatActivity implements
         int month = Integer.parseInt(d[1]);
         int year = Integer.parseInt(d[2]);
 
-        int temp = mMonth - 1;
+        int temp = month - 1;
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.MONTH, temp);
         calendar.set(Calendar.YEAR, year);
