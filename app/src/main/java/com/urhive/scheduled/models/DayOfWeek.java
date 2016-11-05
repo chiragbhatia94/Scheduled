@@ -6,6 +6,7 @@ import com.orm.SugarRecord;
  * Created by Chirag Bhatia on 11-07-2016.
  */
 public class DayOfWeek extends SugarRecord {
+    long reminderID;
     boolean SUNDAY;
     boolean MONDAY;
     boolean TUESDAY;
@@ -22,5 +23,13 @@ public class DayOfWeek extends SugarRecord {
         THURSDAY = dow[4];
         FRIDAY = dow[5];
         SATURDAY = dow[6];
+    }
+
+    public long getReminderID() {
+        return reminderID;
+    }
+
+    public void setReminderID(long reminderID) {
+        this.reminderID = reminderID;
     }
 }

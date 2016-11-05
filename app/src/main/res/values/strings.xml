@@ -48,6 +48,10 @@
     <string name="setup_early_reminder">Setup Early Reminder</string>
     <string name="select_reminder_type">Select Reminder Type</string>
     <string name="custom_reminders_are_set_in_past">Custom Reminders are set in past!</string>
+    <string name="nav_labels">Labels</string>
+    <string name="nav_edit_labels">Edit Labels</string>
+    <string name="category_uncategorized">Uncategorized</string>
+    <string name="some_custom_reminders_are_set_in_past">Some custom reminders is set in past!</string>
 
     <string-array name="icons_string_array" translatable="false">
         <item>ic_notifications_white_24dp</item> 

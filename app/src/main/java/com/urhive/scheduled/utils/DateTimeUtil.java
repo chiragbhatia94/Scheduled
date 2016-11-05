@@ -62,7 +62,7 @@ public class DateTimeUtil {
         mCalendar.set(Calendar.HOUR_OF_DAY, mHour);
         mCalendar.set(Calendar.MINUTE, mMin);
         mCalendar.set(Calendar.SECOND, 0);
-        mCalendar.set(Calendar.MILLISECOND,0);
+        mCalendar.set(Calendar.MILLISECOND, 0);
         this.inMillis = mCalendar.getTimeInMillis();
     }
 
@@ -103,7 +103,7 @@ public class DateTimeUtil {
 
     // static methods
     // compare current date time with parameters
-    public static Boolean isInPast(String date, String time){
+    public static Boolean isInPast(String date, String time) {
         String d[] = date.split("/");
         int day = Integer.parseInt(d[0]);
         int month = Integer.parseInt(d[1]);
@@ -121,7 +121,7 @@ public class DateTimeUtil {
         calendar.set(Calendar.HOUR_OF_DAY, hour);
         calendar.set(Calendar.MINUTE, min);
         calendar.set(Calendar.SECOND, 59);
-        calendar.set(Calendar.MILLISECOND,999);
+        calendar.set(Calendar.MILLISECOND, 999);
         long timeInMillis = calendar.getTimeInMillis();
 
         Calendar now = Calendar.getInstance();
@@ -129,17 +129,17 @@ public class DateTimeUtil {
     }
 
     // get current date and time
-    public static String getCurrentDate(){
+    public static String getCurrentDate() {
         Calendar now = Calendar.getInstance();
         return dateFormat.format(now.getTime());
     }
 
-    public static String getCurrentTime(){
+    public static String getCurrentTime() {
         Calendar now = Calendar.getInstance();
         return timeFormat.format(now.getTime());
     }
 
-    public static String getDate(int d, int m, int y){
+    public static String getDate(int d, int m, int y) {
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.MONTH, --m);
         calendar.set(Calendar.YEAR, y);
@@ -147,19 +147,20 @@ public class DateTimeUtil {
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MILLISECOND,0);
+        calendar.set(Calendar.MILLISECOND, 0);
 
         return dateFormat.format(calendar.getTime());
     }
 
-    public static String getTime(int h, int m){
+    public static String getTime(int h, int m) {
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY, h);
         calendar.set(Calendar.MINUTE, m);
         calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MILLISECOND,0);
+        calendar.set(Calendar.MILLISECOND, 0);
         return timeFormat.format(calendar.getTime());
     }
+
     public static String[] getWeekDays() {
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
@@ -182,7 +183,7 @@ public class DateTimeUtil {
         return weekDays;
     }
 
-    public static String addDaysToDate(String date, int noOfDays){
+    public static String addDaysToDate(String date, int noOfDays) {
         String d[] = date.split("/");
         int day = Integer.parseInt(d[0]);
         int month = Integer.parseInt(d[1]);
@@ -196,9 +197,9 @@ public class DateTimeUtil {
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MILLISECOND,0);
+        calendar.set(Calendar.MILLISECOND, 0);
 
-        calendar.add(Calendar.DATE,noOfDays);
+        calendar.add(Calendar.DATE, noOfDays);
 
         return dateFormat.format(calendar.getTime());
     }
@@ -230,13 +231,55 @@ public class DateTimeUtil {
         return new String[]{dateFormat.format(calendar.getTime()), timeFormat.format(calendar.getTime())};
     }
 
-    public static Calendar addTimeToCalender(String time, Calendar calendar){
+    public static String findNextDayOfWeekToShow(String date, String time, boolean[] daysOfWeek) {
+        Calendar cal = getCalendar(date);
+        int now = cal.get(Calendar.DAY_OF_WEEK) - 1;
+        while (!daysOfWeek[now] || isInPast(date, time)) {
+            date = addDaysToDate(date, 1);
+            cal.add(Calendar.DATE, 1);
+            now = cal.get(Calendar.DAY_OF_WEEK) - 1;
+        }
+
+        return date;
+    }
+
+    public static String findNextMWFTTSAlternateToShow(String date, String time, boolean[] daysOfWeek) {
+        Calendar cal = getCalendar(date);
+        int now = cal.get(Calendar.DAY_OF_WEEK) - 1;
+        while (!daysOfWeek[now] || isInPast(date, time)) {
+            date = addDaysToDate(date, 1);
+            cal.add(Calendar.DATE, 1);
+            now = cal.get(Calendar.DAY_OF_WEEK) - 1;
+
+            if (cal.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
+                if (daysOfWeek[1] == true) {
+                    daysOfWeek[1] = false;
+                    daysOfWeek[2] = true;
+                    daysOfWeek[3] = false;
+                    daysOfWeek[4] = true;
+                    daysOfWeek[5] = false;
+                    daysOfWeek[6] = true;
+                } else if (daysOfWeek[2] == true) {
+                    daysOfWeek[1] = true;
+                    daysOfWeek[2] = false;
+                    daysOfWeek[3] = true;
+                    daysOfWeek[4] = false;
+                    daysOfWeek[5] = true;
+                    daysOfWeek[6] = false;
+                }
+            }
+        }
+
+        return date;
+    }
+
+    public static Calendar addTimeToCalender(String time, Calendar calendar) {
         String t[] = time.split(":");
         int hour = Integer.parseInt(t[0]);
         int min = Integer.parseInt(t[1]);
 
-        calendar.add(Calendar.HOUR,hour);
-        calendar.add(Calendar.MINUTE,min);
+        calendar.add(Calendar.HOUR, hour);
+        calendar.add(Calendar.MINUTE, min);
 
         return calendar;
     }

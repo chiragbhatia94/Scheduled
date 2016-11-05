@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Scheduled</string>
+
+    <string name="navigation_drawer_open">Ouvert le tiroir de navigation</string>
+    <string name="navigation_drawer_close">Fermez le tiroir de navigation</string>
+
+    <string name="action_settings">Paramètres</string>
+
+    <string name="nav_all">Tous</string>
+    <string name="nav_today">Aujourd\'hui</string>
+    <string name="nav_archived">Archivé</string>
+    <string name="nav_completed">Terminé</string>
+    <string name="settings">paramètres</string>
+    <string name="categories">Catégories</string>
+    <string name="nav_deleted">Supprimé</string>
+    <string name="default_quotation">\"Automne sept fois, Levez- huit!\"</string>
+    <string name="default_quotation_author">- Anonyme</string>
+    <string name="title_activity_settings">Paramètres</string>
+
+    <string name="set">Établir</string>
+    <string name="cancel">Annuler</string>
+
+    <string name="default_string">Défaut</string>
+    <string name="custom">Coutume</string>
+    <string name="customize">Personnaliser</string>
+    <string name="notification">Notification</string>
+    <string name="alarm">Alarme</string>
+
+    <string name="use_default">L\'utilisation par défaut</string>
+    <string name="do_not_remind_early">Ne pas rappeler au début</string>
+    <string name="do_not_repeat">Ne pas répéter</string>
+    <string name="select_category">Choisir une catégorie</string>
+    <string name="add_new_category">Ajouter une nouvelle catégorie</string>
+    <string name="tap_to_change_notification_time">Appuyez sur pour changer la date de notification</string>
+    <string name="add_title">Ajouter un titre</string>
+    <string name="add_notification_content_nreason">Ajouter le contenu de la notification\nReason</string>
+    <string name="details">Détails</string>
+    <string name="time_to_show_notification">Temps pour afficher les Notifications</string>
+    <string name="now">Maintenant</string>
+    <string name="date">Date</string>
+    <string name="today">Aujourd\'hui</string>
+    <string name="category">Catégorie</string>
+    <string name="uncategorized">Uncategorized</string>
+    <string name="repeat">Répéter</string>
+    <string name="reminders">Rappels</string>
+    <string name="no_of_times_to_show">Nombre de fois pour afficher</string>
+    <string name="reminder_type">Type de Rappel</string>
+    <string name="setup_early_reminder">Configuration Rappel précoce</string>
+    <string name="select_reminder_type">Sélectionner le type de rappel</string>
+    <string name="custom_reminders_are_set_in_past">Rappels sur mesure sont définies dans le passé!</string>
+    <string name="nav_labels">Labels</string>
+    <string name="nav_edit_labels">Edit Labels</string>
+    <string name="category_uncategorized">Uncategorized</string>
+
+    <string-array name="repeat_array">
+        <item>Ne se répète pas</item>
+        <item>Chaque Jour</item>
+        <item>Chaque Semaine</item>
+        <item>Chaque Mois</item>
+        <item>Chaque Année</item>
+        <item>Specific days of the week</item>
+        <item>Revision preset</item>
+    </string-array>
+
+    <string-array name="repeat_array_custom">
+        <item>Alternate days</item>
+        <item>MWF TTS Alternate Week</item>
+        <item>Coutume</item>
+    </string-array>
+
+    <string-array name="advance_notification_array">
+        <item>15 Minutes</item>
+        <item>24 Heures</item>
+        <item>7 Jours</item>
+    </string-array>
+</resources>

@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             List<Icon> iconsU = Icon.find(Icon.class, "name = ?", "ic_label_white_24dp");
-            Category uncategorized = new Category("Uncategorized", 12, Integer.parseInt(String.valueOf(iconsU.get(0).getId())), 0, 0);
+            Category uncategorized = new Category(getString(R.string.category_uncategorized), 12, Integer.parseInt(String.valueOf(iconsU.get(0).getId())), 0, 0);
             uncategorized.save();
         }
 
@@ -87,11 +87,11 @@ public class MainActivity extends AppCompatActivity {
                     .withName(category.getName()));
         }
 
-        drawerItems.add(new PrimaryDrawerItem().withSelectable(false).withName("Edit Labels").withIdentifier(9999));
+        drawerItems.add(new PrimaryDrawerItem().withSelectable(false).withName(R.string.nav_edit_labels).withIdentifier(9999));
 
 
         ExpandableDrawerItem labels = new ExpandableDrawerItem()
-                .withName("Labels")
+                .withName(R.string.nav_labels)
                 .withSelectable(false)
                 .withIsExpanded(true)
                 .withSubItems(drawerItems);
