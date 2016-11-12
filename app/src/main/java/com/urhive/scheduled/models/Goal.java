@@ -9,9 +9,9 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created by Chirag Bhatia on 06-06-2016.
+ * Created by Chirag Bhatia on 08-11-2016.
  */
-public class Reminder extends SugarRecord implements Comparable<Reminder> {
+public class Goal extends SugarRecord implements Comparable<Goal> {
     @Ignore
     public static final int ACTIVE = 1;
     @Ignore
@@ -43,58 +43,51 @@ public class Reminder extends SugarRecord implements Comparable<Reminder> {
     @Ignore
     public static final int STATUS_DELETED = 3;
     @Ignore
-    public static final int TYPE_NOTIFICATION = 0;
+    public static final int MODE_NORMAL = 0;
     @Ignore
-    public static final int TYPE_ALARM = 1;
-    @Ignore
-    public static final long inAdvanceValues[] = {900000, 86400000, 604800000};
+    public static final int MODE_ADVANCED = 1;
+
     String title;
     String content;
     String date;
     String time;
-    int active;
+    int longestStreak;
+    int currentStreak;
     long categoryId;
     int noToShow;
     int noShown;
     int repeatType;
-    long inAdvanceMillis;
     // added later on
     int status;
-    int reminderType;
+    int mode;
+
     @Ignore
     private Date dateTime;
 
-    public Reminder() {
+    public Goal() {
     }
 
-    public Reminder(String title, String content, String date, String time, int active,
-                    long categoryId, int noToShow, int noShown, int repeatType, long inAdvanceMillis,
-                    int status, int reminderType) {
+    public Goal(String title, String content, String date, String time, int longestStreak, int currentStreak, long categoryId, int noToShow, int noShown, int repeatType, int status, int mode) {
         this.title = title;
         this.content = content;
         this.date = date;
         this.time = time;
-        this.active = active;
+        this.longestStreak = longestStreak;
+        this.currentStreak = currentStreak;
         this.categoryId = categoryId;
         this.noToShow = noToShow;
         this.noShown = noShown;
         this.repeatType = repeatType;
-        this.inAdvanceMillis = inAdvanceMillis;
         this.status = status;
-        this.reminderType = reminderType;
+        this.mode = mode;
     }
 
-    public static String getActiveDays(Long reminderId) {
-        List<DayOfWeek> dow = DayOfWeek.find(DayOfWeek.class, "REMINDER_ID = ?", String.valueOf(reminderId));
+    public static String getActiveDays(Long goalId) {
+        List<DayOfWeek> dow = DayOfWeek.find(DayOfWeek.class, "GOAL_ID = ?", String.valueOf(goalId));
         DayOfWeek daysActive = dow.get(0);
         return daysActive.getActiveDays();
     }
 
-    public static void resetAlarms() {
-
-    }
-
-    // GETTER & SETTER
     public String getTitle() {
         return title;
     }
@@ -127,12 +120,20 @@ public class Reminder extends SugarRecord implements Comparable<Reminder> {
         this.time = time;
     }
 
-    public int getActive() {
-        return active;
+    public int getLongestStreak() {
+        return longestStreak;
     }
 
-    public void setActive(int active) {
-        this.active = active;
+    public void setLongestStreak(int longestStreak) {
+        this.longestStreak = longestStreak;
+    }
+
+    public int getCurrentStreak() {
+        return currentStreak;
+    }
+
+    public void setCurrentStreak(int currentStreak) {
+        this.currentStreak = currentStreak;
     }
 
     public long getCategoryId() {
@@ -167,14 +168,6 @@ public class Reminder extends SugarRecord implements Comparable<Reminder> {
         this.repeatType = repeatType;
     }
 
-    public long getInAdvanceMillis() {
-        return inAdvanceMillis;
-    }
-
-    public void setInAdvanceMillis(long inAdvanceMillis) {
-        this.inAdvanceMillis = inAdvanceMillis;
-    }
-
     public int getStatus() {
         return status;
     }
@@ -183,32 +176,12 @@ public class Reminder extends SugarRecord implements Comparable<Reminder> {
         this.status = status;
     }
 
-    public int getReminderType() {
-        return reminderType;
+    public int getMode() {
+        return mode;
     }
 
-    public void setReminderType(int reminderType) {
-        this.reminderType = reminderType;
-    }
-
-    // TO STRING
-    @Override
-    public String toString() {
-        return "Reminder{" +
-                "title='" + title + '\'' +
-                ", content='" + content + '\'' +
-                ", date='" + date + '\'' +
-                ", time='" + time + '\'' +
-                ", dateTime=" + dateTime +
-                ", active=" + active +
-                ", categoryId=" + categoryId +
-                ", noToShow=" + noToShow +
-                ", noShown=" + noShown +
-                ", repeatType=" + repeatType +
-                ", inAdvanceMillis=" + inAdvanceMillis +
-                ", status =" + status +
-                ", reminderType =" + reminderType +
-                '}';
+    public void setMode(int mode) {
+        this.mode = mode;
     }
 
     // for sorting by date time
@@ -229,7 +202,7 @@ public class Reminder extends SugarRecord implements Comparable<Reminder> {
     }
 
     @Override
-    public int compareTo(Reminder another) {
+    public int compareTo(Goal another) {
         return getDateTime().compareTo(another.getDateTime());
     }
 }

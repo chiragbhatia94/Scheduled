@@ -4,13 +4,133 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
+    <!--<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="hahaha" />
+        card_view:cardBackgroundColor="@color/colorCard"
+        card_view:cardCornerRadius="8dp"
+        card_view:cardElevation="2dp"
+        card_view:cardPreventCornerOverlap="true"
+        card_view:cardUseCompatPadding="true">
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
+            <TextView
+                android:id="@+id/reminderTitleTV"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimaryLight"
+                android:ellipsize="marquee"
+                android:maxLines="1"
+                android:paddingBottom="4dp"
+                android:paddingEnd="8dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:paddingStart="8dp"
+                android:paddingTop="4dp"
+                android:text="Reminder 1: Notification Content"
+                android:textAppearance="@android:style/TextAppearance.Medium"
+                android:textColor="@color/cardview_light_background" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_below="@id/reminderTitleTV"
+                android:gravity="center"
+                android:layout_height="wrap_content">
+                <RelativeLayout
+                    android:id="@+id/tpRL"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="10dp">
+
+                    <ImageView
+                        android:id="@+id/circle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/circle" />
+
+                    <ImageView
+                        android:id="@+id/categoryIconIV"
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/ic_label_white_24dp"
+                        android:tint="@color/white" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/tpRL"
+                    android:paddingTop="8dp">
+                    <TextView
+                        android:id="@+id/reminderDateTimeTV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="8dp"
+                        android:text="03/12/2016 00:18"
+                        android:textColor="@color/primary_dark" />
+
+                    <TextView
+                        android:id="@+id/reminderRepeatTypeTV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/reminderDateTimeTV"
+                        android:paddingLeft="8dp"
+                        android:paddingTop="4dp"
+                        android:text="Do not repeat" />
+
+                    <TextView
+                        android:id="@+id/reminderShownToShowTV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_below="@id/reminderDateTimeTV"
+                        android:paddingRight="8dp"
+                        android:paddingTop="4dp"
+                        android:text="Shown: 5/15" />
+                </RelativeLayout>
+            </RelativeLayout>
+        </RelativeLayout>
+
+        &lt;!&ndash;CORNER&ndash;&gt;
+        <RelativeLayout
+            android:id="@+id/label"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="top|right"
+            android:background="#FF5252"
+            android:gravity="center_horizontal|bottom"
+            android:paddingBottom="4dp"
+            android:rotation="45"
+            android:translationX="40dp"
+            android:translationY="-40dp">
+
+            <ImageView
+                android:id="@+id/reminderNotiONIV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_notifications_active_black_24dp" />
+
+            <ImageView
+                android:id="@+id/reminderNotiOFFIV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_notifications_off_white_24dp"
+                android:tint="#000000" />
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+-->
     <android.support.v7.widget.RecyclerView
         android:id="@+id/goalRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:paddingBottom="16dp"
+        android:paddingTop="8dp"></android.support.v7.widget.RecyclerView>
 </LinearLayout>

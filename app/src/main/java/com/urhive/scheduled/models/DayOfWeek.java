@@ -6,7 +6,7 @@ import com.orm.SugarRecord;
  * Created by Chirag Bhatia on 11-07-2016.
  */
 public class DayOfWeek extends SugarRecord {
-    long reminderID;
+
     boolean SUNDAY;
     boolean MONDAY;
     boolean TUESDAY;
@@ -14,6 +14,11 @@ public class DayOfWeek extends SugarRecord {
     boolean THURSDAY;
     boolean FRIDAY;
     boolean SATURDAY;
+    int reminderID;
+
+    public DayOfWeek() {
+
+    }
 
     public DayOfWeek(boolean[] dow) {
         SUNDAY = dow[0];
@@ -25,11 +30,54 @@ public class DayOfWeek extends SugarRecord {
         SATURDAY = dow[6];
     }
 
-    public long getReminderID() {
+    public int getReminderID() {
         return reminderID;
     }
 
-    public void setReminderID(long reminderID) {
+    public void setReminderID(int reminderID) {
         this.reminderID = reminderID;
+    }
+
+    public String getActiveDays() {
+        //String[] daysOfWeek = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
+        String activeDays = "";
+
+        if (SUNDAY) {
+            activeDays = activeDays + ", Sun";
+        }
+        if (MONDAY) {
+            activeDays = activeDays + ", Mon";
+        }
+        if (TUESDAY) {
+            activeDays = activeDays + ", Tue";
+        }
+        if (WEDNESDAY) {
+            activeDays = activeDays + ", Wed";
+        }
+        if (THURSDAY) {
+            activeDays = activeDays + ", Thu";
+        }
+        if (FRIDAY) {
+            activeDays = activeDays + ", Fri";
+        }
+        if (SATURDAY) {
+            activeDays = activeDays + ", Sat";
+        }
+
+        return activeDays.substring(2);
+    }
+
+    @Override
+    public String toString() {
+        return "DayOfWeek{" +
+                "reminderID=" + reminderID +
+                ", SUNDAY=" + SUNDAY +
+                ", MONDAY=" + MONDAY +
+                ", TUESDAY=" + TUESDAY +
+                ", WEDNESDAY=" + WEDNESDAY +
+                ", THURSDAY=" + THURSDAY +
+                ", FRIDAY=" + FRIDAY +
+                ", SATURDAY=" + SATURDAY +
+                '}';
     }
 }

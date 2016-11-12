@@ -122,6 +122,7 @@ public class AddReminderActivity extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_reminder);
+        setTitle(getString(R.string.add_reminder));
 
         allFindViewById();
         assignDefaultValues();
@@ -800,6 +801,7 @@ public class AddReminderActivity extends AppCompatActivity implements
             return true;
         } else if (id == R.id.action_done) {
             saveReminder();
+            Reminder.resetAlarms();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -939,8 +941,8 @@ public class AddReminderActivity extends AppCompatActivity implements
                                 reminder.setId(reminderId);
                                 AlarmReminders nowReminder = new AlarmReminders(reminderId, 1, mDate, DateTimeUtil.getCurrentTime(), AlarmReminders.NOT_SHOWN, AlarmReminders.NORMAL_ALARM_REMINDER);
                                 nowReminder.save();
-                                // no advance noti in this case!
 
+                                // no advance noti in this case!
                                 Intent intent = new Intent(AddReminderActivity.this, MainActivity.class);
                                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 startActivity(intent);
@@ -975,7 +977,8 @@ public class AddReminderActivity extends AppCompatActivity implements
             }
 
             // creating Reminder Object
-            Reminder reminder = new Reminder(mTitle, mContent, mDate, mTime, mActive, categoryId, noToShow, noShown, repeatType, inAdvanceMillis, status, notiType);
+            Reminder reminder = new Reminder(mTitle, mContent, mDate, mTime, mActive, categoryId,
+                    noToShow, noShown, repeatType, inAdvanceMillis, status, notiType);
 
             long reminderId = reminder.save();
             reminder.setId(reminderId);
@@ -1005,7 +1008,7 @@ public class AddReminderActivity extends AppCompatActivity implements
             reminder.setId(reminderId);
 
             DayOfWeek dow = new DayOfWeek(mDaysOfWeek);
-            dow.setReminderID(reminderId);
+            dow.setReminderID((int) reminderId);
             dow.save();
 
             AlarmReminders nextAlarm = new AlarmReminders();
@@ -1071,7 +1074,7 @@ public class AddReminderActivity extends AppCompatActivity implements
         reminder.setId(reminderId);
 
         DayOfWeek dow = new DayOfWeek(mmDaysOfWeek);
-        dow.setReminderID(reminderId);
+        dow.setReminderID((int) reminderId);
         dow.save();
 
         AlarmReminders nextAlarm = new AlarmReminders();
@@ -1103,7 +1106,7 @@ public class AddReminderActivity extends AppCompatActivity implements
         startActivity(intent);
     }
 
-    public String calculateNextReminder(String date, int RepeatType) {
+    public String calculateNextReminder(String date, int repeatType) {
         String d[] = date.split("/");
         int day = Integer.parseInt(d[0]);
         int month = Integer.parseInt(d[1]);
