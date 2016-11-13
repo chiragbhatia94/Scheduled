@@ -34,6 +34,7 @@ import com.urhive.scheduled.models.Reminder;
 import com.urhive.scheduled.utils.DateTimeUtil;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -118,6 +119,20 @@ public class MainActivity extends AppCompatActivity {
                         hideOption(R.id.action_delete_all_forever);
                         if (drawerItem.equals(R.id.nav_all)) {
                             reminderList = Reminder.find(Reminder.class, "status = ?", String.valueOf(Reminder.STATUS_NORMAL));
+                            for (Reminder reminder : reminderList) {
+                                String args[] = {String.valueOf(reminder.getId()), String.valueOf(AlarmReminders.NORMAL_ALARM_REMINDER)};
+                                List<AlarmReminders> alarmReminderses = AlarmReminders.find(AlarmReminders.class, "reminder_id = ? and " +
+                                        "reminder_type = ?", args);
+                                Collections.sort(alarmReminderses);
+
+                                if (alarmReminderses.isEmpty()) {
+                                    reminderList.remove(reminder);
+                                } else {
+                                    reminder.setDate(alarmReminderses.get(0).getDate());
+                                    reminder.setTime(alarmReminderses.get(0).getTime());
+                                }
+                            }
+
                             ReminderFragment.adapter.notifyListChanged(reminderList);
                             drawer.closeDrawer();
                             return true;

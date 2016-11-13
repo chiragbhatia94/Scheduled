@@ -1,6 +1,7 @@
 package com.urhive.scheduled.activities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -101,6 +102,10 @@ public class AppIntro extends IntroActivity {
             return;
         }
         Toast.makeText(AppIntro.this, "Completed!", Toast.LENGTH_SHORT).show();
+
+        Intent intent = new Intent(AppIntro.this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
     }
 
     @Override

@@ -20,5 +20,6 @@
     <dimen name="habitNameWidth">160dp</dimen>
     <dimen name="progressbarOffset">-10dp</dimen>
 
-    <dimen name="item_offset">5dp</dimen>
+    <dimen name="item_offset">0dp</dimen>
+    <dimen name="card_view_margin">3dp</dimen>
 </resources>

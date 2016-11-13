@@ -43,28 +43,28 @@ public class DayOfWeek extends SugarRecord {
         String activeDays = "";
 
         if (SUNDAY) {
-            activeDays = activeDays + ", Sun";
+            activeDays = activeDays + "S";
         }
         if (MONDAY) {
-            activeDays = activeDays + ", Mon";
+            activeDays = activeDays + "M";
         }
         if (TUESDAY) {
-            activeDays = activeDays + ", Tue";
+            activeDays = activeDays + "T";
         }
         if (WEDNESDAY) {
-            activeDays = activeDays + ", Wed";
+            activeDays = activeDays + "W";
         }
         if (THURSDAY) {
-            activeDays = activeDays + ", Thu";
+            activeDays = activeDays + "T";
         }
         if (FRIDAY) {
-            activeDays = activeDays + ", Fri";
+            activeDays = activeDays + "F";
         }
         if (SATURDAY) {
-            activeDays = activeDays + ", Sat";
+            activeDays = activeDays + "S";
         }
 
-        return activeDays.substring(2);
+        return activeDays;
     }
 
     @Override

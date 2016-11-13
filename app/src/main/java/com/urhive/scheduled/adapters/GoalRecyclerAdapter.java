@@ -1,7 +1,7 @@
 package com.urhive.scheduled.adapters;
 
 import android.content.Context;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,7 +33,7 @@ public class GoalRecyclerAdapter extends RecyclerView.Adapter<GoalRecyclerAdapte
 
     @Override
     public ItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.goallistviewitem, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.goal_listview_item, parent, false);
         return new ItemViewHolder(v);
     }
 
@@ -41,8 +41,8 @@ public class GoalRecyclerAdapter extends RecyclerView.Adapter<GoalRecyclerAdapte
     public void onBindViewHolder(ItemViewHolder holder, int position) {
         Reminder reminder = remindersList.get(position);
 
-        String title = reminder.getTitle() + ": " + reminder.getContent();
-        holder.titleTV.setText(title);
+        holder.titleTV.setText(reminder.getTitle());
+        holder.titleTV.setText(reminder.getContent());
 
         switch (remindersList.get(position).getRepeatType()) {
             case 0:
@@ -77,7 +77,7 @@ public class GoalRecyclerAdapter extends RecyclerView.Adapter<GoalRecyclerAdapte
                 break;
         }
 
-        holder.timeTV.setText(reminder.getDate() + " " + reminder.getTime());
+        holder.timeTV.setText(reminder.getTime());
 
         Category category = Category.findById(Category.class, reminder.getCategoryId());
         Icon icon = Icon.findById(Icon.class, category.getIconId());
@@ -100,9 +100,14 @@ public class GoalRecyclerAdapter extends RecyclerView.Adapter<GoalRecyclerAdapte
         }
 
         ButtonAdapter adapter;
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
+        /*RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
 
-        holder.buttons.setLayoutManager(layoutManager);
+        holder.buttons.setLayoutManager(layoutManager);*/
+
+
+        holder.buttons.setLayoutManager(new GridLayoutManager(context, 7));
+        ItemOffsetDecoration itemDecoration = new ItemOffsetDecoration(context, R.dimen.item_offset);
+        holder.buttons.addItemDecoration(itemDecoration);
 
         adapter = new ButtonAdapter(context, reminders);
         holder.buttons.setAdapter(adapter);
@@ -119,13 +124,14 @@ public class GoalRecyclerAdapter extends RecyclerView.Adapter<GoalRecyclerAdapte
     }
 
     public class ItemViewHolder extends RecyclerView.ViewHolder {
-        TextView titleTV, timeTV, repeatTypeTV, shownTV;
+        TextView titleTV, contentTV, timeTV, repeatTypeTV, shownTV;
         ImageView iconIV, circleIV;
         RecyclerView buttons;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
             titleTV = (TextView) itemView.findViewById(R.id.reminderTitleTV);
+            titleTV = (TextView) itemView.findViewById(R.id.reminderContentTV);
             timeTV = (TextView) itemView.findViewById(R.id.reminderDateTimeTV);
             repeatTypeTV = (TextView) itemView.findViewById(R.id.reminderRepeatTypeTV);
             shownTV = (TextView) itemView.findViewById(R.id.reminderShownToShowTV);

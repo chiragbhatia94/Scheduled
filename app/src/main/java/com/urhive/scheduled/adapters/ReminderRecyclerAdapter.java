@@ -34,7 +34,9 @@ public class ReminderRecyclerAdapter extends RecyclerView.Adapter<ReminderRecycl
 
     @Override
     public ItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.reminderlistviewitem, parent, false);
+        /*View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.reminderlistviewitem, parent, false);
+        */
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.reminder_listview_item, parent, false);
         return new ItemViewHolder(v);
     }
 
@@ -50,8 +52,8 @@ public class ReminderRecyclerAdapter extends RecyclerView.Adapter<ReminderRecycl
             holder.notiOffIV.setVisibility(View.GONE);
         }
 
-        String title = reminder.getTitle() + ": " + reminder.getContent();
-        holder.titleTV.setText(title);
+        holder.titleTV.setText(reminder.getTitle());
+        holder.contentTV.setText(reminder.getContent());
 
         switch (remindersList.get(position).getRepeatType()) {
             case 0:
@@ -86,7 +88,8 @@ public class ReminderRecyclerAdapter extends RecyclerView.Adapter<ReminderRecycl
                 break;
         }
 
-        holder.timeTV.setText(reminder.getDate() + " " + reminder.getTime());
+        //holder.timeTV.setText(reminder.getDate() + " " + reminder.getTime());
+        holder.timeTV.setText(reminder.getTime());
 
         final Category category = Category.findById(Category.class, reminder.getCategoryId());
         Icon icon = Icon.findById(Icon.class, category.getIconId());
@@ -200,12 +203,13 @@ public class ReminderRecyclerAdapter extends RecyclerView.Adapter<ReminderRecycl
     }
 
     public class ItemViewHolder extends RecyclerView.ViewHolder {
-        TextView titleTV, timeTV, repeatTypeTV, shownTV;
+        TextView titleTV, contentTV, timeTV, repeatTypeTV, shownTV;
         ImageView notiOffIV, notiOnIV, iconIV, circleIV, popupmenuIV;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
             titleTV = (TextView) itemView.findViewById(R.id.reminderTitleTV);
+            contentTV = (TextView) itemView.findViewById(R.id.reminderContentTV);
             timeTV = (TextView) itemView.findViewById(R.id.reminderDateTimeTV);
             repeatTypeTV = (TextView) itemView.findViewById(R.id.reminderRepeatTypeTV);
             shownTV = (TextView) itemView.findViewById(R.id.reminderShownToShowTV);

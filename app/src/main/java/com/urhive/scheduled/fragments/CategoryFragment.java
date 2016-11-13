@@ -1,12 +1,8 @@
 package com.urhive.scheduled.fragments;
 
 import android.app.AlertDialog;
-import android.content.Context;
-import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.ColorInt;
-import android.support.annotation.DimenRes;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatDialogFragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -24,6 +20,7 @@ import com.urhive.scheduled.R;
 import com.urhive.scheduled.activities.AddReminderActivity;
 import com.urhive.scheduled.activities.EditLabelsActivity;
 import com.urhive.scheduled.adapters.IconsAdapter;
+import com.urhive.scheduled.adapters.ItemOffsetDecoration;
 import com.urhive.scheduled.helpers.ColorHelper;
 import com.urhive.scheduled.models.Category;
 import com.urhive.scheduled.models.Icon;
@@ -212,23 +209,5 @@ public class CategoryFragment extends AppCompatDialogFragment {
             }
         });
         return view;
-    }
-
-    public class ItemOffsetDecoration extends RecyclerView.ItemDecoration {
-        private int mItemOffset;
-
-        public ItemOffsetDecoration(int itemOffset) {
-            mItemOffset = itemOffset;
-        }
-
-        public ItemOffsetDecoration(@NonNull Context context, @DimenRes int itemOffsetId) {
-            this(context.getResources().getDimensionPixelSize(itemOffsetId));
-        }
-
-        @Override
-        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-            super.getItemOffsets(outRect, view, parent, state);
-            outRect.set(mItemOffset, mItemOffset, mItemOffset, mItemOffset);
-        }
     }
 }

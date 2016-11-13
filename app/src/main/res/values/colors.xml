@@ -29,6 +29,8 @@
 
     <color name="colorBar">#607D8B</color>
 
+    <color name="textGreyHeader">#ff818181</color>
+
     // all material colors
     <color name="red_50">#FFEBEE</color>
     <color name="red_100">#FFCDD2</color>
