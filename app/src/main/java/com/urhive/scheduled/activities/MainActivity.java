@@ -71,7 +71,8 @@ public class MainActivity extends AppCompatActivity {
 
         // navigation drawer
         List<IDrawerItem> drawerItems = new ArrayList<>();
-        // add labels later here via a for loop with their id as identifier and total items in them as badges
+        // add labels later here via a for loop with their id as identifier and total items in
+        // them as badges
         categories = Category.find(Category.class, null, null, null, "position", null);
         Log.i("All Categories", "onCreate: " + categories.toString());
 
@@ -79,7 +80,8 @@ public class MainActivity extends AppCompatActivity {
             Icon i = Icon.findById(Icon.class, category.getIconId());
             Log.i("Category Icons", "onCreate: " + i.toString());
             drawerItems.add(new PrimaryDrawerItem()
-                    .withIcon(getResources().getIdentifier(i.getName(), "drawable", getPackageName()))
+                    .withIcon(getResources().getIdentifier(i.getName(), "drawable",
+                            getPackageName()))
                     .withIconTintingEnabled(true)
                     .withIdentifier(category.getId())
                     .withTag(category)
@@ -87,7 +89,8 @@ public class MainActivity extends AppCompatActivity {
                     .withName(category.getName()));
         }
 
-        drawerItems.add(new PrimaryDrawerItem().withSelectable(false).withName(R.string.nav_edit_labels).withIdentifier(9999));
+        drawerItems.add(new PrimaryDrawerItem().withSelectable(false).withName(R.string
+                .nav_edit_labels).withIdentifier(9999));
 
 
         ExpandableDrawerItem labels = new ExpandableDrawerItem()
@@ -109,7 +112,8 @@ public class MainActivity extends AppCompatActivity {
                 .withSelectedItem(R.id.nav_all)
                 .withOnDrawerItemLongClickListener(new Drawer.OnDrawerItemLongClickListener() {
                     @Override
-                    public boolean onItemLongClick(View view, int position, IDrawerItem drawerItem) {
+                    public boolean onItemLongClick(View view, int position, IDrawerItem
+                            drawerItem) {
                         return false;
                     }
                 })
@@ -118,10 +122,13 @@ public class MainActivity extends AppCompatActivity {
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
                         hideOption(R.id.action_delete_all_forever);
                         if (drawerItem.equals(R.id.nav_all)) {
-                            reminderList = Reminder.find(Reminder.class, "status = ?", String.valueOf(Reminder.STATUS_NORMAL));
+                            reminderList = Reminder.find(Reminder.class, "status = ?", String
+                                    .valueOf(Reminder.STATUS_NORMAL));
                             for (Reminder reminder : reminderList) {
-                                String args[] = {String.valueOf(reminder.getId()), String.valueOf(AlarmReminders.NORMAL_ALARM_REMINDER)};
-                                List<AlarmReminders> alarmReminderses = AlarmReminders.find(AlarmReminders.class, "reminder_id = ? and " +
+                                String args[] = {String.valueOf(reminder.getId()), String.valueOf
+                                        (AlarmReminders.NORMAL_ALARM_REMINDER)};
+                                List<AlarmReminders> alarmReminderses = AlarmReminders.find
+                                        (AlarmReminders.class, "reminder_id = ? and " +
                                         "reminder_type = ?", args);
                                 Collections.sort(alarmReminderses);
 
@@ -138,12 +145,14 @@ public class MainActivity extends AppCompatActivity {
                             return true;
                         } else if (drawerItem.equals(R.id.nav_deleted)) {
                             showOption(R.id.action_delete_all_forever);
-                            reminderList = Reminder.find(Reminder.class, "status = ?", String.valueOf(Reminder.STATUS_DELETED));
+                            reminderList = Reminder.find(Reminder.class, "status = ?", String
+                                    .valueOf(Reminder.STATUS_DELETED));
                             ReminderFragment.adapter.notifyListChanged(reminderList);
                             drawer.closeDrawer();
                             return true;
                         } else if (drawerItem.equals(R.id.nav_archived)) {
-                            reminderList = Reminder.find(Reminder.class, "status = ?", String.valueOf(Reminder.STATUS_ARCHIEVED));
+                            reminderList = Reminder.find(Reminder.class, "status = ?", String
+                                    .valueOf(Reminder.STATUS_ARCHIEVED));
                             ReminderFragment.adapter.notifyListChanged(reminderList);
                             drawer.closeDrawer();
                             return true;
@@ -157,40 +166,50 @@ public class MainActivity extends AppCompatActivity {
                             return true;
                         } else if (drawerItem.equals(R.id.nav_completed)) {
                             String args[] = {};
-                            reminderList = Reminder.findWithQuery(Reminder.class, "select * from reminder where no_shown = no_to_show and status = 1", args);
+                            reminderList = Reminder.findWithQuery(Reminder.class, "select * from " +
+                                    "reminder where no_shown = no_to_show and status = 1", args);
                             ReminderFragment.adapter.notifyListChanged(reminderList);
                             drawer.closeDrawer();
                             return true;
                         } else if (drawerItem.equals(R.id.nav_today)) {
-                            reminderList = Reminder.find(Reminder.class, "status = ?", String.valueOf(Reminder.STATUS_NORMAL));
+                            reminderList = Reminder.find(Reminder.class, "status = ?", String
+                                    .valueOf(Reminder.STATUS_NORMAL));
                             List<Reminder> newReminderList = new ArrayList<Reminder>();
                             String date = DateTimeUtil.getCurrentDate();
                             for (Reminder reminder : reminderList) {
                                 String args[] = {date, String.valueOf(AlarmReminders.NOT_SHOWN),
-                                        String.valueOf(reminder.getId()), String.valueOf(AlarmReminders.NORMAL_ALARM_REMINDER)};
-                                List<AlarmReminders> alarms = AlarmReminders.find(AlarmReminders.class,
-                                        "date = ? and status_shown = ? and reminder_id = ? and reminder_type = ?", args);
+                                        String.valueOf(reminder.getId()), String.valueOf
+                                        (AlarmReminders.NORMAL_ALARM_REMINDER)};
+                                List<AlarmReminders> alarms = AlarmReminders.find(AlarmReminders
+                                                .class,
+                                        "date = ? and status_shown = ? and reminder_id = ? and " +
+                                                "reminder_type = ?", args);
                                 if (alarms.size() > 0) {
                                     newReminderList.add(reminder);
                                 }
                             }
                             reminderList = newReminderList;
                             ReminderFragment.adapter.notifyListChanged(reminderList);
-                            // Toast.makeText(MainActivity.this, "To be developed!", Toast.LENGTH_SHORT).show();
+                            // Toast.makeText(MainActivity.this, "To be developed!", Toast
+                            // .LENGTH_SHORT).show();
                             drawer.closeDrawer();
                             return true;
                         } else {
                             if (drawerItem.getTag().equals(10000001))
                                 return true;
                             else if (drawerItem.getTag() == null) {
-                                Toast.makeText(MainActivity.this, "There is some problem! Error option code: " + drawerItem.toString(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(MainActivity.this, "There is some problem! Error " +
+                                        "option code: " + drawerItem.toString(), Toast
+                                        .LENGTH_SHORT).show();
                                 drawer.closeDrawer();
                                 return true;
                             }
                             for (Category category : categories) {
                                 if (drawerItem.getTag().equals(category)) {
-                                    String options[] = {String.valueOf(Reminder.STATUS_NORMAL), String.valueOf(category.getId())};
-                                    reminderList = Reminder.find(Reminder.class, "status = ? and category_id = ?", options);
+                                    String options[] = {String.valueOf(Reminder.STATUS_NORMAL),
+                                            String.valueOf(category.getId())};
+                                    reminderList = Reminder.find(Reminder.class, "status = ? and " +
+                                            "category_id = ?", options);
                                     ReminderFragment.adapter.notifyListChanged(reminderList);
                                     drawer.closeDrawer();
                                     return true;
@@ -211,9 +230,11 @@ public class MainActivity extends AppCompatActivity {
 
         // navigation drawer ends here
 
-        // Toast.makeText(MainActivity.this, ""+ Reminder.getActiveDays(), Toast.LENGTH_SHORT).show();
+        // Toast.makeText(MainActivity.this, ""+ Reminder.getActiveDays(), Toast.LENGTH_SHORT)
+        // .show();
 
-        reminderList = Reminder.find(Reminder.class, "status = ?", String.valueOf(Reminder.STATUS_NORMAL));
+        reminderList = Reminder.find(Reminder.class, "status = ?", String.valueOf(Reminder
+                .STATUS_NORMAL));
 
         viewPager = (ViewPager) findViewById(R.id.viewPager);
         mainFAM = (FloatingActionsMenu) findViewById(R.id.mainFAM);
@@ -286,7 +307,9 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 for (Reminder reminder : reminderList) {
-                                    List<AlarmReminders> alarms = AlarmReminders.find(AlarmReminders.class, "reminder_id = ?", String.valueOf(reminder.getId()));
+                                    List<AlarmReminders> alarms = AlarmReminders.find
+                                            (AlarmReminders.class, "reminder_id = ?", String
+                                                    .valueOf(reminder.getId()));
                                     for (AlarmReminders alarm : alarms) {
                                         alarm.delete();
                                     }
@@ -295,9 +318,11 @@ public class MainActivity extends AppCompatActivity {
                                 reminderList.clear();
                                 ReminderFragment.adapter.notifyListChanged(reminderList);
                                 Intent intent = new Intent(MainActivity.this, MainActivity.class);
-                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent
+                                        .FLAG_ACTIVITY_CLEAR_TASK);
                                 startActivity(intent);
-                                Toast.makeText(MainActivity.this, "Deleted!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(MainActivity.this, "Deleted!", Toast.LENGTH_SHORT)
+                                        .show();
                             }
                         })
                         .setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -309,7 +334,8 @@ public class MainActivity extends AppCompatActivity {
                 builder.show();
                 return true;
             default:
-                Toast.makeText(MainActivity.this, "Yet to be developed!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "Yet to be developed!", Toast.LENGTH_SHORT)
+                        .show();
         }
         return super.onOptionsItemSelected(item);
     }

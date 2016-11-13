@@ -1,7 +1,6 @@
 package com.urhive.scheduled.adapters;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -39,7 +38,7 @@ public class ButtonAdapter extends RecyclerView.Adapter<ButtonAdapter.ButtonView
         // holder.noTV.setText("C");
         holder.noTV.setText(String.valueOf(list.get(position).getNo()));
         holder.noTV.setTextColor(ContextCompat.getColor(context, R.color.black));
-        holder.button.setBackgroundColor(Color.TRANSPARENT);
+        holder.button.setColorFilter(ContextCompat.getColor(context, R.color.grey_100));
         holder.button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

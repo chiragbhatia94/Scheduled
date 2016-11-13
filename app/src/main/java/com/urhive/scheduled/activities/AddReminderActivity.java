@@ -139,14 +139,16 @@ public class AddReminderActivity extends AppCompatActivity implements
         advanceNotiRL.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final String[] advanceNotificationArray = getResources().getStringArray(R.array.advance_notification_array);
+                final String[] advanceNotificationArray = getResources().getStringArray(R.array
+                        .advance_notification_array);
                 if (advanceNotiSwitch.isChecked()) {
                     advanceNotiSwitch.setChecked(false);
                     inAdvanceMillis = 0;
                     advanceNotiTV.setText(R.string.do_not_remind_early);
                 } else {
                     AlertDialog.Builder builder = new AlertDialog.Builder(AddReminderActivity.this)
-                            .setItems(advanceNotificationArray, new DialogInterface.OnClickListener() {
+                            .setItems(advanceNotificationArray, new DialogInterface
+                                    .OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     inAdvanceMillis = Reminder.inAdvanceValues[which];
@@ -162,22 +164,28 @@ public class AddReminderActivity extends AppCompatActivity implements
         categoryRL.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+                LayoutInflater inflater = (LayoutInflater) getSystemService
+                        (LAYOUT_INFLATER_SERVICE);
                 View dialogView = inflater.inflate(R.layout.view_dialog_list_view, null, false);
 
                 ListView listView = (ListView) dialogView.findViewById(R.id.dialogListView);
 
-                List<Category> categories = Category.find(Category.class, null, null, null, "position", null);
+                List<Category> categories = Category.find(Category.class, null, null, null,
+                        "position", null);
                 List<Icon> icons = Icon.listAll(Icon.class);
 
-                listView.setAdapter(new UseCategoryAdapter(AddReminderActivity.this, categories, icons));
+                listView.setAdapter(new UseCategoryAdapter(AddReminderActivity.this, categories,
+                        icons));
                 AlertDialog.Builder builder = new AlertDialog.Builder(AddReminderActivity.this)
                         .setTitle(R.string.select_category)
-                        .setPositiveButton(R.string.add_new_category, new DialogInterface.OnClickListener() {
+                        .setPositiveButton(R.string.add_new_category, new DialogInterface
+                                .OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                CategoryFragment addCategoryFragment = CategoryFragment.addImmidiateCategory();
-                                addCategoryFragment.show(getSupportFragmentManager(), "AddCategory");
+                                CategoryFragment addCategoryFragment = CategoryFragment
+                                        .addImmidiateCategory();
+                                addCategoryFragment.show(getSupportFragmentManager(),
+                                        "AddCategory");
                             }
                         })
                         .setView(dialogView);
@@ -188,7 +196,8 @@ public class AddReminderActivity extends AppCompatActivity implements
         repeatTimeRL.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                RepeatTimesFragment repeatTimeFragment = RepeatTimesFragment.showRepeatTimesFragment(noToShow);
+                RepeatTimesFragment repeatTimeFragment = RepeatTimesFragment
+                        .showRepeatTimesFragment(noToShow);
                 repeatTimeFragment.show(getSupportFragmentManager(), "RepeatTime");
             }
         });
@@ -222,7 +231,8 @@ public class AddReminderActivity extends AppCompatActivity implements
 
                                 repeatTimeRL.setVisibility(View.VISIBLE);
                                 // changes for no to show or repeatTimeRL
-                                if (which == Reminder.DO_NOT_REPEAT || which == Reminder.REVISION_PRESET) {
+                                if (which == Reminder.DO_NOT_REPEAT || which == Reminder
+                                        .REVISION_PRESET) {
                                     repeatTimeRL.setVisibility(View.GONE);
                                 }
                             }
@@ -240,7 +250,8 @@ public class AddReminderActivity extends AppCompatActivity implements
         customizeTV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (PremiumHelper.checkPremium(AddReminderActivity.this, "Customize Presets", "Buy Premium to customize presets & add or remove reminders!")) {
+                if (PremiumHelper.checkPremium(AddReminderActivity.this, "Customize Presets",
+                        "Buy Premium to customize presets & add or remove reminders!")) {
                     if (!customizing) {
                         customizing = Boolean.TRUE;
                         addReminder.setVisibility(View.VISIBLE);
@@ -275,7 +286,9 @@ public class AddReminderActivity extends AppCompatActivity implements
             public void onClick(View v) {
                 AlertDialog.Builder dialog = new AlertDialog.Builder(AddReminderActivity.this)
                         .setTitle(R.string.select_reminder_type)
-                        .setSingleChoiceItems(new String[]{getResources().getString(R.string.notification), getResources().getString(R.string.alarm)}, notiType, new DialogInterface.OnClickListener() {
+                        .setSingleChoiceItems(new String[]{getResources().getString(R.string
+                                        .notification), getResources().getString(R.string.alarm)},
+                                notiType, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 notiType = which;
@@ -317,7 +330,8 @@ public class AddReminderActivity extends AppCompatActivity implements
 
         dpd.setOnDateSetListener(new DatePickerDialog.OnDateSetListener() {
             @Override
-            public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
+            public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int
+                    dayOfMonth) {
                 monthOfYear++;
                 mDay = dayOfMonth;
                 mMonth = monthOfYear;
@@ -342,8 +356,10 @@ public class AddReminderActivity extends AppCompatActivity implements
                         mmTime = DateTimeUtil.getTime(mHour, mMinute);
 
                         int size = customReminderList.size();
-                        customReminderList.add(new AlarmReminders(size + 1, mmDate, mmTime, AlarmReminders.NOT_SHOWN, AlarmReminders.NORMAL_ALARM_REMINDER));
-                        AlarmReminders.sortCustomReminderListByDateTimeAndArrangeByNumber(customReminderList);
+                        customReminderList.add(new AlarmReminders(size + 1, mmDate, mmTime,
+                                AlarmReminders.NOT_SHOWN, AlarmReminders.NORMAL_ALARM_REMINDER));
+                        AlarmReminders.sortCustomReminderListByDateTimeAndArrangeByNumber
+                                (customReminderList);
                         if (repeatType == Reminder.REVISION_PRESET) {
                             presetExpandableListViewAdapter.notifyDataSetChanged();
                         } else if (repeatType == Reminder.CUSTOM) {
@@ -357,7 +373,8 @@ public class AddReminderActivity extends AppCompatActivity implements
 
     private void ehlvSetAdapter() {
         createDefaultRevisionPresetList();
-        presetExpandableListViewAdapter = new PresetExpandableListViewAdapter(AddReminderActivity.this, customReminderList, getFragmentManager());
+        presetExpandableListViewAdapter = new PresetExpandableListViewAdapter(AddReminderActivity
+                .this, customReminderList, getFragmentManager());
         ehlv.setAdapter(presetExpandableListViewAdapter);
         ehlv.setExpanded(true);
     }
@@ -372,11 +389,16 @@ public class AddReminderActivity extends AppCompatActivity implements
             setTimeVariables();
         }
 
-        customReminderList.add(new AlarmReminders(1, DateTimeUtil.addDaysToDate(mDate, 0), mTime, AlarmReminders.NOT_SHOWN, AlarmReminders.NORMAL_ALARM_REMINDER));
-        customReminderList.add(new AlarmReminders(2, DateTimeUtil.addDaysToDate(mDate, 1), mTime, AlarmReminders.NOT_SHOWN, AlarmReminders.NORMAL_ALARM_REMINDER));
-        customReminderList.add(new AlarmReminders(3, DateTimeUtil.addDaysToDate(mDate, 7), mTime, AlarmReminders.NOT_SHOWN, AlarmReminders.NORMAL_ALARM_REMINDER));
-        customReminderList.add(new AlarmReminders(4, DateTimeUtil.addDaysToDate(mDate, 30), mTime, AlarmReminders.NOT_SHOWN, AlarmReminders.NORMAL_ALARM_REMINDER));
-        customReminderList.add(new AlarmReminders(5, DateTimeUtil.addDaysToDate(mDate, 90), mTime, AlarmReminders.NOT_SHOWN, AlarmReminders.NORMAL_ALARM_REMINDER));
+        customReminderList.add(new AlarmReminders(1, DateTimeUtil.addDaysToDate(mDate, 0), mTime,
+                AlarmReminders.NOT_SHOWN, AlarmReminders.NORMAL_ALARM_REMINDER));
+        customReminderList.add(new AlarmReminders(2, DateTimeUtil.addDaysToDate(mDate, 1), mTime,
+                AlarmReminders.NOT_SHOWN, AlarmReminders.NORMAL_ALARM_REMINDER));
+        customReminderList.add(new AlarmReminders(3, DateTimeUtil.addDaysToDate(mDate, 7), mTime,
+                AlarmReminders.NOT_SHOWN, AlarmReminders.NORMAL_ALARM_REMINDER));
+        customReminderList.add(new AlarmReminders(4, DateTimeUtil.addDaysToDate(mDate, 30),
+                mTime, AlarmReminders.NOT_SHOWN, AlarmReminders.NORMAL_ALARM_REMINDER));
+        customReminderList.add(new AlarmReminders(5, DateTimeUtil.addDaysToDate(mDate, 90),
+                mTime, AlarmReminders.NOT_SHOWN, AlarmReminders.NORMAL_ALARM_REMINDER));
     }
 
     public void customPresetDialog(final String repeatCustomArray[]) {
@@ -411,27 +433,33 @@ public class AddReminderActivity extends AppCompatActivity implements
                                     .setMinimumDate(CalendarDay.from(mYear, mMonth, mDay))
                                     .commit();
 
-                            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(AddReminderActivity.this);
+                            SharedPreferences preferences = PreferenceManager
+                                    .getDefaultSharedPreferences(AddReminderActivity.this);
                             Boolean type = preferences.getBoolean("reminderSelection", false);
 
                             if (type == PremiumHelper.CUSTOM_TYPE_DISCRETE) {
                                 typeNeutral = 1;
                                 mcv.setOnDateChangedListener(new OnDateSelectedListener() {
                                     @Override
-                                    public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull final CalendarDay date, boolean selected) {
+                                    public void onDateSelected(@NonNull MaterialCalendarView
+                                                                       widget, @NonNull final
+                                                               CalendarDay date, boolean selected) {
                                         if (selected) {
                                             setTimeVariables();
 
-                                            final TimePickerDialog tpd = TimePickerDialog.newInstance(
+                                            final TimePickerDialog tpd = TimePickerDialog
+                                                    .newInstance(
                                                     AddReminderActivity.this,
                                                     mHour,
                                                     mMinute,
                                                     false
                                             );
 
-                                            tpd.setOnTimeSetListener(new TimePickerDialog.OnTimeSetListener() {
+                                            tpd.setOnTimeSetListener(new TimePickerDialog
+                                                    .OnTimeSetListener() {
                                                 @Override
-                                                public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute) {
+                                                public void onTimeSet(RadialPickerLayout view,
+                                                                      int hourOfDay, int minute) {
                                                     customList.put(date, hourOfDay + ":" + minute);
                                                 }
                                             });
@@ -459,14 +487,17 @@ public class AddReminderActivity extends AppCompatActivity implements
                                 @Override
                                 public void onShow(DialogInterface dialog) {
                                     Button neutral = calendarAlert.getButton(Dialog.BUTTON_NEUTRAL);
-                                    Button negative = calendarAlert.getButton(Dialog.BUTTON_NEGATIVE);
-                                    Button positive = calendarAlert.getButton(Dialog.BUTTON_POSITIVE);
+                                    Button negative = calendarAlert.getButton(Dialog
+                                            .BUTTON_NEGATIVE);
+                                    Button positive = calendarAlert.getButton(Dialog
+                                            .BUTTON_POSITIVE);
 
                                     positive.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
                                             customizeTV.setVisibility(View.GONE);
-                                            presetTV.setText(R.string.tap_to_change_notification_time);
+                                            presetTV.setText(R.string
+                                                    .tap_to_change_notification_time);
 
                                             getNSetCustomDates(mcv);
                                             calendarAlert.dismiss();
@@ -505,10 +536,12 @@ public class AddReminderActivity extends AppCompatActivity implements
     public void switchMCVWorking() {
         if (typeNeutral == 0) {
             typeNeutral = 1;
-            Toast.makeText(AddReminderActivity.this, "Select Discrete Reminders", Toast.LENGTH_SHORT).show();
+            Toast.makeText(AddReminderActivity.this, "Select Discrete Reminders", Toast
+                    .LENGTH_SHORT).show();
             mcv.setOnDateChangedListener(new OnDateSelectedListener() {
                 @Override
-                public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull final CalendarDay date, boolean selected) {
+                public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull final
+                CalendarDay date, boolean selected) {
                     // click to open a timepicker
                     if (selected) {
                         setTimeVariables();
@@ -522,7 +555,8 @@ public class AddReminderActivity extends AppCompatActivity implements
 
                         tpd.setOnTimeSetListener(new TimePickerDialog.OnTimeSetListener() {
                             @Override
-                            public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute) {
+                            public void onTimeSet(RadialPickerLayout view, int hourOfDay, int
+                                    minute) {
                                 customList.put(date, hourOfDay + ":" + minute);
                             }
                         });
@@ -534,7 +568,8 @@ public class AddReminderActivity extends AppCompatActivity implements
                     }
                 }
             });
-            calendarAlert.setButton(DialogInterface.BUTTON_NEUTRAL, "Select Range", new DialogInterface.OnClickListener() {
+            calendarAlert.setButton(DialogInterface.BUTTON_NEUTRAL, "Select Range", new
+                    DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
 
@@ -542,14 +577,17 @@ public class AddReminderActivity extends AppCompatActivity implements
             });
         } else {
             typeNeutral = 0;
-            Toast.makeText(AddReminderActivity.this, "Select Range of Reminders", Toast.LENGTH_SHORT).show();
+            Toast.makeText(AddReminderActivity.this, "Select Range of Reminders", Toast
+                    .LENGTH_SHORT).show();
             mcv.setOnDateChangedListener(new OnDateSelectedListener() {
                 @Override
-                public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
+                public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull
+                CalendarDay date, boolean selected) {
 
                 }
             });
-            calendarAlert.setButton(DialogInterface.BUTTON_NEUTRAL, "Select Discrete", new DialogInterface.OnClickListener() {
+            calendarAlert.setButton(DialogInterface.BUTTON_NEUTRAL, "Select Discrete", new
+                    DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
 
@@ -574,15 +612,20 @@ public class AddReminderActivity extends AppCompatActivity implements
                 String t[] = time.split(":");
                 int h = Integer.parseInt(t[0]);
                 int m = Integer.parseInt(t[1]);
-                customReminderList.add(new AlarmReminders(i, DateTimeUtil.getDate(d.getDay(), d.getMonth(), d.getYear()), DateTimeUtil.getTime(h, m), AlarmReminders.NOT_SHOWN, AlarmReminders.NORMAL_ALARM_REMINDER));
+                customReminderList.add(new AlarmReminders(i, DateTimeUtil.getDate(d.getDay(), d
+                        .getMonth(), d.getYear()), DateTimeUtil.getTime(h, m), AlarmReminders
+                        .NOT_SHOWN, AlarmReminders.NORMAL_ALARM_REMINDER));
             } else {
-                customReminderList.add(new AlarmReminders(i, DateTimeUtil.getDate(d.getDay(), d.getMonth(), d.getYear()), mTime, AlarmReminders.NOT_SHOWN, AlarmReminders.NORMAL_ALARM_REMINDER));
+                customReminderList.add(new AlarmReminders(i, DateTimeUtil.getDate(d.getDay(), d
+                        .getMonth(), d.getYear()), mTime, AlarmReminders.NOT_SHOWN,
+                        AlarmReminders.NORMAL_ALARM_REMINDER));
             }
             i++;
         }
 
         ehlv.setExpanded(true);
-        customExpandableListViewAdapter = new CustomExpandableListViewAdapter(AddReminderActivity.this, customReminderList, getFragmentManager());
+        customExpandableListViewAdapter = new CustomExpandableListViewAdapter(AddReminderActivity
+                .this, customReminderList, getFragmentManager());
         ehlv.setAdapter(customExpandableListViewAdapter);
         ehlv.setVisibility(View.VISIBLE);
         presetRL.setVisibility(View.VISIBLE);
@@ -592,8 +635,10 @@ public class AddReminderActivity extends AppCompatActivity implements
         final boolean[] values = mDaysOfWeek;
         final String[] shortWeekDays = DateTimeUtil.getShortWeekDays();
         String[] weekDays = DateTimeUtil.getWeekDays();
-        android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(this);
-        builder.setMultiChoiceItems(weekDays, mDaysOfWeek, new DialogInterface.OnMultiChoiceClickListener() {
+        android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app
+                .AlertDialog.Builder(this);
+        builder.setMultiChoiceItems(weekDays, mDaysOfWeek, new DialogInterface
+                .OnMultiChoiceClickListener() {
             public void onClick(DialogInterface dialog, int which, boolean isChecked) {
                 values[which] = isChecked;
             }
@@ -612,7 +657,8 @@ public class AddReminderActivity extends AppCompatActivity implements
 
                     repeatTimeRL.setVisibility(View.VISIBLE);
                     repeatTypeTV.setText(stringBuilder);
-                    Toast.makeText(AddReminderActivity.this, "" + stringBuilder, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddReminderActivity.this, "" + stringBuilder, Toast
+                            .LENGTH_SHORT).show();
                     mDaysOfWeek = values;
                 } else {
                     repeatType = 0;
@@ -666,8 +712,10 @@ public class AddReminderActivity extends AppCompatActivity implements
         Arrays.fill(mDaysOfWeek, false);
         customReminderList = new ArrayList<>();
 
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(AddReminderActivity.this);
-        notiType = Integer.parseInt(preferences.getString("notiTypePref", String.valueOf(Reminder.TYPE_NOTIFICATION)));
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences
+                (AddReminderActivity.this);
+        notiType = Integer.parseInt(preferences.getString("notiTypePref", String.valueOf(Reminder
+                .TYPE_NOTIFICATION)));
 
         repeatArray = getResources().getStringArray(R.array.repeat_array);
         repeatArrayCustom = getResources().getStringArray(R.array.repeat_array_custom);
@@ -718,7 +766,8 @@ public class AddReminderActivity extends AppCompatActivity implements
 
         if (repeatType == Reminder.REVISION_PRESET || repeatType == Reminder.CUSTOM) {
             if (isAnyCustomRemindersInPast()) {
-                Toast.makeText(AddReminderActivity.this, R.string.some_custom_reminders_are_set_in_past, Toast.LENGTH_SHORT).show();
+                Toast.makeText(AddReminderActivity.this, R.string
+                        .some_custom_reminders_are_set_in_past, Toast.LENGTH_SHORT).show();
                 return;
             }
         }
@@ -731,7 +780,8 @@ public class AddReminderActivity extends AppCompatActivity implements
         if (!customReminderList.isEmpty()) {
             for (AlarmReminders reminder : customReminderList) {
                 if (DateTimeUtil.isInPast(reminder.getDate(), reminder.getTime())) {
-                    Toast.makeText(AddReminderActivity.this, R.string.custom_reminders_are_set_in_past, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddReminderActivity.this, R.string
+                            .custom_reminders_are_set_in_past, Toast.LENGTH_SHORT).show();
                     return true;
                 }
             }
@@ -811,7 +861,8 @@ public class AddReminderActivity extends AppCompatActivity implements
         mTitle = titleET.getText().toString();
         if (mTitle.isEmpty()) {
             titleET.setError("Title cannot be empty!");
-            Toast.makeText(AddReminderActivity.this, "Title cannot be empty!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(AddReminderActivity.this, "Title cannot be empty!", Toast
+                    .LENGTH_SHORT).show();
             return;
         }
 
@@ -864,11 +915,13 @@ public class AddReminderActivity extends AppCompatActivity implements
         if (repeatType == Reminder.DO_NOT_REPEAT) {
             // creating Reminder Object
             if (DateTimeUtil.isInPast(mDate, mTime)) {
-                Toast.makeText(AddReminderActivity.this, "Reminder in past!\nTry Again!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AddReminderActivity.this, "Reminder in past!\nTry Again!", Toast
+                        .LENGTH_SHORT).show();
                 return;
             }
 
-            Reminder reminder = new Reminder(mTitle, mContent, mDate, mTime, mActive, categoryId, noToShow, noShown, repeatType, inAdvanceMillis, status, notiType);
+            Reminder reminder = new Reminder(mTitle, mContent, mDate, mTime, mActive, categoryId,
+                    noToShow, noShown, repeatType, inAdvanceMillis, status, notiType, mDate, mTime);
 
             long reminderId = reminder.save();
             reminder.setId(reminderId);
@@ -876,12 +929,14 @@ public class AddReminderActivity extends AppCompatActivity implements
             if (inAdvanceMillis != 0) {
                 String[] dt = DateTimeUtil.calcAdavanceNotiDateTime(mDate, mTime, inAdvanceMillis);
                 if (!DateTimeUtil.isInPast(dt[0], dt[1])) {
-                    AlarmReminders advanceNoti = new AlarmReminders(reminderId, 1, dt[0], dt[1], AlarmReminders.NOT_SHOWN, AlarmReminders.ADVANCE_ALARM_REMINDER);
+                    AlarmReminders advanceNoti = new AlarmReminders(reminderId, 1, dt[0], dt[1],
+                            AlarmReminders.NOT_SHOWN, AlarmReminders.ADVANCE_ALARM_REMINDER);
                     advanceNoti.save();
                 }
             }
 
-            AlarmReminders onlyAlarm = new AlarmReminders(reminderId, 1, mDate, mTime, AlarmReminders.NOT_SHOWN, AlarmReminders.NORMAL_ALARM_REMINDER);
+            AlarmReminders onlyAlarm = new AlarmReminders(reminderId, 1, mDate, mTime,
+                    AlarmReminders.NOT_SHOWN, AlarmReminders.NORMAL_ALARM_REMINDER);
             onlyAlarm.save();
 
             Intent intent = new Intent(AddReminderActivity.this, MainActivity.class);
@@ -895,15 +950,19 @@ public class AddReminderActivity extends AppCompatActivity implements
                 repeatType == Reminder.EVERY_YEAR ||
                 repeatType == Reminder.ALTERNATE_DAYS) {
             final Reminder reminder = new Reminder(mTitle, mContent, mDate, mTime, mActive,
-                    categoryId, noToShow, noShown, repeatType, inAdvanceMillis, status, notiType);
+                    categoryId, noToShow, noShown, repeatType, inAdvanceMillis, status, notiType,
+                    mDate, mTime);
 
             if (DateTimeUtil.isInPast(mDate, mTime)) {
                 /*
-                * show a alert dialog asking user to set alarm from next repeating alarm or to change date and time
+                * show a alert dialog asking user to set alarm from next repeating alarm or to
+                * change date and time
                 * */
-                AlertDialog.Builder pastReminderDialog = new AlertDialog.Builder(AddReminderActivity.this)
+                AlertDialog.Builder pastReminderDialog = new AlertDialog.Builder
+                        (AddReminderActivity.this)
                         .setTitle("Reminder in past!")
-                        .setMessage("Todays alarm time is already passed! Want to reschedule alarm?")
+                        .setMessage("Todays alarm time is already passed! Want to reschedule " +
+                                "alarm?")
                         .setPositiveButton("Reschedule", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -915,23 +974,37 @@ public class AddReminderActivity extends AppCompatActivity implements
                             public void onClick(DialogInterface dialog, int which) {
                                 long reminderId = reminder.save();
                                 reminder.setId(reminderId);
-                                String nextDate = calculateNextReminder(reminder.getDate(), reminder.getRepeatType());
+                                String nextDate = calculateNextReminder(reminder.getDate(),
+                                        reminder.getRepeatType());
 
                                 if (inAdvanceMillis != 0) {
-                                    String[] dt = DateTimeUtil.calcAdavanceNotiDateTime(nextDate, mTime, inAdvanceMillis);
+                                    String[] dt = DateTimeUtil.calcAdavanceNotiDateTime(nextDate,
+                                            mTime, inAdvanceMillis);
                                     if (!DateTimeUtil.isInPast(dt[0], dt[1])) {
-                                        AlarmReminders advanceNoti = new AlarmReminders(reminderId, 1, dt[0], dt[1], AlarmReminders.NOT_SHOWN, AlarmReminders.ADVANCE_ALARM_REMINDER);
+                                        AlarmReminders advanceNoti = new AlarmReminders
+                                                (reminderId, 1, dt[0], dt[1], AlarmReminders
+                                                        .NOT_SHOWN, AlarmReminders
+                                                        .ADVANCE_ALARM_REMINDER);
                                         advanceNoti.save();
                                     }
                                 }
 
-                                AlarmReminders nextReminder = new AlarmReminders(reminderId, 1, nextDate, mTime, AlarmReminders.NOT_SHOWN, AlarmReminders.NORMAL_ALARM_REMINDER);
+                                AlarmReminders nextReminder = new AlarmReminders(reminderId, 1,
+                                        nextDate, mTime, AlarmReminders.NOT_SHOWN, AlarmReminders
+                                        .NORMAL_ALARM_REMINDER);
                                 nextReminder.save();
 
-                                Intent intent = new Intent(AddReminderActivity.this, MainActivity.class);
-                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                reminder.setNextAlarmDate(nextDate);
+                                reminder.setNextAlarmTime(mTime);
+                                reminder.save();
+
+                                Intent intent = new Intent(AddReminderActivity.this, MainActivity
+                                        .class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent
+                                        .FLAG_ACTIVITY_CLEAR_TASK);
                                 startActivity(intent);
-                                Toast.makeText(AddReminderActivity.this, "Reminder Saved!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(AddReminderActivity.this, "Reminder Saved!", Toast
+                                        .LENGTH_SHORT).show();
                             }
                         })
                         .setNeutralButton("Show Now", new DialogInterface.OnClickListener() {
@@ -939,14 +1012,27 @@ public class AddReminderActivity extends AppCompatActivity implements
                             public void onClick(DialogInterface dialog, int which) {
                                 long reminderId = reminder.save();
                                 reminder.setId(reminderId);
-                                AlarmReminders nowReminder = new AlarmReminders(reminderId, 1, mDate, DateTimeUtil.getCurrentTime(), AlarmReminders.NOT_SHOWN, AlarmReminders.NORMAL_ALARM_REMINDER);
+                                AlarmReminders nowReminder = new AlarmReminders(reminderId, 1,
+                                        mDate, DateTimeUtil.getCurrentTime(), AlarmReminders
+                                        .NOT_SHOWN, AlarmReminders.NORMAL_ALARM_REMINDER);
                                 nowReminder.save();
 
+                                // for setting next alarm parameters
+                                String nextDate = calculateNextReminder(reminder.getDate(),
+                                        reminder.getRepeatType());
+
+                                reminder.setNextAlarmDate(nextDate);
+                                reminder.setNextAlarmTime(mTime);
+                                reminder.save();
+
                                 // no advance noti in this case!
-                                Intent intent = new Intent(AddReminderActivity.this, MainActivity.class);
-                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                Intent intent = new Intent(AddReminderActivity.this, MainActivity
+                                        .class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent
+                                        .FLAG_ACTIVITY_CLEAR_TASK);
                                 startActivity(intent);
-                                Toast.makeText(AddReminderActivity.this, "Reminder Saved!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(AddReminderActivity.this, "Reminder Saved!", Toast
+                                        .LENGTH_SHORT).show();
                             }
                         });
                 pastReminderDialog.show();
@@ -955,30 +1041,37 @@ public class AddReminderActivity extends AppCompatActivity implements
                 long reminderId = reminder.save();
                 reminder.setId(reminderId);
 
-                AlarmReminders firstAlarm = new AlarmReminders(reminderId, 1, mDate, mTime, AlarmReminders.NOT_SHOWN, AlarmReminders.NORMAL_ALARM_REMINDER);
+                AlarmReminders firstAlarm = new AlarmReminders(reminderId, 1, mDate, mTime,
+                        AlarmReminders.NOT_SHOWN, AlarmReminders.NORMAL_ALARM_REMINDER);
                 firstAlarm.save();
 
                 if (inAdvanceMillis != 0) {
-                    String[] dt = DateTimeUtil.calcAdavanceNotiDateTime(mDate, mTime, inAdvanceMillis);
+                    String[] dt = DateTimeUtil.calcAdavanceNotiDateTime(mDate, mTime,
+                            inAdvanceMillis);
                     if (!DateTimeUtil.isInPast(dt[0], dt[1])) {
-                        AlarmReminders advanceNoti = new AlarmReminders(reminderId, 1, dt[0], dt[1], AlarmReminders.NOT_SHOWN, AlarmReminders.ADVANCE_ALARM_REMINDER);
+                        AlarmReminders advanceNoti = new AlarmReminders(reminderId, 1, dt[0],
+                                dt[1], AlarmReminders.NOT_SHOWN, AlarmReminders
+                                .ADVANCE_ALARM_REMINDER);
                         advanceNoti.save();
                     }
                 }
                 Intent intent = new Intent(AddReminderActivity.this, MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
-                Toast.makeText(AddReminderActivity.this, "Reminder Saved!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AddReminderActivity.this, "Reminder Saved!", Toast.LENGTH_SHORT)
+                        .show();
             }
         } else if (repeatType == Reminder.REVISION_PRESET || repeatType == Reminder.CUSTOM) {
             if (isAnyCustomRemindersInPast()) {
-                Toast.makeText(AddReminderActivity.this, "Custom Reminder in past!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AddReminderActivity.this, "Custom Reminder in past!", Toast
+                        .LENGTH_SHORT).show();
                 return;
             }
 
             // creating Reminder Object
             Reminder reminder = new Reminder(mTitle, mContent, mDate, mTime, mActive, categoryId,
-                    noToShow, noShown, repeatType, inAdvanceMillis, status, notiType);
+                    noToShow, noShown, repeatType, inAdvanceMillis, status, notiType,
+                    customReminderList.get(0).getDate(), customReminderList.get(0).getTime());
 
             long reminderId = reminder.save();
             reminder.setId(reminderId);
@@ -986,9 +1079,12 @@ public class AddReminderActivity extends AppCompatActivity implements
             for (AlarmReminders alarm : customReminderList) {
                 alarm.setReminderId(reminderId);
                 if (inAdvanceMillis != 0) {
-                    String[] dt = DateTimeUtil.calcAdavanceNotiDateTime(alarm.getDate(), alarm.getTime(), inAdvanceMillis);
+                    String[] dt = DateTimeUtil.calcAdavanceNotiDateTime(alarm.getDate(), alarm
+                            .getTime(), inAdvanceMillis);
                     if (!DateTimeUtil.isInPast(dt[0], dt[1])) {
-                        AlarmReminders advanceNoti = new AlarmReminders(reminderId, 1, dt[0], dt[1], AlarmReminders.NOT_SHOWN, AlarmReminders.ADVANCE_ALARM_REMINDER);
+                        AlarmReminders advanceNoti = new AlarmReminders(reminderId, 1, dt[0],
+                                dt[1], AlarmReminders.NOT_SHOWN, AlarmReminders
+                                .ADVANCE_ALARM_REMINDER);
                         advanceNoti.save();
                     }
                 }
@@ -1002,7 +1098,8 @@ public class AddReminderActivity extends AppCompatActivity implements
             Toast.makeText(AddReminderActivity.this, "Reminder Saved!", Toast.LENGTH_SHORT).show();
         } else if (repeatType == Reminder.SPECIFIC_DAY_OF_WEEK) {
             // creating Reminder Object
-            Reminder reminder = new Reminder(mTitle, mContent, mDate, mTime, mActive, categoryId, noToShow, noShown, repeatType, inAdvanceMillis, status, notiType);
+            Reminder reminder = new Reminder(mTitle, mContent, mDate, mTime, mActive, categoryId,
+                    noToShow, noShown, repeatType, inAdvanceMillis, status, notiType, mDate, mTime);
 
             long reminderId = reminder.save();
             reminder.setId(reminderId);
@@ -1022,18 +1119,27 @@ public class AddReminderActivity extends AppCompatActivity implements
 
             nextAlarm.setDate(nextDate);
 
+            reminder.setNextAlarmDate(nextDate);
+            reminder.setNextAlarmDate(mTime);
+            reminder.save();
+
             if (inAdvanceMillis != 0) {
-                String[] dt = DateTimeUtil.calcAdavanceNotiDateTime(nextDate, mTime, inAdvanceMillis);
+                String[] dt = DateTimeUtil.calcAdavanceNotiDateTime(nextDate, mTime,
+                        inAdvanceMillis);
                 if (!DateTimeUtil.isInPast(dt[0], dt[1])) {
-                    AlarmReminders advanceNoti = new AlarmReminders(reminderId, 1, dt[0], dt[1], AlarmReminders.NOT_SHOWN, AlarmReminders.ADVANCE_ALARM_REMINDER);
+                    AlarmReminders advanceNoti = new AlarmReminders(reminderId, 1, dt[0], dt[1],
+                            AlarmReminders.NOT_SHOWN, AlarmReminders.ADVANCE_ALARM_REMINDER);
                     advanceNoti.save();
                 }
             }
 
             nextAlarm.save();
 
-            String[] daysOfWeek = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
-            Toast.makeText(AddReminderActivity.this, "Alarm of " + daysOfWeek[DateTimeUtil.getCalendar(nextDate).get(Calendar.DAY_OF_WEEK) - 1] + " is set.", Toast.LENGTH_SHORT).show();
+            String[] daysOfWeek = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday",
+                    "Friday", "Saturday"};
+            Toast.makeText(AddReminderActivity.this, "Alarm of " + daysOfWeek[DateTimeUtil
+                    .getCalendar(nextDate).get(Calendar.DAY_OF_WEEK) - 1] + " is set.", Toast
+                    .LENGTH_SHORT).show();
 
             Intent intent = new Intent(AddReminderActivity.this, MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -1068,7 +1174,8 @@ public class AddReminderActivity extends AppCompatActivity implements
 
     void saveMWFTTSAlternate(long categoryId, int noShown, int status, boolean[] mmDaysOfWeek) {
         // creating Reminder Object
-        Reminder reminder = new Reminder(mTitle, mContent, mDate, mTime, mActive, categoryId, noToShow, noShown, repeatType, inAdvanceMillis, status, notiType);
+        Reminder reminder = new Reminder(mTitle, mContent, mDate, mTime, mActive, categoryId,
+                noToShow, noShown, repeatType, inAdvanceMillis, status, notiType, mDate, mTime);
 
         long reminderId = reminder.save();
         reminder.setId(reminderId);
@@ -1088,19 +1195,25 @@ public class AddReminderActivity extends AppCompatActivity implements
 
         nextAlarm.setDate(nextDate);
 
+        reminder.setNextAlarmDate(nextDate);
+        reminder.save();
+
         if (inAdvanceMillis != 0) {
             String[] dt = DateTimeUtil.calcAdavanceNotiDateTime(nextDate, mTime, inAdvanceMillis);
             if (!DateTimeUtil.isInPast(dt[0], dt[1])) {
-                AlarmReminders advanceNoti = new AlarmReminders(reminderId, 1, dt[0], dt[1], AlarmReminders.NOT_SHOWN, AlarmReminders.ADVANCE_ALARM_REMINDER);
+                AlarmReminders advanceNoti = new AlarmReminders(reminderId, 1, dt[0], dt[1],
+                        AlarmReminders.NOT_SHOWN, AlarmReminders.ADVANCE_ALARM_REMINDER);
                 advanceNoti.save();
             }
         }
 
         nextAlarm.save();
 
-        String[] daysOfWeek = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
-        Toast.makeText(AddReminderActivity.this, "Alarm of " + daysOfWeek[DateTimeUtil.getCalendar(nextDate).get(Calendar.DAY_OF_WEEK) - 1] + " is set.", Toast.LENGTH_SHORT).show();
-
+        String[] daysOfWeek = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday",
+                "Saturday"};
+        Toast.makeText(AddReminderActivity.this, "Alarm of " + daysOfWeek[DateTimeUtil
+                .getCalendar(nextDate).get(Calendar.DAY_OF_WEEK) - 1] + " is set.", Toast
+                .LENGTH_SHORT).show();
         Intent intent = new Intent(AddReminderActivity.this, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);

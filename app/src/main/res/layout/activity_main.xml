@@ -67,7 +67,7 @@
             android:onClick="openNewGoalActivity"
             app:fab_colorNormal="@color/white"
             app:fab_colorPressed="@color/white"
-            app:fab_icon="@drawable/ic_directions_run_black_24dp"
+            app:fab_icon="@drawable/ic_directions_run_white_24dp"
             app:fab_size="mini"
             app:fab_title="Add Goal" />
     </com.getbase.floatingactionbutton.FloatingActionsMenu>

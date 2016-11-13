@@ -26,7 +26,6 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/card_view_margin"
         android:layout_marginRight="@dimen/card_view_margin"
-        card_view:cardBackgroundColor="@color/colorCard"
         card_view:cardCornerRadius="8dp"
         card_view:cardElevation="2dp"
         card_view:cardPreventCornerOverlap="true"

@@ -63,13 +63,17 @@ public class Reminder extends SugarRecord implements Comparable<Reminder> {
     int reminderType;
     @Ignore
     private Date dateTime;
+    @Ignore
+    private String nextAlarmDate;
+    @Ignore
+    private String nextAlarmTime;
 
     public Reminder() {
     }
 
     public Reminder(String title, String content, String date, String time, int active,
                     long categoryId, int noToShow, int noShown, int repeatType, long inAdvanceMillis,
-                    int status, int reminderType) {
+                    int status, int reminderType, String nextAlarmDate, String nextAlarmTime) {
         this.title = title;
         this.content = content;
         this.date = date;
@@ -82,6 +86,8 @@ public class Reminder extends SugarRecord implements Comparable<Reminder> {
         this.inAdvanceMillis = inAdvanceMillis;
         this.status = status;
         this.reminderType = reminderType;
+        this.nextAlarmDate = nextAlarmDate;
+        this.nextAlarmTime = nextAlarmTime;
     }
 
     public static String getActiveDays(Long reminderId) {
@@ -191,6 +197,22 @@ public class Reminder extends SugarRecord implements Comparable<Reminder> {
         this.reminderType = reminderType;
     }
 
+    public String getNextAlarmTime() {
+        return nextAlarmTime;
+    }
+
+    public void setNextAlarmTime(String nextAlarmTime) {
+        this.nextAlarmTime = nextAlarmTime;
+    }
+
+    public String getNextAlarmDate() {
+        return nextAlarmDate;
+    }
+
+    public void setNextAlarmDate(String nextAlarmDate) {
+        this.nextAlarmDate = nextAlarmDate;
+    }
+
     // TO STRING
     @Override
     public String toString() {
@@ -208,6 +230,8 @@ public class Reminder extends SugarRecord implements Comparable<Reminder> {
                 ", inAdvanceMillis=" + inAdvanceMillis +
                 ", status =" + status +
                 ", reminderType =" + reminderType +
+                ", nextAlarmTime =" + nextAlarmDate +
+                ", nextAlarmTime =" + nextAlarmTime +
                 '}';
     }
 
