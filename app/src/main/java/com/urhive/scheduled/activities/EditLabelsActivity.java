@@ -131,11 +131,17 @@ public class EditLabelsActivity extends AppCompatActivity implements
                                 for (int i = 0; i < categoryList.size(); i++) {
                                     if (selectedPositions.contains(categoryList.get(i)
                                             .getPosition())) {
+                                        // TODO
+                                        // all those reminders & goals with this category to
+                                        // go inside category id 1 uncategorized
+
+                                        Category.executeQuery("update reminder set category_id = " +
+                                                "1 where category_id = " + categoryList.get(i)
+                                                .getId() + ";");
+
                                         Category.delete(categoryList.get(i));
                                         Toast.makeText(EditLabelsActivity.this, "TODO work left",
                                                 Toast.LENGTH_SHORT).show();
-                                        // TODO all those reminders & goals with this category to
-                                        // go inside category id 1 uncategorized
                                     }
                                 }
                                 selectedPositions.clear();
