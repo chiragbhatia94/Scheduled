@@ -67,7 +67,9 @@ public class Goal extends SugarRecord implements Comparable<Goal> {
     public Goal() {
     }
 
-    public Goal(String title, String content, String date, String time, int longestStreak, int currentStreak, long categoryId, int noToShow, int noShown, int repeatType, int status, int mode) {
+    public Goal(String title, String content, String date, String time, int longestStreak, int
+            currentStreak, long categoryId, int noToShow, int noShown, int repeatType, int
+                        status, int mode) {
         this.title = title;
         this.content = content;
         this.date = date;
@@ -83,7 +85,8 @@ public class Goal extends SugarRecord implements Comparable<Goal> {
     }
 
     public static String getActiveDays(Long goalId) {
-        List<DayOfWeek> dow = DayOfWeek.find(DayOfWeek.class, "GOAL_ID = ?", String.valueOf(goalId));
+        List<DayOfWeek> dow = DayOfWeek.find(DayOfWeek.class, "GOAL_ID = ?", String.valueOf
+                (goalId));
         DayOfWeek daysActive = dow.get(0);
         return daysActive.getActiveDays();
     }

@@ -1,52 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/colorBackground"
-    tools:context="com.urhive.scheduled.activities.AddGoalActivity">
+                                                 xmlns:tools="http://schemas.android.com/tools"
+                                                 android:layout_width="match_parent"
+                                                 android:layout_height="match_parent"
+                                                 android:background="@color/colorBackground"
+                                                 tools:context="com.urhive.scheduled.activities.AddGoalActivity">
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="fill_parent">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+                android:layout_width="match_parent"
+                android:layout_height="fill_parent">
 
         <LinearLayout
-            android:id="@+id/heading"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
-            android:orientation="vertical"
-            android:padding="@dimen/activity_horizontal_margin">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <EditText
-                android:id="@+id/titleET"
+            <LinearLayout
+                android:id="@+id/heading"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="50dp"
-                android:hint="Add Title"
-                android:inputType="textCapWords"
-                android:singleLine="true"
-                android:textAppearance="@android:style/TextAppearance.Large"
-                android:textColor="@android:color/white"
-                android:textColorHint="@color/primary_text_disabled_material_dark" />
+                android:background="@color/colorPrimary"
+                android:orientation="vertical"
+                android:padding="@dimen/activity_horizontal_margin">
 
-            <EditText
-                android:id="@+id/contentET"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="50dp"
-                android:gravity="top"
-                android:hint="Add Notification Content\nReason"
-                android:inputType="textMultiLine"
-                android:lines="3"
-                android:textAppearance="@android:style/TextAppearance.Large"
-                android:textColor="@android:color/white"
-                android:textColorHint="@color/primary_text_disabled_material_dark" />
-        </LinearLayout>
+                <EditText
+                    android:id="@+id/titleET"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="50dp"
+                    android:hint="Add Title"
+                    android:inputType="textCapWords"
+                    android:singleLine="true"
+                    android:textAppearance="@android:style/TextAppearance.Large"
+                    android:textColor="@android:color/white"
+                    android:textColorHint="@color/primary_text_disabled_material_dark"/>
+
+                <EditText
+                    android:id="@+id/contentET"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="50dp"
+                    android:gravity="top"
+                    android:hint="Add Notification Content\nReason"
+                    android:inputType="textMultiLine"
+                    android:lines="3"
+                    android:textAppearance="@android:style/TextAppearance.Large"
+                    android:textColor="@android:color/white"
+                    android:textColorHint="@color/primary_text_disabled_material_dark"/>
+            </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -61,7 +63,7 @@
                     android:paddingRight="@dimen/activity_horizontal_margin"
                     android:paddingTop="@dimen/activity_vertical_margin"
                     android:text="Details"
-                    android:textAppearance="@android:style/TextAppearance.Large" />
+                    android:textAppearance="@android:style/TextAppearance.Large"/>
 
                 <RelativeLayout
                     android:id="@+id/targetRL"
@@ -79,7 +81,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="16dp"
                         android:layout_marginRight="27dp"
-                        android:src="@drawable/ic_alarm_black_24dp" />
+                        android:src="@drawable/ic_alarm_black_24dp"/>
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -93,14 +95,14 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Time To Show Notification"
-                            android:textSize="15sp" />
+                            android:textSize="15sp"/>
 
                         <TextView
                             android:id="@+id/setTimeTV"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Now"
-                            android:textSize="15sp" />
+                            android:textSize="15sp"/>
                     </LinearLayout>
                 </RelativeLayout>
 
@@ -120,7 +122,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="16dp"
                         android:layout_marginRight="27dp"
-                        android:src="@drawable/ic_event_black_24dp" />
+                        android:src="@drawable/ic_event_black_24dp"/>
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -134,14 +136,14 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Date"
-                            android:textSize="15sp" />
+                            android:textSize="15sp"/>
 
                         <TextView
                             android:id="@+id/setDateTV"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Today"
-                            android:textSize="15sp" />
+                            android:textSize="15sp"/>
                     </LinearLayout>
                 </RelativeLayout>
 
@@ -160,7 +162,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="16dp"
                         android:layout_marginRight="27dp"
-                        android:src="@drawable/ic_more_black_24dp" />
+                        android:src="@drawable/ic_more_black_24dp"/>
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -174,14 +176,14 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Category"
-                            android:textSize="15sp" />
+                            android:textSize="15sp"/>
 
                         <TextView
                             android:id="@+id/categoryTV"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Uncategorized"
-                            android:textSize="15sp" />
+                            android:textSize="15sp"/>
                     </LinearLayout>
                 </RelativeLayout>
 
@@ -253,7 +255,7 @@
                         android:layout_marginLeft="16dp"
                         android:layout_marginRight="27dp"
                         android:src="@drawable/ic_refresh_white_24dp"
-                        android:tint="@color/black" />
+                        android:tint="@color/black"/>
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -267,14 +269,14 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Repeat"
-                            android:textSize="15sp" />
+                            android:textSize="15sp"/>
 
                         <TextView
                             android:id="@+id/repeatTV"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Does Not Repeat"
-                            android:textSize="15sp" />
+                            android:textSize="15sp"/>
                     </LinearLayout>
                 </RelativeLayout>
 
@@ -294,7 +296,7 @@
                         android:layout_marginLeft="16dp"
                         android:layout_marginRight="27dp"
                         android:src="@drawable/ic_settings_backup_restore_white_24dp"
-                        android:tint="@color/black" />
+                        android:tint="@color/black"/>
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -308,18 +310,18 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="No of times to repeat"
-                            android:textSize="15sp" />
+                            android:textSize="15sp"/>
 
                         <TextView
                             android:id="@+id/noToShowTV"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="5"
-                            android:textSize="15sp" />
+                            android:textSize="15sp"/>
                     </LinearLayout>
                 </RelativeLayout>
             </LinearLayout>
-    </LinearLayout>
+        </LinearLayout>
     </ScrollView>
 
     <!--    <com.getbase.floatingactionbutton.FloatingActionButton

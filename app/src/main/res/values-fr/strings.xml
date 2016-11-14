@@ -32,9 +32,11 @@
     <string name="do_not_repeat">Ne pas répéter</string>
     <string name="select_category">Choisir une catégorie</string>
     <string name="add_new_category">Ajouter une nouvelle catégorie</string>
-    <string name="tap_to_change_notification_time">Appuyez sur pour changer la date de notification</string>
+    <string name="tap_to_change_notification_time">Appuyez sur pour changer la date de
+        notification</string>
     <string name="add_title">Ajouter un titre</string>
-    <string name="add_notification_content_nreason">Ajouter le contenu de la notification\nReason</string>
+    <string name="add_notification_content_nreason">Ajouter le contenu de la notification\n
+        Reason</string>
     <string name="details">Détails</string>
     <string name="time_to_show_notification">Temps pour afficher les Notifications</string>
     <string name="now">Maintenant</string>

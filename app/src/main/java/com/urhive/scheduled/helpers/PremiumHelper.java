@@ -23,7 +23,8 @@ public class PremiumHelper {
                     .setPositiveButton("Buy", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            Toast.makeText(context, "To Be Developed Still", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, "To Be Developed Still", Toast.LENGTH_SHORT)
+                                    .show();
                         }
                     })
                     .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

@@ -5,7 +5,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.DragEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,18 +25,21 @@ import java.util.List;
 public class EditLabelsActivity extends AppCompatActivity implements
         DragSortListView.DropListener {
 
+    static List<Category> categoryList;
+    static CategoryDragSortAdapter adp;
     int NORMAL_MODE = 0;
     int SELECTION_MODE = 1;
     int REORDER_MODE = 2;
-
     int actionMode = NORMAL_MODE;
-
     DragSortListView listView;
     List<Icon> iconList;
-    static List<Category> categoryList;
-    static CategoryDragSortAdapter adp;
-
     private List<Integer> selectedPositions;
+
+    public static void notifyListView() {
+        categoryList.clear();
+        categoryList.addAll(Category.find(Category.class, null, null, null, "position", null));
+        adp.notifyDataSetChanged();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,13 +70,15 @@ public class EditLabelsActivity extends AppCompatActivity implements
                         EditLabelsActivity.this.invalidateOptionsMenu();
                     }
                 } else {
-                    Toast.makeText(EditLabelsActivity.this, "Long press to select!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EditLabelsActivity.this, "Long press to select!", Toast
+                            .LENGTH_SHORT).show();
                 }
             }
         });
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long
+                    id) {
                 if (actionMode == NORMAL_MODE) {
                     actionMode = SELECTION_MODE;
                     EditLabelsActivity.this.invalidateOptionsMenu();
@@ -93,7 +97,7 @@ public class EditLabelsActivity extends AppCompatActivity implements
         // Inflate the menu; this adds items to the action bar if it is present.
         if (actionMode == NORMAL_MODE) {
             getMenuInflater().inflate(R.menu.edit_labels, menu);
-        } else if (actionMode == SELECTION_MODE){
+        } else if (actionMode == SELECTION_MODE) {
             getMenuInflater().inflate(R.menu.delete_labels, menu);
         }
         return true;
@@ -110,7 +114,8 @@ public class EditLabelsActivity extends AppCompatActivity implements
                 return true;
             case R.id.action_reorder:
                 listView.setDragEnabled(true);
-                Toast.makeText(EditLabelsActivity.this, "Long press & drag to reorder!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(EditLabelsActivity.this, "Long press & drag to reorder!", Toast
+                        .LENGTH_SHORT).show();
                 actionMode = REORDER_MODE;
                 this.invalidateOptionsMenu();
                 return true;
@@ -121,16 +126,20 @@ public class EditLabelsActivity extends AppCompatActivity implements
                         .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                // Toast.makeText(EditLabelsActivity.this, "delete these items\n" + selectedPositions.toString(), Toast.LENGTH_SHORT).show();
+                                // Toast.makeText(EditLabelsActivity.this, "delete these items\n"
+                                // + selectedPositions.toString(), Toast.LENGTH_SHORT).show();
                                 for (int i = 0; i < categoryList.size(); i++) {
-                                    if (selectedPositions.contains(categoryList.get(i).getPosition())){
+                                    if (selectedPositions.contains(categoryList.get(i)
+                                            .getPosition())) {
                                         Category.delete(categoryList.get(i));
-                                        Toast.makeText(EditLabelsActivity.this, "TODO work left", Toast.LENGTH_SHORT).show();
-                                        // TODO all those reminders & goals with this category to go inside category id 1 uncategorized
+                                        Toast.makeText(EditLabelsActivity.this, "TODO work left",
+                                                Toast.LENGTH_SHORT).show();
+                                        // TODO all those reminders & goals with this category to
+                                        // go inside category id 1 uncategorized
                                     }
                                 }
                                 selectedPositions.clear();
-                                actionMode=NORMAL_MODE;
+                                actionMode = NORMAL_MODE;
                                 invalidateOptionsMenu();
                                 notifyListView();
                             }
@@ -147,7 +156,8 @@ public class EditLabelsActivity extends AppCompatActivity implements
                 onBackPressed();
                 return true;
             default:
-                Toast.makeText(EditLabelsActivity.this, "Yet to be developed!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(EditLabelsActivity.this, "Yet to be developed!", Toast
+                        .LENGTH_SHORT).show();
         }
 
         return super.onOptionsItemSelected(item);
@@ -155,7 +165,7 @@ public class EditLabelsActivity extends AppCompatActivity implements
 
     @Override
     public void onBackPressed() {
-        if (actionMode==NORMAL_MODE){
+        if (actionMode == NORMAL_MODE) {
             Intent intent = new Intent(EditLabelsActivity.this, MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
@@ -168,15 +178,9 @@ public class EditLabelsActivity extends AppCompatActivity implements
         }
     }
 
-    public static void notifyListView() {
-        categoryList.clear();
-        categoryList.addAll(Category.find(Category.class, null, null, null, "position", null));
-        adp.notifyDataSetChanged();
-    }
-
     public void selectItem(int position) {
         if (!selectedPositions.contains(position))
-            if (categoryList.get(position).getId()!=1)
+            if (categoryList.get(position).getId() != 1)
                 selectedPositions.add(position);
             else
                 return;

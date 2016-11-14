@@ -289,17 +289,17 @@ public class AddReminderActivity extends AppCompatActivity implements
                         .setSingleChoiceItems(new String[]{getResources().getString(R.string
                                         .notification), getResources().getString(R.string.alarm)},
                                 notiType, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                notiType = which;
-                                if (which == Reminder.TYPE_NOTIFICATION) {
-                                    notiTypeTV.setText(R.string.notification);
-                                } else if (which == Reminder.TYPE_ALARM) {
-                                    notiTypeTV.setText(R.string.alarm);
-                                }
-                                dialog.dismiss();
-                            }
-                        });
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        notiType = which;
+                                        if (which == Reminder.TYPE_NOTIFICATION) {
+                                            notiTypeTV.setText(R.string.notification);
+                                        } else if (which == Reminder.TYPE_ALARM) {
+                                            notiTypeTV.setText(R.string.alarm);
+                                        }
+                                        dialog.dismiss();
+                                    }
+                                });
                 dialog.show();
             }
         });
@@ -449,11 +449,11 @@ public class AddReminderActivity extends AppCompatActivity implements
 
                                             final TimePickerDialog tpd = TimePickerDialog
                                                     .newInstance(
-                                                    AddReminderActivity.this,
-                                                    mHour,
-                                                    mMinute,
-                                                    false
-                                            );
+                                                            AddReminderActivity.this,
+                                                            mHour,
+                                                            mMinute,
+                                                            false
+                                                    );
 
                                             tpd.setOnTimeSetListener(new TimePickerDialog
                                                     .OnTimeSetListener() {
@@ -570,11 +570,11 @@ public class AddReminderActivity extends AppCompatActivity implements
             });
             calendarAlert.setButton(DialogInterface.BUTTON_NEUTRAL, "Select Range", new
                     DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
 
-                }
-            });
+                        }
+                    });
         } else {
             typeNeutral = 0;
             Toast.makeText(AddReminderActivity.this, "Select Range of Reminders", Toast
@@ -582,17 +582,17 @@ public class AddReminderActivity extends AppCompatActivity implements
             mcv.setOnDateChangedListener(new OnDateSelectedListener() {
                 @Override
                 public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull
-                CalendarDay date, boolean selected) {
+                        CalendarDay date, boolean selected) {
 
                 }
             });
             calendarAlert.setButton(DialogInterface.BUTTON_NEUTRAL, "Select Discrete", new
                     DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
 
-                }
-            });
+                        }
+                    });
         }
     }
 

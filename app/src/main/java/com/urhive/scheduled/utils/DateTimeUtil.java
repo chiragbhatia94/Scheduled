@@ -13,8 +13,10 @@ import java.util.Locale;
  * Created by Chirag Bhatia on 06-06-2016.
  */
 public class DateTimeUtil {
-    private static final SimpleDateFormat WEEK_DAYS_FORMAT = new SimpleDateFormat("EEEE", Locale.getDefault());
-    private static final SimpleDateFormat SHORT_WEEK_DAYS_FORMAT = new SimpleDateFormat("E", Locale.getDefault());
+    private static final SimpleDateFormat WEEK_DAYS_FORMAT = new SimpleDateFormat("EEEE", Locale
+            .getDefault());
+    private static final SimpleDateFormat SHORT_WEEK_DAYS_FORMAT = new SimpleDateFormat("E",
+            Locale.getDefault());
     public static SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
     public static SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
     public static SimpleDateFormat dateTimeFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
@@ -204,7 +206,8 @@ public class DateTimeUtil {
         return dateFormat.format(calendar.getTime());
     }
 
-    public static String[] calcAdavanceNotiDateTime(String date, String time, long inAdvanceMillis) {
+    public static String[] calcAdavanceNotiDateTime(String date, String time, long
+            inAdvanceMillis) {
         String d[] = date.split("/");
         int day = Integer.parseInt(d[0]);
         int month = Integer.parseInt(d[1]);
@@ -228,7 +231,8 @@ public class DateTimeUtil {
         long newMillis = presentMillis - inAdvanceMillis;
         calendar.setTimeInMillis(newMillis);
 
-        return new String[]{dateFormat.format(calendar.getTime()), timeFormat.format(calendar.getTime())};
+        return new String[]{dateFormat.format(calendar.getTime()), timeFormat.format(calendar
+                .getTime())};
     }
 
     public static String findNextDayOfWeekToShow(String date, String time, boolean[] daysOfWeek) {
@@ -243,7 +247,8 @@ public class DateTimeUtil {
         return date;
     }
 
-    public static String findNextMWFTTSAlternateToShow(String date, String time, boolean[] daysOfWeek) {
+    public static String findNextMWFTTSAlternateToShow(String date, String time, boolean[]
+            daysOfWeek) {
         Calendar cal = getCalendar(date);
         int now = cal.get(Calendar.DAY_OF_WEEK) - 1;
         while (!daysOfWeek[now] || isInPast(date, time)) {

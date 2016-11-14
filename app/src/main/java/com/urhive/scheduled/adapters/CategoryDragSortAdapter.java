@@ -1,13 +1,9 @@
 package com.urhive.scheduled.adapters;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.drawable.ShapeDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -31,12 +27,11 @@ public class CategoryDragSortAdapter extends BaseAdapter {
     Context context;
     List<Category> categoryList;
     List<Icon> iconList;
-
+    View view;
     private List selectedPositions;
 
-    View view;
-
-    public CategoryDragSortAdapter(Context context, List<Category> categoryList, List<Icon> iconList) {
+    public CategoryDragSortAdapter(Context context, List<Category> categoryList, List<Icon>
+            iconList) {
         this.context = context;
         this.categoryList = categoryList;
         this.iconList = iconList;
@@ -57,22 +52,6 @@ public class CategoryDragSortAdapter extends BaseAdapter {
         return categoryList.get(position).getId();
     }
 
-    private class ViewHolder {
-        RelativeLayout relativeLayout;
-        ImageView iconIV, editIV, circleIV;
-        TextView nameTV;
-
-        ViewHolder(View v) {
-            relativeLayout = (RelativeLayout) v.findViewById(R.id.list_item_relative_layout);
-            iconIV = (ImageView) v.findViewById(R.id.categoryIconIV);
-            editIV = (ImageView) v.findViewById(R.id.editCategoryIcon);
-            nameTV = (TextView) v.findViewById(R.id.categoryNameTV);
-            circleIV = (ImageView) v.findViewById(R.id.circle);
-
-            view = v;
-        }
-    }
-
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         View cell = convertView;
@@ -87,24 +66,29 @@ public class CategoryDragSortAdapter extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) cell.getTag();
         }
-        if (selected){
+        if (selected) {
             viewHolder.relativeLayout.setBackgroundResource(R.drawable.border_list_item);
         } else {
             viewHolder.relativeLayout.setBackgroundResource(android.R.color.transparent);
         }
 
         viewHolder.nameTV.setText(categoryList.get(position).getName());
-        viewHolder.iconIV.setImageResource(context.getResources().getIdentifier(iconList.get(categoryList.get(position).getIconId() - 1).getName(), "drawable", context.getPackageName()));
-        viewHolder.circleIV.setColorFilter(ColorHelper.COLOR_PALLETE[categoryList.get(position).getColor()]);
+        viewHolder.iconIV.setImageResource(context.getResources().getIdentifier(iconList.get
+                (categoryList.get(position).getIconId() - 1).getName(), "drawable", context
+                .getPackageName()));
+        viewHolder.circleIV.setColorFilter(ColorHelper.COLOR_PALLETE[categoryList.get(position)
+                .getColor()]);
 
         viewHolder.editIV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (categoryList.get(position).getId()==1){
+                if (categoryList.get(position).getId() == 1) {
                     Toast.makeText(context, "This cannot be edited!", Toast.LENGTH_SHORT).show();
                 } else {
-                    CategoryFragment addCategoryFragment = CategoryFragment.editCategory(categoryList.get(position).getId());
-                    addCategoryFragment.show(((EditLabelsActivity)context).getSupportFragmentManager(), "EditCategory");
+                    CategoryFragment addCategoryFragment = CategoryFragment.editCategory
+                            (categoryList.get(position).getId());
+                    addCategoryFragment.show(((EditLabelsActivity) context)
+                            .getSupportFragmentManager(), "EditCategory");
                 }
             }
         });
@@ -113,5 +97,21 @@ public class CategoryDragSortAdapter extends BaseAdapter {
 
     public void setSelectedPositions(List selectedPositions) {
         this.selectedPositions = selectedPositions;
+    }
+
+    private class ViewHolder {
+        RelativeLayout relativeLayout;
+        ImageView iconIV, editIV, circleIV;
+        TextView nameTV;
+
+        ViewHolder(View v) {
+            relativeLayout = (RelativeLayout) v.findViewById(R.id.list_item_relative_layout);
+            iconIV = (ImageView) v.findViewById(R.id.categoryIconIV);
+            editIV = (ImageView) v.findViewById(R.id.editCategoryIcon);
+            nameTV = (TextView) v.findViewById(R.id.categoryNameTV);
+            circleIV = (ImageView) v.findViewById(R.id.circle);
+
+            view = v;
+        }
     }
 }

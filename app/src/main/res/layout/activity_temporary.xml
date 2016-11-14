@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.urhive.scheduled.Temporary">
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context="com.urhive.scheduled.Temporary">
 
     <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:card_view="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        card_view:cardBackgroundColor="@color/colorCard"
-        card_view:cardCornerRadius="8dp"
-        card_view:cardElevation="2dp"
-        card_view:cardPreventCornerOverlap="true"
-        card_view:cardUseCompatPadding="true">
+                                        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        card_view:cardBackgroundColor="@color/colorCard"
+                                        card_view:cardCornerRadius="8dp"
+                                        card_view:cardElevation="2dp"
+                                        card_view:cardPreventCornerOverlap="true"
+                                        card_view:cardUseCompatPadding="true">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -37,14 +37,14 @@
                         android:id="@+id/reminderNotiONIV"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ic_notifications_active_white_24dp" />
+                        android:src="@drawable/ic_notifications_active_white_24dp"/>
 
                     <ImageView
                         android:id="@+id/reminderNotiOFFIV"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_notifications_off_white_24dp"
-                        android:tint="@color/white" />
+                        android:tint="@color/white"/>
                 </RelativeLayout>
 
                 <ImageView
@@ -53,7 +53,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:paddingLeft="8dp"
-                    android:src="@drawable/ic_more_vert_white_24dp" />
+                    android:src="@drawable/ic_more_vert_white_24dp"/>
 
                 <TextView
                     android:id="@+id/reminderTitleTV"
@@ -70,7 +70,7 @@
                     android:paddingTop="4dp"
                     android:text="Reminder 1: Notification Content"
                     android:textAppearance="@android:style/TextAppearance.Medium"
-                    android:textColor="@color/cardview_light_background" />
+                    android:textColor="@color/cardview_light_background"/>
             </RelativeLayout>
 
             <LinearLayout
@@ -91,7 +91,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
-                        android:src="@drawable/circle" />
+                        android:src="@drawable/circle"/>
 
                     <ImageView
                         android:id="@+id/categoryIconIV"
@@ -99,7 +99,7 @@
                         android:layout_height="18dp"
                         android:layout_centerInParent="true"
                         android:src="@drawable/ic_label_white_24dp"
-                        android:tint="@color/white" />
+                        android:tint="@color/white"/>
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -121,12 +121,12 @@
                             Buttons
                         -->
                         <android.support.v7.widget.RecyclerView xmlns:app="http://schemas.android.com/apk/res-auto"
-                            android:id="@+id/weekdays_recycler_view"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:overScrollMode="never"
-                            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+                                                                android:id="@+id/weekdays_recycler_view"
+                                                                android:layout_width="wrap_content"
+                                                                android:layout_height="wrap_content"
+                                                                android:layout_gravity="center"
+                                                                android:overScrollMode="never"
+                                                                app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
                     </LinearLayout>
 
@@ -136,7 +136,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/buttons"
                         android:text="03/12/2016 00:18"
-                        android:textColor="@color/primary_dark" />
+                        android:textColor="@color/primary_dark"/>
 
                     <TextView
                         android:id="@+id/reminderRepeatTypeTV"
@@ -144,7 +144,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/reminderDateTimeTV"
                         android:paddingTop="4dp"
-                        android:text="Do not repeat" />
+                        android:text="Do not repeat"/>
 
                     <TextView
                         android:id="@+id/reminderShownToShowTV"
@@ -153,7 +153,7 @@
                         android:layout_alignParentRight="true"
                         android:layout_below="@id/reminderDateTimeTV"
                         android:paddingTop="4dp"
-                        android:text="Shown: 5/15" />
+                        android:text="Shown: 5/15"/>
                 </RelativeLayout>
             </LinearLayout>
         </RelativeLayout>

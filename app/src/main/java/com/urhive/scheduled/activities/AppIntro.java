@@ -38,7 +38,8 @@ public class AppIntro extends IntroActivity {
                 editor.putBoolean("pref_first_run", false);
                 editor.apply();
 
-                String icons[] = AppIntro.this.getResources().getStringArray(R.array.icons_string_array);
+                String icons[] = AppIntro.this.getResources().getStringArray(R.array
+                        .icons_string_array);
 
                 for (int i = 0; i < icons.length; i++) {
                     Icon icon = new Icon(icons[i], 0);
@@ -47,7 +48,8 @@ public class AppIntro extends IntroActivity {
                 }
 
                 List<Icon> iconsU = Icon.find(Icon.class, "name = ?", "ic_label_white_24dp");
-                Category uncategorized = new Category(getString(R.string.category_uncategorized), 12, Integer.parseInt(String.valueOf(iconsU.get(0).getId())), 0, 0);
+                Category uncategorized = new Category(getString(R.string.category_uncategorized),
+                        12, Integer.parseInt(String.valueOf(iconsU.get(0).getId())), 0, 0);
                 uncategorized.save();
 
                 try {

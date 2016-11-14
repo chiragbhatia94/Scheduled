@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:context=".activities.MainActivity">
+                                                 xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                 xmlns:tools="http://schemas.android.com/tools"
+                                                 android:layout_width="match_parent"
+                                                 android:layout_height="match_parent"
+                                                 android:fitsSystemWindows="true"
+                                                 tools:context=".activities.MainActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+            app:popupTheme="@style/AppTheme.PopupOverlay"/>
 
     </android.support.design.widget.AppBarLayout>
 
@@ -36,7 +36,7 @@
             android:background="@color/blue_grey_700"
             android:paddingBottom="4dp"
             android:paddingTop="4dp"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"/>
     </android.support.v4.view.ViewPager>
 
     <com.getbase.floatingactionbutton.FloatingActionsMenu
@@ -58,7 +58,7 @@
             app:fab_icon="@drawable/ic_alarm_black_24dp"
             app:fab_size="mini"
             app:fab_title="Add Reminder"
-            app:useCompatPadding="true" />
+            app:useCompatPadding="true"/>
 
         <com.getbase.floatingactionbutton.FloatingActionButton
             android:id="@+id/goalFab"
@@ -69,6 +69,6 @@
             app:fab_colorPressed="@color/white"
             app:fab_icon="@drawable/ic_directions_run_white_24dp"
             app:fab_size="mini"
-            app:fab_title="Add Goal" />
+            app:fab_title="Add Goal"/>
     </com.getbase.floatingactionbutton.FloatingActionsMenu>
 </android.support.design.widget.CoordinatorLayout>

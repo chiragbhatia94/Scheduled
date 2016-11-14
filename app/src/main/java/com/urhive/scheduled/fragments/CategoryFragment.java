@@ -42,7 +42,7 @@ public class CategoryFragment extends AppCompatDialogFragment {
     private EditText nameET;
     private int initIconId;
 
-    public static CategoryFragment addImmidiateCategory(){
+    public static CategoryFragment addImmidiateCategory() {
         CategoryFragment categoryFragment = new CategoryFragment();
         Bundle args = new Bundle();
         args.putInt("mode", IMMIDIATE_ADD_MODE);
@@ -76,7 +76,8 @@ public class CategoryFragment extends AppCompatDialogFragment {
 
     @Nullable
     @Override
-    public View onCreateView(final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(final LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_category, container, false);
         nameET = (EditText) view.findViewById(R.id.categoryNameET);
 
@@ -92,7 +93,7 @@ public class CategoryFragment extends AppCompatDialogFragment {
         Bundle args = getArguments();
         mode = (Integer) args.get("mode");
 
-        System.out.println(mode+"");
+        System.out.println(mode + "");
 
         if (mode == ADD_MODE || mode == IMMIDIATE_ADD_MODE) {
             getDialog().setTitle("Add Category");
@@ -110,7 +111,8 @@ public class CategoryFragment extends AppCompatDialogFragment {
         Icon ic = Icon.findById(Icon.class, category.getIconId());
         nameET.setText(category.getName());
         circle.setColorFilter(ColorHelper.COLOR_PALLETE[category.getColor()]);
-        image.setImageResource(getResources().getIdentifier(ic.getName(), "drawable", getContext().getPackageName()));
+        image.setImageResource(getResources().getIdentifier(ic.getName(), "drawable", getContext
+                ().getPackageName()));
 
         colorSelectTV.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -139,14 +141,18 @@ public class CategoryFragment extends AppCompatDialogFragment {
             public void onClick(View v) {
                 View dialogView = inflater.inflate(R.layout.view_dialog_recycler_view, null, false);
 
-                RecyclerView recyclerView = (RecyclerView) dialogView.findViewById(R.id.dialogRecyclerView);
-                recyclerView.setLayoutManager(new GridLayoutManager(getContext(), getResources().getInteger(R.integer.grid_columns)));
-                ItemOffsetDecoration itemDecoration = new ItemOffsetDecoration(getContext(), R.dimen.item_offset);
+                RecyclerView recyclerView = (RecyclerView) dialogView.findViewById(R.id
+                        .dialogRecyclerView);
+                recyclerView.setLayoutManager(new GridLayoutManager(getContext(), getResources()
+                        .getInteger(R.integer.grid_columns)));
+                ItemOffsetDecoration itemDecoration = new ItemOffsetDecoration(getContext(), R
+                        .dimen.item_offset);
                 recyclerView.addItemDecoration(itemDecoration);
 
                 List<Icon> list = Icon.listAll(Icon.class);
 
-                recyclerView.setAdapter(new IconsAdapter(getContext(), R.layout.item_icon_grid, list));
+                recyclerView.setAdapter(new IconsAdapter(getContext(), R.layout.item_icon_grid,
+                        list));
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                 builder.setTitle("Select Icon")
@@ -173,15 +179,17 @@ public class CategoryFragment extends AppCompatDialogFragment {
                         Icon icon = Icon.findById(Icon.class, category.getIconId());
                         icon.setUseFrequency(icon.getUseFrequency() + 1);
                         icon.save();
-                        if (mode==ADD_MODE){
+                        if (mode == ADD_MODE) {
                             EditLabelsActivity.notifyListView();
-                        }
-                        else {
+                        } else {
                             AddReminderActivity.category = category;
                             AddReminderActivity.categoryTV.setText(category.getName());
 
-                            AddReminderActivity.circle.setColorFilter(ColorHelper.COLOR_PALLETE[category.getColor()]);
-                            AddReminderActivity.categoryIcon.setImageResource(getResources().getIdentifier(icon.getName(),"drawable",getContext().getPackageName()));
+                            AddReminderActivity.circle.setColorFilter(ColorHelper
+                                    .COLOR_PALLETE[category.getColor()]);
+                            AddReminderActivity.categoryIcon.setImageResource(getResources()
+                                    .getIdentifier(icon.getName(), "drawable", getContext()
+                                            .getPackageName()));
                         }
                         Toast.makeText(getContext(), "Saved!", Toast.LENGTH_SHORT).show();
                         dismiss();

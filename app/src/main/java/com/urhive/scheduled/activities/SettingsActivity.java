@@ -14,7 +14,8 @@ public class SettingsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
         setTitle("Settings");
 
-        getFragmentManager().beginTransaction().replace(R.id.content_frame, new com.urhive.scheduled.fragments.PreferenceFragment()).commit();
+        getFragmentManager().beginTransaction().replace(R.id.content_frame, new com.urhive
+                .scheduled.fragments.PreferenceFragment()).commit();
     }
 
     @Override

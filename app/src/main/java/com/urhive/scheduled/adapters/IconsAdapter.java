@@ -22,17 +22,6 @@ public class IconsAdapter extends RecyclerView.Adapter<IconsAdapter.ViewHolder> 
     private Context mContext;
     private List<Icon> mIconList;
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        public ImageView mImageView;
-        private View mView;
-
-        public ViewHolder(final View view) {
-            super(view);
-            mView = view;
-            mImageView = (ImageView) view.findViewById(R.id.icon);
-        }
-    }
-
     public IconsAdapter(Context context, int rowLayout, List<Icon> iconList) {
         mContext = context;
         mRowLayout = rowLayout;
@@ -53,7 +42,8 @@ public class IconsAdapter extends RecyclerView.Adapter<IconsAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
         final String iconName = mIconList.get(position).getName();
-        final int iconResId = mContext.getResources().getIdentifier(iconName, "drawable", mContext.getPackageName());
+        final int iconResId = mContext.getResources().getIdentifier(iconName, "drawable",
+                mContext.getPackageName());
         viewHolder.mImageView.setImageResource(iconResId);
         viewHolder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,8 +51,20 @@ public class IconsAdapter extends RecyclerView.Adapter<IconsAdapter.ViewHolder> 
                 CategoryFragment.imageSelected();
                 CategoryFragment.image.setImageResource(iconResId);
 
-                CategoryFragment.category.setIconId(Integer.parseInt(String.valueOf(mIconList.get(position).getId())));
+                CategoryFragment.category.setIconId(Integer.parseInt(String.valueOf(mIconList.get
+                        (position).getId())));
             }
         });
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        public ImageView mImageView;
+        private View mView;
+
+        public ViewHolder(final View view) {
+            super(view);
+            mView = view;
+            mImageView = (ImageView) view.findViewById(R.id.icon);
+        }
     }
 }

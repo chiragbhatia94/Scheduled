@@ -33,7 +33,8 @@ public class GoalRecyclerAdapter extends RecyclerView.Adapter<GoalRecyclerAdapte
 
     @Override
     public ItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.goal_listview_item, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.goal_listview_item,
+                parent, false);
         return new ItemViewHolder(v);
     }
 
@@ -82,7 +83,8 @@ public class GoalRecyclerAdapter extends RecyclerView.Adapter<GoalRecyclerAdapte
         Category category = Category.findById(Category.class, reminder.getCategoryId());
         Icon icon = Icon.findById(Icon.class, category.getIconId());
 
-        holder.iconIV.setImageResource(context.getResources().getIdentifier(icon.getName(), "drawable", context.getPackageName()));
+        holder.iconIV.setImageResource(context.getResources().getIdentifier(icon.getName(),
+                "drawable", context.getPackageName()));
         holder.circleIV.setColorFilter(ColorHelper.COLOR_PALLETE[category.getColor()]);
         int x = reminder.getNoShown();
         int y = reminder.getNoToShow();
@@ -100,13 +102,15 @@ public class GoalRecyclerAdapter extends RecyclerView.Adapter<GoalRecyclerAdapte
         }
 
         ButtonAdapter adapter;
-        /*RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
+        /*RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context,
+        LinearLayoutManager.HORIZONTAL, false);
 
         holder.buttons.setLayoutManager(layoutManager);*/
 
 
         holder.buttons.setLayoutManager(new GridLayoutManager(context, 7));
-        ItemOffsetDecoration itemDecoration = new ItemOffsetDecoration(context, R.dimen.item_offset);
+        ItemOffsetDecoration itemDecoration = new ItemOffsetDecoration(context, R.dimen
+                .item_offset);
         holder.buttons.addItemDecoration(itemDecoration);
 
         adapter = new ButtonAdapter(context, reminders);

@@ -63,8 +63,11 @@ public class UseCategoryAdapter extends BaseAdapter {
         }
 
         viewHolder.nameTV.setText(categoryList.get(position).getName());
-        viewHolder.iconIV.setImageResource(context.getResources().getIdentifier(iconList.get(categoryList.get(position).getIconId() - 1).getName(), "drawable", context.getPackageName()));
-        viewHolder.circleIV.setColorFilter(ColorHelper.COLOR_PALLETE[categoryList.get(position).getColor()]);
+        viewHolder.iconIV.setImageResource(context.getResources().getIdentifier(iconList.get
+                (categoryList.get(position).getIconId() - 1).getName(), "drawable", context
+                .getPackageName()));
+        viewHolder.circleIV.setColorFilter(ColorHelper.COLOR_PALLETE[categoryList.get(position)
+                .getColor()]);
 
         view.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,8 +81,10 @@ public class UseCategoryAdapter extends BaseAdapter {
                 AddReminderActivity.category = category;
                 AddReminderActivity.categoryTV.setText(category.getName());
 
-                AddReminderActivity.circle.setColorFilter(ColorHelper.COLOR_PALLETE[category.getColor()]);
-                AddReminderActivity.categoryIcon.setImageResource(context.getResources().getIdentifier(icon.getName(),"drawable",context.getPackageName()));
+                AddReminderActivity.circle.setColorFilter(ColorHelper.COLOR_PALLETE[category
+                        .getColor()]);
+                AddReminderActivity.categoryIcon.setImageResource(context.getResources()
+                        .getIdentifier(icon.getName(), "drawable", context.getPackageName()));
 
                 AddReminderActivity.categoryAlertBox.dismiss();
             }

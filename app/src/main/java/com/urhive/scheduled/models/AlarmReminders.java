@@ -44,7 +44,8 @@ public class AlarmReminders extends SugarRecord implements Comparable<AlarmRemin
         this.reminderType = reminderType;
     }
 
-    public AlarmReminders(long reminderId, int number, String date, String time, int statusShown, int reminderType) {
+    public AlarmReminders(long reminderId, int number, String date, String time, int statusShown,
+                          int reminderType) {
         this.reminderId = reminderId;
         this.number = number;
         this.date = date;
@@ -63,7 +64,8 @@ public class AlarmReminders extends SugarRecord implements Comparable<AlarmRemin
     }
 
     // static methods
-    public static void sortCustomReminderListByDateTimeAndArrangeByNumber(List<AlarmReminders> presetList) {
+    public static void sortCustomReminderListByDateTimeAndArrangeByNumber(List<AlarmReminders>
+                                                                                  presetList) {
         Collections.sort(presetList);
 
         for (int i = 0; i < presetList.size(); i++) {

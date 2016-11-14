@@ -27,7 +27,8 @@ public class Temporary extends AppCompatActivity {
         RecyclerView recyclerView;
         ButtonAdapter adapter;
         recyclerView = (RecyclerView) findViewById(R.id.weekdays_recycler_view);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(Temporary.this, LinearLayoutManager.HORIZONTAL, false);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(Temporary.this,
+                LinearLayoutManager.HORIZONTAL, false);
 
         recyclerView.setLayoutManager(layoutManager);
 

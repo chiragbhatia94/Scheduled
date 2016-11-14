@@ -72,7 +72,8 @@ public class Reminder extends SugarRecord implements Comparable<Reminder> {
     }
 
     public Reminder(String title, String content, String date, String time, int active,
-                    long categoryId, int noToShow, int noShown, int repeatType, long inAdvanceMillis,
+                    long categoryId, int noToShow, int noShown, int repeatType, long
+                            inAdvanceMillis,
                     int status, int reminderType, String nextAlarmDate, String nextAlarmTime) {
         this.title = title;
         this.content = content;
@@ -91,7 +92,8 @@ public class Reminder extends SugarRecord implements Comparable<Reminder> {
     }
 
     public static String getActiveDays(Long reminderId) {
-        List<DayOfWeek> dow = DayOfWeek.find(DayOfWeek.class, "REMINDER_ID = ?", String.valueOf(reminderId));
+        List<DayOfWeek> dow = DayOfWeek.find(DayOfWeek.class, "REMINDER_ID = ?", String.valueOf
+                (reminderId));
         DayOfWeek daysActive = dow.get(0);
         return daysActive.getActiveDays();
     }

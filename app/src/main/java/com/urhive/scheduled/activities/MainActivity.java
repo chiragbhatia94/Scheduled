@@ -90,7 +90,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
         drawerItems.add(new PrimaryDrawerItem().withSelectable(false).withName(R.string
-                .nav_edit_labels).withIdentifier(9999));
+                .nav_edit_labels)
+                .withIdentifier(9999));
 
 
         ExpandableDrawerItem labels = new ExpandableDrawerItem()
@@ -129,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
                                         (AlarmReminders.NORMAL_ALARM_REMINDER)};
                                 List<AlarmReminders> alarmReminderses = AlarmReminders.find
                                         (AlarmReminders.class, "reminder_id = ? and " +
-                                        "reminder_type = ?", args);
+                                                "reminder_type = ?", args);
                                 Collections.sort(alarmReminderses);
 
                                 if (alarmReminderses.isEmpty()) {

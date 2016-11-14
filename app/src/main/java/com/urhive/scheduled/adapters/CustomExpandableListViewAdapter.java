@@ -21,7 +21,8 @@ import java.util.List;
 /**
  * Created by Chirag Bhatia on 11-07-2016.
  */
-public class CustomExpandableListViewAdapter extends BaseAdapter implements TimePickerDialog.OnTimeSetListener {
+public class CustomExpandableListViewAdapter extends BaseAdapter implements TimePickerDialog
+        .OnTimeSetListener {
     Context context;
     List<AlarmReminders> list;
     FragmentManager fragmentManager;
@@ -30,7 +31,8 @@ public class CustomExpandableListViewAdapter extends BaseAdapter implements Time
     int mHour, mMinute;
     int p = 0;
 
-    public CustomExpandableListViewAdapter(Context context, List<AlarmReminders> list, FragmentManager fm) {
+    public CustomExpandableListViewAdapter(Context context, List<AlarmReminders> list,
+                                           FragmentManager fm) {
         this.context = context;
         this.list = list;
         this.fragmentManager = fm;
@@ -76,12 +78,15 @@ public class CustomExpandableListViewAdapter extends BaseAdapter implements Time
      * {@link LayoutInflater#inflate(int, ViewGroup, boolean)}
      * to specify a root view and to prevent attachment to the root.
      *
-     * @param position    The position of the item within the adapter's data set of the item whose view
+     * @param position    The position of the item within the adapter's data set of the item
+     *                    whose view
      *                    we want.
      * @param convertView The old view to reuse, if possible. Note: You should check that this view
-     *                    is non-null and of an appropriate type before using. If it is not possible to convert
+     *                    is non-null and of an appropriate type before using. If it is not
+     *                    possible to convert
      *                    this view to display the correct data, this method can create a new view.
-     *                    Heterogeneous lists can specify their number of view types, so that this View is
+     *                    Heterogeneous lists can specify their number of view types, so that
+     *                    this View is
      *                    always of the right type (see {@link #getViewTypeCount()} and
      *                    {@link #getItemViewType(int)}).
      * @param parent      The parent that this view will eventually be attached to

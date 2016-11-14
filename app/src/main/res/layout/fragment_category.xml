@@ -1,8 +1,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/container"
-    style="@style/dialogForm"
-    tools:context="com.urhive.scheduled.activities.EditLabelsActivity">
+              xmlns:tools="http://schemas.android.com/tools"
+              android:id="@+id/container"
+              style="@style/dialogForm"
+              tools:context="com.urhive.scheduled.activities.EditLabelsActivity">
 
     <LinearLayout
         android:id="@+id/formPanel"
@@ -17,7 +17,7 @@
                 android:hint="Category Name"
                 android:inputType="textCapWords">
 
-                <requestFocus />
+                <requestFocus/>
             </EditText>
         </LinearLayout>
 
@@ -34,14 +34,14 @@
                     android:id="@+id/circle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/circle" />
+                    android:src="@drawable/circle"/>
 
                 <ImageView
                     android:id="@+id/image"
                     android:layout_width="18dp"
                     android:layout_height="18dp"
                     android:layout_gravity="center"
-                    android:src="@drawable/ic_notifications_white_24dp" />
+                    android:src="@drawable/ic_notifications_white_24dp"/>
 
             </FrameLayout>
 
@@ -58,11 +58,11 @@
                     android:layout_below="@id/categoryNameET"
                     android:layout_weight="1"
                     android:text="Category Color"
-                    android:textAppearance="@android:style/TextAppearance.Medium" />
+                    android:textAppearance="@android:style/TextAppearance.Medium"/>
 
                 <View
                     android:layout_width="15dp"
-                    android:layout_height="15dp" />
+                    android:layout_height="15dp"/>
 
                 <TextView
                     android:id="@+id/categoryIconTV"
@@ -70,7 +70,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Category Icon"
-                    android:textAppearance="@android:style/TextAppearance.Medium" />
+                    android:textAppearance="@android:style/TextAppearance.Medium"/>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
@@ -91,7 +91,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="DISCARD"
-            android:textColor="@color/colorAccent" />
+            android:textColor="@color/colorAccent"/>
 
         <TextView
             android:id="@+id/categoryFragmentSaveTV"
@@ -99,6 +99,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="SAVE"
-            android:textColor="@color/colorAccent" />
+            android:textColor="@color/colorAccent"/>
     </LinearLayout>
 </LinearLayout>

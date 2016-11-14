@@ -31,7 +31,8 @@ public class RepeatTimesFragment extends AppCompatDialogFragment {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable
+            Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_repeat_times, container, false);
         repeatTimesET = (EditText) view.findViewById(R.id.getRepeatTimeTV);
         foreverTV = (TextView) view.findViewById(R.id.repeatTimesFragmentForeverTV);
@@ -43,10 +44,10 @@ public class RepeatTimesFragment extends AppCompatDialogFragment {
         Bundle args = getArguments();
         int times = args.getInt("times");
 
-        if (times == -1){
+        if (times == -1) {
             repeatTimesET.setText("5");
         } else {
-            repeatTimesET.setText(""+times);
+            repeatTimesET.setText("" + times);
         }
 
         foreverTV.setOnClickListener(new View.OnClickListener() {
@@ -69,14 +70,14 @@ public class RepeatTimesFragment extends AppCompatDialogFragment {
             @Override
             public void onClick(View v) {
                 String temp = repeatTimesET.getText().toString();
-                if (temp.isEmpty()){
+                if (temp.isEmpty()) {
                     int times = 5;
                     AddReminderActivity.noToShowTV.setText("" + times);
                     AddReminderActivity.noToShow = times;
                     dismiss();
                     return;
                 }
-                if (temp.equals("Forever")){
+                if (temp.equals("Forever")) {
                     AddReminderActivity.noToShowTV.setText("Forever");
                     AddReminderActivity.noToShow = -1;
                     dismiss();

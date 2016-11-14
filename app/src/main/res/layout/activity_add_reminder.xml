@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="fill_parent">
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent">
 
     <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorBackground"
-        tools:context="com.urhive.scheduled.activities.AddReminderActivity">
+                                                     xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                     xmlns:tools="http://schemas.android.com/tools"
+                                                     android:layout_width="match_parent"
+                                                     android:layout_height="wrap_content"
+                                                     android:background="@color/colorBackground"
+                                                     tools:context="com.urhive.scheduled.activities.AddReminderActivity">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -34,7 +34,7 @@
                     android:singleLine="true"
                     android:textAppearance="@android:style/TextAppearance.Large"
                     android:textColor="@android:color/white"
-                    android:textColorHint="@color/primary_text_disabled_material_dark" />
+                    android:textColorHint="@color/primary_text_disabled_material_dark"/>
 
                 <EditText
                     android:id="@+id/contentET"
@@ -47,7 +47,7 @@
                     android:lines="3"
                     android:textAppearance="@android:style/TextAppearance.Large"
                     android:textColor="@android:color/white"
-                    android:textColorHint="@color/primary_text_disabled_material_dark" />
+                    android:textColorHint="@color/primary_text_disabled_material_dark"/>
             </LinearLayout>
 
             <LinearLayout
@@ -64,7 +64,7 @@
                     android:paddingRight="@dimen/activity_horizontal_margin"
                     android:paddingTop="@dimen/activity_vertical_margin"
                     android:text="@string/details"
-                    android:textAppearance="@android:style/TextAppearance.Large" />
+                    android:textAppearance="@android:style/TextAppearance.Large"/>
 
                 <RelativeLayout
                     android:id="@+id/timeRL"
@@ -82,7 +82,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="16dp"
                         android:layout_marginRight="27dp"
-                        android:src="@drawable/ic_alarm_black_24dp" />
+                        android:src="@drawable/ic_alarm_black_24dp"/>
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -96,14 +96,14 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/time_to_show_notification"
-                            android:textSize="15sp" />
+                            android:textSize="15sp"/>
 
                         <TextView
                             android:id="@+id/setTimeTV"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/now"
-                            android:textSize="15sp" />
+                            android:textSize="15sp"/>
                     </LinearLayout>
                 </RelativeLayout>
 
@@ -123,7 +123,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="16dp"
                         android:layout_marginRight="27dp"
-                        android:src="@drawable/ic_event_black_24dp" />
+                        android:src="@drawable/ic_event_black_24dp"/>
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -137,14 +137,14 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/date"
-                            android:textSize="15sp" />
+                            android:textSize="15sp"/>
 
                         <TextView
                             android:id="@+id/setDateTV"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/today"
-                            android:textSize="15sp" />
+                            android:textSize="15sp"/>
                     </LinearLayout>
                 </RelativeLayout>
 
@@ -168,14 +168,14 @@
                             android:id="@+id/circle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/circle" />
+                            android:src="@drawable/circle"/>
 
                         <ImageView
                             android:id="@+id/image"
                             android:layout_width="18dp"
                             android:layout_height="18dp"
                             android:layout_gravity="center"
-                            android:src="@drawable/ic_notifications_white_24dp" />
+                            android:src="@drawable/ic_notifications_white_24dp"/>
 
                     </FrameLayout>
 
@@ -191,14 +191,14 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/category"
-                            android:textSize="15sp" />
+                            android:textSize="15sp"/>
 
                         <TextView
                             android:id="@+id/categoryTV"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/uncategorized"
-                            android:textSize="15sp" />
+                            android:textSize="15sp"/>
                     </LinearLayout>
                 </RelativeLayout>
 
@@ -218,7 +218,7 @@
                         android:layout_marginLeft="16dp"
                         android:layout_marginRight="27dp"
                         android:src="@drawable/ic_refresh_white_24dp"
-                        android:tint="@color/black" />
+                        android:tint="@color/black"/>
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -232,14 +232,14 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/repeat"
-                            android:textSize="15sp" />
+                            android:textSize="15sp"/>
 
                         <TextView
                             android:id="@+id/repeatTypeTV"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/do_not_repeat"
-                            android:textSize="15sp" />
+                            android:textSize="15sp"/>
                     </LinearLayout>
                 </RelativeLayout>
 
@@ -266,7 +266,7 @@
                             android:layout_marginLeft="16dp"
                             android:layout_marginRight="27dp"
                             android:src="@drawable/ic_settings_backup_restore_white_24dp"
-                            android:tint="@color/black" />
+                            android:tint="@color/black"/>
 
                         <Button
                             android:id="@+id/addReminder"
@@ -280,7 +280,7 @@
                             android:layout_marginRight="27dp"
                             android:onClick="addPreset"
                             android:text="+"
-                            android:visibility="gone" />
+                            android:visibility="gone"/>
                     </RelativeLayout>
 
                     <LinearLayout
@@ -295,14 +295,14 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/reminders"
-                            android:textSize="15sp" />
+                            android:textSize="15sp"/>
 
                         <TextView
                             android:id="@+id/setPresetTV"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/default_string"
-                            android:textSize="15sp" />
+                            android:textSize="15sp"/>
                     </LinearLayout>
 
                     <TextView
@@ -312,14 +312,14 @@
                         android:layout_alignParentRight="true"
                         android:layout_marginRight="16dp"
                         android:text="@string/customize"
-                        android:textAppearance="@android:style/TextAppearance.Large" />
+                        android:textAppearance="@android:style/TextAppearance.Large"/>
 
                 </RelativeLayout>
 
                 <com.github.paolorotolo.expandableheightlistview.ExpandableHeightListView
                     android:id="@+id/expandableheightlistviewPreset"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"/>
 
                 <RelativeLayout
                     android:id="@+id/noToShowRL"
@@ -337,7 +337,7 @@
                         android:layout_marginLeft="16dp"
                         android:layout_marginRight="27dp"
                         android:src="@drawable/ic_settings_backup_restore_white_24dp"
-                        android:tint="@color/black" />
+                        android:tint="@color/black"/>
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -351,14 +351,14 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/no_of_times_to_show"
-                            android:textSize="15sp" />
+                            android:textSize="15sp"/>
 
                         <TextView
                             android:id="@+id/noToShowTV"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="5"
-                            android:textSize="15sp" />
+                            android:textSize="15sp"/>
                     </LinearLayout>
                 </RelativeLayout>
 
@@ -378,7 +378,7 @@
                         android:layout_marginLeft="16dp"
                         android:layout_marginRight="27dp"
                         android:src="@drawable/ic_dvr_white_24dp"
-                        android:tint="@color/black" />
+                        android:tint="@color/black"/>
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -392,14 +392,14 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/reminder_type"
-                            android:textSize="15sp" />
+                            android:textSize="15sp"/>
 
                         <TextView
                             android:id="@+id/notiTypeTV"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/notification"
-                            android:textSize="15sp" />
+                            android:textSize="15sp"/>
                     </LinearLayout>
                 </RelativeLayout>
 
@@ -419,7 +419,7 @@
                         android:layout_marginLeft="16dp"
                         android:layout_marginRight="27dp"
                         android:src="@drawable/ic_data_usage_white_24dp"
-                        android:tint="@color/black" />
+                        android:tint="@color/black"/>
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -433,14 +433,14 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/setup_early_reminder"
-                            android:textSize="15sp" />
+                            android:textSize="15sp"/>
 
                         <TextView
                             android:id="@+id/advanceNotiTV"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/do_not_remind_early"
-                            android:textSize="15sp" />
+                            android:textSize="15sp"/>
                     </LinearLayout>
 
                     <Switch
@@ -450,7 +450,7 @@
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:clickable="false"
-                        android:paddingRight="16dp" />
+                        android:paddingRight="16dp"/>
                 </RelativeLayout>
             </LinearLayout>
         </LinearLayout>
@@ -469,7 +469,7 @@
             app:fab_icon="@drawable/ic_notifications_off_white_24dp"
             app:fab_size="normal"
             app:layout_anchor="@id/heading"
-            app:layout_anchorGravity="bottom|left|end" />
+            app:layout_anchorGravity="bottom|left|end"/>
 
         <com.getbase.floatingactionbutton.FloatingActionButton
             android:id="@+id/onFab"
@@ -482,6 +482,6 @@
             app:fab_icon="@drawable/ic_notifications_active_white_24dp"
             app:fab_size="normal"
             app:layout_anchor="@id/heading"
-            app:layout_anchorGravity="bottom|left|end" />
+            app:layout_anchorGravity="bottom|left|end"/>
     </android.support.design.widget.CoordinatorLayout>
 </ScrollView>

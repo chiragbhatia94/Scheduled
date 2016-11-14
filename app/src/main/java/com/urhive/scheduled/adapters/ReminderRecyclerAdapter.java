@@ -23,7 +23,8 @@ import java.util.List;
 /**
  * Created by Chirag Bhatia on 06-11-2016.
  */
-public class ReminderRecyclerAdapter extends RecyclerView.Adapter<ReminderRecyclerAdapter.ItemViewHolder> {
+public class ReminderRecyclerAdapter extends RecyclerView.Adapter<ReminderRecyclerAdapter
+        .ItemViewHolder> {
     Context context;
     List<Reminder> remindersList;
 
@@ -34,9 +35,11 @@ public class ReminderRecyclerAdapter extends RecyclerView.Adapter<ReminderRecycl
 
     @Override
     public ItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        /*View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.reminderlistviewitem, parent, false);
+        /*View v = LayoutInflater.from(parent.getContext()).inflate(R.layout
+        .reminderlistviewitem, parent, false);
         */
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.reminder_listview_item, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout
+                .reminder_listview_item, parent, false);
         return new ItemViewHolder(v);
     }
 
@@ -94,7 +97,8 @@ public class ReminderRecyclerAdapter extends RecyclerView.Adapter<ReminderRecycl
         final Category category = Category.findById(Category.class, reminder.getCategoryId());
         Icon icon = Icon.findById(Icon.class, category.getIconId());
 
-        holder.iconIV.setImageResource(context.getResources().getIdentifier(icon.getName(), "drawable", context.getPackageName()));
+        holder.iconIV.setImageResource(context.getResources().getIdentifier(icon.getName(),
+                "drawable", context.getPackageName()));
         holder.circleIV.setColorFilter(ColorHelper.COLOR_PALLETE[category.getColor()]);
         int x = reminder.getNoShown();
         int y = reminder.getNoToShow();
@@ -130,13 +134,16 @@ public class ReminderRecyclerAdapter extends RecyclerView.Adapter<ReminderRecycl
                 final PopupMenu popupMenu = new PopupMenu(context, view);
                 switch (reminder.getStatus()) {
                     case Reminder.STATUS_NORMAL:
-                        popupMenu.getMenuInflater().inflate(R.menu.reminder_normal_item_menu, popupMenu.getMenu());
+                        popupMenu.getMenuInflater().inflate(R.menu.reminder_normal_item_menu,
+                                popupMenu.getMenu());
                         break;
                     case Reminder.STATUS_ARCHIEVED:
-                        popupMenu.getMenuInflater().inflate(R.menu.reminder_archive_item_menu, popupMenu.getMenu());
+                        popupMenu.getMenuInflater().inflate(R.menu.reminder_archive_item_menu,
+                                popupMenu.getMenu());
                         break;
                     case Reminder.STATUS_DELETED:
-                        popupMenu.getMenuInflater().inflate(R.menu.reminder_delete_item_menu, popupMenu.getMenu());
+                        popupMenu.getMenuInflater().inflate(R.menu.reminder_delete_item_menu,
+                                popupMenu.getMenu());
                         break;
                 }
 
@@ -145,7 +152,8 @@ public class ReminderRecyclerAdapter extends RecyclerView.Adapter<ReminderRecycl
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.action_edit:
-                                Toast.makeText(context, "To be developed", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(context, "To be developed", Toast.LENGTH_SHORT)
+                                        .show();
                                 break;
                             case R.id.action_archive:
                                 reminder.setStatus(Reminder.STATUS_ARCHIEVED);
@@ -174,7 +182,9 @@ public class ReminderRecyclerAdapter extends RecyclerView.Adapter<ReminderRecycl
                                 notifyDataSetChanged();
                                 break;
                             case R.id.action_delete_forever:
-                                List<AlarmReminders> alarms = AlarmReminders.find(AlarmReminders.class, "reminder_id = ?", String.valueOf(reminder.getId()));
+                                List<AlarmReminders> alarms = AlarmReminders.find(AlarmReminders
+                                        .class, "reminder_id = ?", String.valueOf(reminder.getId
+                                        ()));
                                 for (AlarmReminders alarm : alarms) {
                                     alarm.delete();
                                 }

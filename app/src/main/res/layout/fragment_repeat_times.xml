@@ -1,8 +1,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/container"
-    style="@style/dialogForm"
-    tools:context="com.urhive.scheduled.activities.AddReminderActivity">
+              xmlns:tools="http://schemas.android.com/tools"
+              android:id="@+id/container"
+              style="@style/dialogForm"
+              tools:context="com.urhive.scheduled.activities.AddReminderActivity">
 
     <LinearLayout
         android:id="@+id/formPanel"
@@ -14,14 +14,14 @@
                 android:id="@+id/getRepeatTimeTV"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:hint="No of Times To Repeat"
-                android:inputType="number"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
+                android:hint="No of Times To Repeat"
+                android:inputType="number"
                 android:selectAllOnFocus="true"
                 android:singleLine="false">
 
-                <requestFocus />
+                <requestFocus/>
             </EditText>
         </LinearLayout>
     </LinearLayout>
@@ -42,7 +42,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="FOREVER"
-            android:textColor="@color/colorAccent" />
+            android:textColor="@color/colorAccent"/>
 
         <LinearLayout
             style="?android:attr/buttonBarStyle"
@@ -60,7 +60,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="DISCARD"
-                android:textColor="@color/colorAccent" />
+                android:textColor="@color/colorAccent"/>
 
             <TextView
                 android:id="@+id/repeatTimesFragmentSaveTV"
@@ -68,7 +68,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="SAVE"
-                android:textColor="@color/colorAccent" />
+                android:textColor="@color/colorAccent"/>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

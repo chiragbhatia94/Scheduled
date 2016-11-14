@@ -9,7 +9,7 @@ public class Icon extends SugarRecord {
     String name;
     int useFrequency;
 
-    public Icon(){
+    public Icon() {
 
     }
 

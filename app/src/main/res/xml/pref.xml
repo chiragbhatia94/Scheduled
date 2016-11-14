@@ -4,32 +4,32 @@
         <CheckBoxPreference
             android:defaultValue="true"
             android:key="checkBoxVibrate"
-            android:title="Vibrate" />
+            android:title="Vibrate"/>
         <CheckBoxPreference
             android:defaultValue="true"
             android:key="checkBoxSound"
-            android:title="Sound" />
+            android:title="Sound"/>
         <CheckBoxPreference
             android:defaultValue="true"
             android:key="checkBoxLED"
-            android:title="LED" />
+            android:title="LED"/>
         <CheckBoxPreference
             android:defaultValue="true"
             android:key="checkBoxSnooze"
             android:summary="Add a snooze button in the notification"
-            android:title="Snooze" />
+            android:title="Snooze"/>
         <CheckBoxPreference
             android:defaultValue="true"
             android:key="checkBoxOngoing"
             android:summary="Reminder Notification will not be removed untill you give feedback!"
-            android:title="Persitent" />
+            android:title="Persitent"/>
         <ListPreference
             android:defaultValue="0"
             android:entries="@array/listentries"
             android:entryValues="@array/listvalues"
             android:key="notiTypePref"
             android:summary="%s"
-            android:title="Default Reminder Type" />
+            android:title="Default Reminder Type"/>
     </PreferenceCategory>
 
     <PreferenceCategory android:title="Quotes">
@@ -37,11 +37,11 @@
             android:defaultValue="true"
             android:key="quoteNotification"
             android:summary="Daily show a notification with quote of the day"
-            android:title="Show quotes as notification" />
+            android:title="Show quotes as notification"/>
         <com.urhive.scheduled.fragments.TimePreference
             android:key="quotationTime"
             android:summary="%s"
-            android:title="Quote Notification Time" />
+            android:title="Quote Notification Time"/>
     </PreferenceCategory>
 
     <PreferenceCategory android:title="Custom">
@@ -49,6 +49,6 @@
             android:defaultValue="false"
             android:key="reminderSelection"
             android:summary="Select time along with the date or later on!"
-            android:title="Reminder Selection" />
+            android:title="Reminder Selection"/>
     </PreferenceCategory>
 </PreferenceScreen>

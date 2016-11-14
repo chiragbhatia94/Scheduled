@@ -29,7 +29,8 @@ public class ButtonAdapter extends RecyclerView.Adapter<ButtonAdapter.ButtonView
 
     @Override
     public ButtonViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.buttonlistviewitem, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.buttonlistviewitem,
+                parent, false);
         return new ButtonViewHolder(v);
     }
 
@@ -42,7 +43,8 @@ public class ButtonAdapter extends RecyclerView.Adapter<ButtonAdapter.ButtonView
         holder.button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "This is awesome! " + list.get(position).getNo(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "This is awesome! " + list.get(position).getNo(),
+                        Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -62,6 +64,4 @@ public class ButtonAdapter extends RecyclerView.Adapter<ButtonAdapter.ButtonView
             noTV = (TextView) itemView.findViewById(R.id.noTV);
         }
     }
-
-
 }
